@@ -31,4 +31,11 @@ Route::group([
             'edit'
         ]
     ]);
+    Route::resource('products.categories', 'ProductCategoryController', [
+        'only' => [
+            'index',
+            'store',
+            'destroy'
+        ]
+    ]);
 });

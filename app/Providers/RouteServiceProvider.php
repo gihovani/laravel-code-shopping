@@ -30,10 +30,12 @@ class RouteServiceProvider extends ServiceProvider
         parent::boot();
 
         Route::bind('category', function ($value){
-            return Category::whereId($value)->orWhere('slug', $value)->get()->first();
+            $collection = Category::whereId($value)->orWhere('slug', $value)->get();
+            return $collection->first();
         });
         Route::bind('product', function ($value){
-            return Product::whereId($value)->orWhere('slug', $value)->get()->first();
+            $collection = Product::whereId($value)->orWhere('slug', $value)->get();
+            return $collection->first();
         });
     }
 

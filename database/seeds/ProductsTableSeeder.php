@@ -11,6 +11,9 @@ class ProductsTableSeeder extends Seeder
      */
     public function run()
     {
-        factory(\CodeShopping\Models\Product::class, 100)->create();
+        $categories = \CodeShopping\Models\Category::all();
+        factory(\CodeShopping\Models\Product::class, 100)->create()->each(function($product) use($categories) {
+            $product->categories()->attach($categories->random()->id);
+        });
     }
 }
