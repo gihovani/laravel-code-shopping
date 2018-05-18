@@ -31,4 +31,7 @@ class Product extends Model
     public function categories() {
         return $this->belongsToMany(Category::class);
     }
+    public function inputs() {
+        return $this->hasMany(ProductInput::class);
+    }
 }

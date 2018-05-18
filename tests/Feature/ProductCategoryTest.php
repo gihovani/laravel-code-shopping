@@ -31,4 +31,19 @@ class ProductCategoryTest extends TestCase
         $response->assertStatus(201)
                  ->assertJson(['product' => $product, 'categories' => [$category]]);
     }
+
+    public function testDelete() {
+        $product = factory(Product::class)
+            ->create()
+            ->toArray();
+        $category = factory(Category::class)
+            ->create()
+            ->toArray();
+        $toPost = ['categories' => $category['id']];
+        $this->json('POST', '/api/products/' . $product['id'] . '/categories', $toPost);
+        $response = $this->json('DELETE', '/api/products/' . $product['id'] . '/categories/' . $category['id']);
+        $response->assertStatus(204);
+
+        ;
+    }
 }

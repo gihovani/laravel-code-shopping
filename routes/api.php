@@ -38,4 +38,10 @@ Route::group([
             'destroy'
         ]
     ]);
+    Route::resource('products.inputs', 'ProductInputController', [
+        'only' => [
+            'store',
+            'index'
+        ]
+    ]);
 });
