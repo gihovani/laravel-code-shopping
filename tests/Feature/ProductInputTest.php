@@ -13,8 +13,8 @@ class ProductInputTest extends TestCase
     public function testCreateNotValid() {
         $product = factory(Product::class)
             ->create();
-        $toPost = ['amount' => 'um'];
-        $response = $this->json('POST', '/api/products/' . $product->id . '/inputs', $toPost);
+        $toPost = ['amount' => 'um', 'product_id' => $product->id];
+        $response = $this->json('POST', '/api/inputs/', $toPost);
         $response->assertStatus(422);
     }
 
@@ -23,8 +23,8 @@ class ProductInputTest extends TestCase
         $product = factory(Product::class)
             ->create();
         $oldStock = $product->stock;
-        $toPost = ['amount' => $value];
-        $response = $this->json('POST', '/api/products/' . $product->id . '/inputs', $toPost);
+        $toPost = ['amount' => $value, 'product_id' => $product->id];
+        $response = $this->json('POST', '/api/inputs', $toPost);
         $response->assertStatus(201);
         $product->refresh();
         $this->assertEquals($product->stock, $oldStock + $value);

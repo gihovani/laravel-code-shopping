@@ -38,10 +38,18 @@ Route::group([
             'destroy'
         ]
     ]);
-    Route::resource('products.inputs', 'ProductInputController', [
+    Route::resource('product_inputs', 'ProductInputController', [
         'only' => [
             'store',
-            'index'
+            'index',
+            'show'
+        ]
+    ]);
+    Route::resource('product_outputs', 'ProductOutputController', [
+        'only' => [
+            'store',
+            'index',
+            'show'
         ]
     ]);
 });

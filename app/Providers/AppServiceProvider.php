@@ -2,6 +2,10 @@
 
 namespace CodeShopping\Providers;
 
+use CodeShopping\Models\ProductOutput;
+use CodeShopping\Observers\ProductInputObserver;
+use CodeShopping\Models\ProductInput;
+use CodeShopping\Observers\ProductOutputObserver;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -13,7 +17,8 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        ProductInput::observe(ProductInputObserver::class);
+        ProductOutput::observe(ProductOutputObserver::class);
     }
 
     /**

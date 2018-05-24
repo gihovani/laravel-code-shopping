@@ -4,7 +4,7 @@ namespace CodeShopping\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class ProductInput extends Model
+class ProductOutput extends Model
 {
     public $fillable = ['amount', 'product_id'];
     public function product() {
