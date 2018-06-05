@@ -12,7 +12,7 @@ class ProductsTableSeeder extends Seeder
     public function run()
     {
         $categories = \CodeShopping\Models\Category::all();
-        $products = factory(\CodeShopping\Models\Product::class, 100)->create();
+        $products = factory(\CodeShopping\Models\Product::class, 30)->create();
         $products->each(function($product) use($categories) {
             $product->categories()->attach($categories->random()->id);
         });
