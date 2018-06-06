@@ -26,7 +26,7 @@ class ProductPhoto extends Model
         try {
             self::uploadFiles($productId, $files);
             \DB::beginTransaction();
-            $photos = self::createWithPhotosFiles($productId, $files);
+            $photos = self::createPhotosModels($productId, $files);
             \DB::commit();
             return new Collection($photos);
         } catch (\Exception $e) {
@@ -50,6 +50,21 @@ class ProductPhoto extends Model
             return $this;
         } catch (\Exception $e) {
             self::deleteFiles($this->product_id, [$file]);
+            \DB::rollBack();
+            throw $e;
+        }
+    }
+
+    public function deleteWithPhoto(): bool
+    {
+        try {
+            \DB::beginTransaction();
+            $this->deletePhoto($this->file_name);
+            $result = $this->delete();
+            \DB::commit();
+
+            return $result;
+        } catch (\Exception $e) {
             \DB::rollBack();
             throw $e;
         }
@@ -96,7 +111,7 @@ class ProductPhoto extends Model
 
     public function product()
     {
-        return $this->belongsTo(Product::class);
+        return $this->belongsTo(Product::class)->withTrashed();
     }
 
     private static function createPhotosModels(int $productId, array $files): array
