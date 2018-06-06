@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Category extends Model
 {
     use Sluggable;
-    public $fillable = [
+    protected $fillable = [
         'name',
         'active'
     ];

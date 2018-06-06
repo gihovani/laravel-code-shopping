@@ -2,6 +2,7 @@
 
 namespace CodeShopping\Models;
 
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\UploadedFile;
 
@@ -12,12 +13,7 @@ class ProductPhoto extends Model
 
     const PRODUCTS_PATH = self::BASE_PATH . '/' . self::DIR_PRODUCTS;
 
-    public $fillable = ['file_name', 'product_id'];
-
-    public function product()
-    {
-        return $this->belongsTo(Product::class);
-    }
+    protected $fillable = ['file_name', 'product_id'];
 
     public static function photosPath($productId)
     {
@@ -25,7 +21,59 @@ class ProductPhoto extends Model
         return storage_path($path);
     }
 
-    public static function uploadFiles($productId, array $files)
+    public static function createWithPhotosFiles(int $productId, array $files): Collection
+    {
+        try {
+            self::uploadFiles($productId, $files);
+            \DB::beginTransaction();
+            $photos = self::createWithPhotosFiles($productId, $files);
+            \DB::commit();
+            return new Collection($photos);
+        } catch (\Exception $e) {
+            self::deleteFiles($productId, $files);
+            \DB::rollBack();
+            throw $e;
+        }
+    }
+
+    public function updateWithPhoto(UploadedFile $file): ProductPhoto
+    {
+        try {
+            $oldFileName = $this->file_name;
+            self::uploadFiles($this->product_id, [$file]);
+            \DB::beginTransaction();
+            $this->file_name = $file->hashName();
+            $this->save();
+            \DB::commit();
+
+            $this->deletePhoto($oldFileName);
+            return $this;
+        } catch (\Exception $e) {
+            self::deleteFiles($this->product_id, [$file]);
+            \DB::rollBack();
+            throw $e;
+        }
+    }
+
+    private function deletePhoto($fileName)
+    {
+        $dir = self::photosDir($this->product_id);
+        \Storage::disk('public')->delete($dir . '/' . $fileName);
+    }
+
+    private static function deleteFiles(int $productId, array $files)
+    {
+        /** @var UploadedFile $file */
+        foreach ($files as $file) {
+            $path = self::photosPath($productId);
+            $photoPath = $path . '/' . $file->hashName();
+            if (file_exists($photoPath)) {
+                \File::delete($photoPath);
+            }
+        }
+    }
+
+    public static function uploadFiles(int $productId, array $files)
     {
         $dir = self::photosDir($productId);
         /** @var UploadedFile $file */
@@ -39,4 +87,29 @@ class ProductPhoto extends Model
         $dir = self::DIR_PRODUCTS . '/' . $productId;
         return $dir;
     }
+
+    public function getPhotoUrlAttribute()
+    {
+        $path = self::photosDir($this->product_id);
+        return asset('storage/' . $path . '/' . $this->file_name);
+    }
+
+    public function product()
+    {
+        return $this->belongsTo(Product::class);
+    }
+
+    private static function createPhotosModels(int $productId, array $files): array
+    {
+        $photos = [];
+        /** @var UploadedFile $file */
+        foreach ($files as $file) {
+            $photos[] = self::create([
+                'file_name' => $file->hashName(),
+                'product_id' => $productId
+            ]);
+        }
+        return $photos;
+    }
+
 }

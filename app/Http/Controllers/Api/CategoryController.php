@@ -18,7 +18,7 @@ class CategoryController extends Controller
     {
         $category = Category::create($request->all());
         $category->refresh();
-        return new CategoryResource($category);
+        return response()->json(new CategoryResource($category), 201);
     }
 
     public function show(Category $category)

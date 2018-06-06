@@ -20,7 +20,7 @@ class ProductController extends Controller
         $product = Product::create($request->all());
         $product->refresh();
 
-        return new ProductResource($product);
+        return response()->json(new ProductResource($product), 201);
     }
 
     public function show(Product $product)

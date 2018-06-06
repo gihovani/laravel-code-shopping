@@ -38,6 +38,12 @@ Route::group([
             'destroy'
         ]
     ]);
+    Route::resource('products.photos', 'ProductPhotoController', [
+        'except' => [
+            'create',
+            'edit'
+        ]
+    ]);
     Route::resource('product_inputs', 'ProductInputController', [
         'only' => [
             'store',
