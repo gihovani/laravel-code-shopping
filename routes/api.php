@@ -1,4 +1,5 @@
 <?php
+
 use Illuminate\Http\Request;
 
 /*
@@ -12,25 +13,14 @@ use Illuminate\Http\Request;
 |
 */
 Route::middleware('auth:api')
-     ->get('/user', function(Request $request) {
-         return $request->user();
-     });
+    ->get('/user', function (Request $request) {
+        return $request->user();
+    });
 Route::group([
     'namespace' => 'Api',
-    'as'        => 'api.'
-], function() {
-    Route::resource('users', 'UserController', [
-        'except' => [
-            'create',
-            'edit'
-        ]
-    ]);
-    Route::resource('categories', 'CategoryController', [
-        'except' => [
-            'create',
-            'edit'
-        ]
-    ]);
+    'as' => 'api.'
+], function () {
+    Route::patch('products/{product}/restore', 'ProductController@restore');
     Route::resource('products', 'ProductController', [
         'except' => [
             'create',
@@ -62,6 +52,18 @@ Route::group([
             'store',
             'index',
             'show'
+        ]
+    ]);
+    Route::resource('categories', 'CategoryController', [
+        'except' => [
+            'create',
+            'edit'
+        ]
+    ]);
+    Route::resource('users', 'UserController', [
+        'except' => [
+            'create',
+            'edit'
         ]
     ]);
 });

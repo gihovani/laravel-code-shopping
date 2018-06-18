@@ -6,14 +6,16 @@ use CodeShopping\Http\Controllers\Controller;
 use CodeShopping\Http\Requests\ProductRequest;
 use CodeShopping\Http\Resources\ProductResource;
 use CodeShopping\Models\Product;
+use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\Builder;
+
 
 class ProductController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
         $query = Product::query();
-        $query = $this->onlyTrashedIfRequested($query);
+        $query = $this->onlyTrashedIfRequested($request, $query);
         $products = $query->paginate(10);
         return ProductResource::collection($products);
     }
@@ -44,11 +46,17 @@ class ProductController extends Controller
         return response()->json([], 204);
     }
 
-    private function onlyTrashedIfRequested(Builder $builder)
+    public function restore(Product $product)
     {
-        if (\Request::get('trashed') == 1) {
-            $builder = $builder->onlyTrashed();
+        $product->restore();
+        return response()->json([], 204);
+    }
+
+    private function onlyTrashedIfRequested(Request $request, Builder $query)
+    {
+        if ($request->get('trashed')) {
+            $query = $query->onlyTrashed();
         }
-        return $builder;
+        return $query;
     }
 }
