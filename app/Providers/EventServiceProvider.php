@@ -13,9 +13,9 @@ class EventServiceProvider extends ServiceProvider
      * @var array
      */
     protected $listen = [
-        'CodeShopping\Events\Event' => [
-            'CodeShopping\Listeners\EventListener',
-        ],
+        'CodeShopping\Events\UserCreatedEvent' => [
+            'CodeShopping\Listeners\SendEmailToDefinePasswordListener',
+        ]
     ];
 
     /**
