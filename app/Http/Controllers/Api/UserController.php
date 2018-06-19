@@ -3,6 +3,7 @@
 namespace CodeShopping\Http\Controllers\Api;
 
 use CodeShopping\Common\OnlyTrashed;
+use CodeShopping\Events\UserCreatedEvent;
 use CodeShopping\Http\Requests\UserRequest;
 use CodeShopping\Http\Resources\UserResource;
 use CodeShopping\Models\User;
@@ -24,6 +25,7 @@ class UserController extends Controller
     {
         $user = User::create($request->all());
         $user->refresh();
+        event(new UserCreatedEvent($user));
         return response()->json(new UserResource($user), 201);
     }
 
