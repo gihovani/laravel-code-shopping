@@ -60,6 +60,7 @@ Route::group([
             'edit'
         ]
     ]);
+    Route::patch('users/{user}/restore', 'UserController@restore');
     Route::resource('users', 'UserController', [
         'except' => [
             'create',
