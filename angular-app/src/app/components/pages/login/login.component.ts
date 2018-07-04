@@ -1,29 +1,34 @@
 import {Component, OnInit} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
+import {Router} from "@angular/router";
 
 @Component({
-  selector: 'login',
-  templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css']
+    selector: 'login',
+    templateUrl: './login.component.html',
+    styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
 
-  public credentials = {
-    email: '',
-    password: ''
-  };
+    public credentials = {
+        email: 'admin@user.com',
+        password: 'secret'
+    };
 
-  constructor(private http: HttpClient) {
-  }
+    public showMessageError: boolean = false;
 
-  ngOnInit() {
-  }
+    constructor(private http: HttpClient, private router: Router) {
+    }
 
-  submit() {
-    console.log(this.credentials);
-    this.http.post('http://localhost:8000/api/login', this.credentials)
-      .subscribe((response:any) => {
-        alert(response.token);
-      });
-  }
+    ngOnInit() {
+    }
+
+    submit() {
+        this.http.post<any>('http://localhost:8000/api/login', this.credentials)
+            .subscribe((data) => {
+                const token = data.token;
+                window.localStorage.setItem('token', token);
+                this.router.navigate(['categories/list']);
+            }, error => this.showMessageError = true);
+        return false;
+    }
 }
