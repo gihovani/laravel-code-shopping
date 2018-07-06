@@ -23,29 +23,30 @@ export class CategoryListComponent implements OnInit {
     };
 
     @ViewChild(CategoryNewModalComponent)
-    public categoryNewModal: CategoryNewModalComponent;
+    public newModal: CategoryNewModalComponent;
 
     @ViewChild(CategoryEditModalComponent)
-    public categoryEditModal: CategoryEditModalComponent;
+    public editModal: CategoryEditModalComponent;
 
     @ViewChild(CategoryDeleteModalComponent)
-    public categoryDeleteModal: CategoryDeleteModalComponent;
+    public deleteModal: CategoryDeleteModalComponent;
 
     constructor(private notifyMessage: NotifyMessageService,
                 private categoryHttp: CategoryHttpService,
-                protected categoryInsertService: CategoryInsertService,
-                protected categoryEditService: CategoryEditService,
-                protected categoryDeleteService: CategoryDeleteService) {
+                protected insertService: CategoryInsertService,
+                protected editService: CategoryEditService,
+                protected deleteService: CategoryDeleteService) {
 
-        this.categoryInsertService.categoryListComponent = this;
-        this.categoryEditService.categoryListComponent = this;
+        this.insertService.listComponent = this;
+        this.editService.listComponent = this;
+        this.deleteService.listComponent = this;
     }
 
     ngOnInit() {
-        this.getCategories();
+        this.getItems();
     }
 
-    getCategories() {
+    getItems() {
         this.categoryHttp.list(this.pagination.page).subscribe(response => {
             this.categories = response.data
             this.pagination.totalItems = response.meta.total;
@@ -55,6 +56,6 @@ export class CategoryListComponent implements OnInit {
 
     pageChanged(page) {
         this.pagination.page = page;
-        this.getCategories();
+        this.getItems();
     }
 }

@@ -7,7 +7,7 @@ import pace from 'pace';
     styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit {
-    title = 'app';
+    title = 'Code Shopping';
 
     ngOnInit() {
         pace.start({

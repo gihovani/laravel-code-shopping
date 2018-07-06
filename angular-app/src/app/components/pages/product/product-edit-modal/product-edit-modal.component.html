@@ -1,15 +1,25 @@
 <form (submit)="submit()">
   <modal (onHide)="hideModal($event)">
-    <h5 modal-title>Editar Categoria - {{category.name}}</h5>
+    <h5 modal-title>Editar Produto - {{product.name}}</h5>
     <div modal-body>
       <div class="form-group">
         <label for="edit-name">Nome</label>
         <input type="text" id="edit-name" name="name" class="form-control" required
-               [(ngModel)]="category.name">
+               [(ngModel)]="product.name">
+      </div>
+      <div class="form-group">
+        <label for="edit-price">Price</label>
+        <input type="number" id="edit-price" name="price" class="form-control" required
+               [(ngModel)]="product.price">
+      </div>
+      <div class="form-group">
+        <label for="edit-description">Description</label>
+        <textarea class="form-control" rows="3" id="edit-description" name="description" class="form-control"
+                  [(ngModel)]="product.description" required></textarea>
       </div>
       <div class="form-group form-check">
         <input type="checkbox" id="edit-active" name="active" class="form-check-input"
-               [(ngModel)]="category.active">
+               [(ngModel)]="product.active">
         <label for="edit-active">Ativo?</label>
       </div>
     </div>

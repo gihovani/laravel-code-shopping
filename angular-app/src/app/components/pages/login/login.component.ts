@@ -9,7 +9,7 @@ import {Router} from "@angular/router";
 })
 export class LoginComponent implements OnInit {
 
-    public credentials = {
+    public credentials: User = {
         email: 'admin@user.com',
         password: 'secret'
     };

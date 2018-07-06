@@ -1,32 +1,32 @@
 import {Injectable} from "@angular/core";
 import {NotifyMessageService} from "../../../../services/notify-message.service";
-import {CategoryListComponent} from "./category-list.component";
+import {ProductListComponent} from "./product-list.component";
 
 @Injectable({
     providedIn: 'root'
 })
-export class CategoryDeleteService {
-    private _listComponent: CategoryListComponent;
+export class ProductDeleteService {
+    private _listComponent: ProductListComponent;
 
     constructor(private notifyMessage: NotifyMessageService) {
     }
 
-    set listComponent(value: CategoryListComponent) {
+    set listComponent(value: ProductListComponent) {
         this._listComponent = value;
     }
 
-    showModal(categoryId: number) {
-        this._listComponent.categoryId = categoryId;
+    showModal(productId: number) {
+        this._listComponent.productId = productId;
         this._listComponent.deleteModal.showModal();
     }
 
     onError($event) {
-        this.notifyMessage.error('Não foi possível remover esta Categoria');
+        this.notifyMessage.error('Não foi possível remover este Produto');
         console.log($event);
     }
 
     onSuccess($event) {
-        this.notifyMessage.success('Categoria apagada com sucesso!');
+        this.notifyMessage.success('Produto apagado com sucesso!');
         this._listComponent.getItems();
     }
 }

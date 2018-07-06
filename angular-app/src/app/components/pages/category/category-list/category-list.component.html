@@ -4,7 +4,8 @@
         <thead>
         <tr>
             <td colspan="5">
-                <button class="btn btn-primary" (click)="categoryInsertService.showModalInsert()">Nova Categoria</button>
+                <button class="btn btn-primary" (click)="insertService.showModal()">Nova Categoria
+                </button>
             </td>
         </tr>
         <tr>
@@ -24,10 +25,10 @@
             </td>
             <td>{{category.created_at | date: 'dd/MM/yyyy'}}</td>
             <td>
-                <a href="javascript:void(0)" (click)="categoryEditService.showModalEdit(category.id)">
+                <a href="javascript:void(0)" (click)="editService.showModal(category.id)">
                     <i class="fas fa-edit"></i>
                 </a> |
-                <a href="javascript:void(0)" (click)="categoryDeleteService.showModalDelete(category.id)">
+                <a href="javascript:void(0)" (click)="deleteService.showModal(category.id)">
                     <i class="fas fa-trash-alt"></i>
                 </a>
             </td>
@@ -35,8 +36,12 @@
         </tbody>
     </table>
 
-    <pagination-controls (pageChange)="pageChanged($event)" previousLabel="Anterior" nextLabel="Próxima"></pagination-controls>
+    <pagination-controls (pageChange)="pageChanged($event)" previousLabel="Anterior"
+                         nextLabel="Próxima"></pagination-controls>
 </div>
-<category-new-modal (onError)="categoryInsertService.onError($event)" (onSuccess)="categoryInsertService.onSuccess($event)"></category-new-modal>
-<category-edit-modal [categoryId]="categoryId" (onError)="categoryEditService.onError($event)" (onSuccess)="categoryEditService.onSuccess($event)"></category-edit-modal>
-<category-delete-modal [categoryId]="categoryId" (onError)="categoryDeleteService.onError($event)" (onSuccess)="categoryDeleteService.onSuccess($event)"></category-delete-modal>
+<category-new-modal (onError)="insertService.onError($event)"
+                    (onSuccess)="insertService.onSuccess($event)"></category-new-modal>
+<category-edit-modal [categoryId]="categoryId" (onError)="editService.onError($event)"
+                     (onSuccess)="editService.onSuccess($event)"></category-edit-modal>
+<category-delete-modal [categoryId]="categoryId" (onError)="deleteService.onError($event)"
+                       (onSuccess)="deleteService.onSuccess($event)"></category-delete-modal>

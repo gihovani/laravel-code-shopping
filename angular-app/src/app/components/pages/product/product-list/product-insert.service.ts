@@ -1,17 +1,17 @@
 import {Injectable} from "@angular/core";
 import {NotifyMessageService} from "../../../../services/notify-message.service";
-import {CategoryListComponent} from "./category-list.component";
+import {ProductListComponent} from "./product-list.component";
 
 @Injectable({
     providedIn: 'root'
 })
-export class CategoryInsertService {
-    private _listComponent: CategoryListComponent;
+export class ProductInsertService {
+    private _listComponent: ProductListComponent;
 
     constructor(private notifyMessage: NotifyMessageService) {
     }
 
-    set listComponent(value: CategoryListComponent) {
+    set listComponent(value: ProductListComponent) {
         this._listComponent = value;
     }
 
@@ -19,12 +19,12 @@ export class CategoryInsertService {
         this._listComponent.newModal.showModal();
     }
     onError($event) {
-        this.notifyMessage.error('Não foi possível criar esta Categoria');
+        this.notifyMessage.error('Não foi possível criar este Produto');
         console.log($event);
     }
 
     onSuccess($event) {
-        this.notifyMessage.success('Categoria criada com sucesso!');
+        this.notifyMessage.success('Produto criado com sucesso!');
         this._listComponent.getItems();
     }
 }
