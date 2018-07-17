@@ -7,6 +7,7 @@ import {ProductDeleteModalComponent} from "../product-delete-modal/product-delet
 import {ProductInsertService} from "./product-insert.service";
 import {ProductDeleteService} from "./product-delete.service";
 import {ProductEditService} from "./product-edit.service";
+import {Product} from "../../../../model";
 
 @Component({
     selector: 'app-product-list',
@@ -47,7 +48,7 @@ export class ProductListComponent implements OnInit {
     }
 
     getItems() {
-        this.productHttp.list(this.pagination.page).subscribe(response => {
+        this.productHttp.list({page: this.pagination.page}).subscribe(response => {
             this.items = response.data
             this.pagination.totalItems = response.meta.total;
             this.pagination.itemsPerPage = response.meta.per_page;

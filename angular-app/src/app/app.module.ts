@@ -21,14 +21,18 @@ import {ProductNewModalComponent} from './components/pages/product/product-new-m
 import {ProductEditModalComponent} from './components/pages/product/product-edit-modal/product-edit-modal.component';
 import {ProductDeleteModalComponent} from './components/pages/product/product-delete-modal/product-delete-modal.component';
 import {ProductListComponent} from './components/pages/product/product-list/product-list.component';
+import {NumberFormatBrPipe} from './pipes/number-format-br.pipe';
+import {ProductCategoryListComponent} from './components/pages/product-category/product-category-list/product-category-list.component';
+import { ProductCategoryNewComponent } from './components/pages/product-category/product-category-new/product-category-new.component';
 
 const routes: Routes = [
     {path: 'login', component: LoginComponent},
     {path: 'categories/list', component: CategoryListComponent},
+    {path: 'products/:product/categories/list', component: ProductCategoryListComponent},
     {path: 'products/list', component: ProductListComponent},
     {path: 'users/list', component: UserListComponent},
     {path: '', redirectTo: '/login', pathMatch: 'full'}
-]
+];
 
 @NgModule({
     declarations: [
@@ -47,7 +51,10 @@ const routes: Routes = [
         ProductNewModalComponent,
         ProductEditModalComponent,
         ProductDeleteModalComponent,
-        ProductListComponent
+        ProductListComponent,
+        NumberFormatBrPipe,
+        ProductCategoryListComponent,
+        ProductCategoryNewComponent
     ],
     imports: [
         BrowserModule,

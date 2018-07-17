@@ -2,6 +2,7 @@ import {Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angula
 import {HttpErrorResponse} from "@angular/common/http";
 import {ModalComponent} from "../../../bootstrap/modal/modal.component";
 import {ProductHttpService} from "../../../../services/http/product-http.service";
+import {Product} from "../../../../model";
 
 @Component({
   selector: 'product-delete-modal',

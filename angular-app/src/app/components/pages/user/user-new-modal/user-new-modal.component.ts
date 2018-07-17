@@ -2,6 +2,7 @@ import {Component, EventEmitter, OnInit, Output, ViewChild} from '@angular/core'
 import {HttpErrorResponse} from "@angular/common/http";
 import {ModalComponent} from "../../../bootstrap/modal/modal.component";
 import {UserHttpService} from "../../../../services/http/user-http.service";
+import {User} from "../../../../model";
 
 @Component({
     selector: 'user-new-modal',

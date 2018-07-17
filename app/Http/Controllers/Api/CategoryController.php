@@ -6,12 +6,14 @@ use CodeShopping\Http\Controllers\Controller;
 use CodeShopping\Http\Requests\CategoryRequest;
 use CodeShopping\Http\Resources\CategoryResource;
 use CodeShopping\Models\Category;
+use Illuminate\Http\Request;
 
 class CategoryController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        return CategoryResource::collection(Category::paginate(5));
+        $categories = $request->has('all') ? Category::all() : Category::paginate(5);
+        return CategoryResource::collection($categories);
     }
 
     public function store(CategoryRequest $request)

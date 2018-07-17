@@ -10,18 +10,18 @@
         </tr>
         <tr>
             <th style="width: 5%">ID</th>
-            <th style="width: 60%">Nome</th>
-            <th style="width: 8%">Preço</th>
-            <th style="width: 7%">Ativo?</th>
+            <th style="width: 45%">Nome</th>
+            <th style="width: 10%">Preço</th>
+            <th style="width: 10%">Ativo?</th>
             <th style="width: 10%">Criado Em</th>
-            <th style="width: 10%">Ações</th>
+            <th style="width: 20%">Ações</th>
         </tr>
         </thead>
         <tbody>
         <tr *ngFor="let product of items | paginate: {itemsPerPage: pagination.itemsPerPage, currentPage: pagination.page, totalItems: pagination.totalItems}">
             <td>{{product.id}}</td>
             <td>{{product.name}}</td>
-            <td>{{product.price | currency}}</td>
+            <td>{{product.price | numberFormatBr}}</td>
             <td>
                 <i class="fas" [ngClass]="{'fa-check': product.active, 'fa-times': !product.active}"></i>
             </td>
@@ -32,6 +32,9 @@
                 </a> |
                 <a href="javascript:void(0)" (click)="deleteService.showModal(product.id)">
                     <i class="fas fa-trash-alt"></i>
+                </a> |
+                <a [routerLink]="['/products', product.id, 'categories', 'list']">
+                    Categorias
                 </a>
             </td>
         </tr>

@@ -1,13 +1,13 @@
-interface Category {
+export interface Category {
     id?: number;
     name: string;
     readonly slug?: string;
     active: boolean;
     readonly created_at?: string;
     readonly updated_at?: string;
-}
+};
 
-interface Product {
+export interface Product {
     id?: number;
     name: string;
     readonly slug?: string;
@@ -17,9 +17,14 @@ interface Product {
     active: boolean;
     readonly created_at?: string;
     readonly updated_at?: string;
-}
+};
 
-interface User {
+export interface ProductCategory {
+    product: Product;
+    categories: Category[];
+};
+
+export interface User {
     id?: number;
     name?: string;
     email: string;
@@ -27,4 +32,4 @@ interface User {
     readonly remember_token?: string;
     readonly created_at?: string;
     readonly updated_at?: string;
-}
+};

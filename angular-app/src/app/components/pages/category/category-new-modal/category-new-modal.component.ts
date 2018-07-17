@@ -2,6 +2,7 @@ import {Component, EventEmitter, OnInit, Output, ViewChild} from '@angular/core'
 import {HttpErrorResponse} from "@angular/common/http";
 import {ModalComponent} from "../../../bootstrap/modal/modal.component";
 import {CategoryHttpService} from "../../../../services/http/category-http.service";
+import {Category} from "../../../../model";
 
 @Component({
     selector: 'category-new-modal',

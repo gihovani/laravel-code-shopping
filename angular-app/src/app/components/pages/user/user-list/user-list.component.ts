@@ -7,6 +7,7 @@ import {UserEditService} from "./user-edit.service";
 import {UserDeleteService} from "./user-delete.service";
 import {UserEditModalComponent} from "../user-edit-modal/user-edit-modal.component";
 import {UserDeleteModalComponent} from "../user-delete-modal/user-delete-modal.component";
+import {User} from "../../../../model";
 
 @Component({
     selector: 'user-list',
@@ -47,7 +48,7 @@ export class UserListComponent implements OnInit {
     }
 
     getItems() {
-        this.userHttp.list(this.pagination.page).subscribe(response => {
+        this.userHttp.list({page: this.pagination.page}).subscribe(response => {
             this.users = response.data
             this.pagination.totalItems = response.meta.total;
             this.pagination.itemsPerPage = response.meta.per_page;

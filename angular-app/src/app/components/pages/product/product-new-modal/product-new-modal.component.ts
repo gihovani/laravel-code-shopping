@@ -2,6 +2,7 @@ import {Component, EventEmitter, OnInit, Output, ViewChild} from '@angular/core'
 import {HttpErrorResponse} from "@angular/common/http";
 import {ModalComponent} from "../../../bootstrap/modal/modal.component";
 import {ProductHttpService} from "../../../../services/http/product-http.service";
+import {Product} from "../../../../model";
 
 @Component({
     selector: 'product-new-modal',

@@ -2,23 +2,30 @@ import {Injectable} from '@angular/core';
 import {HttpClient, HttpParams} from "@angular/common/http";
 import {Observable} from "rxjs/internal/Observable";
 import {map} from "rxjs/operators";
+import {HttpResource, SearchParams, SearchParamsBuilder} from "./http-resource";
+import {BaseCrudHttp} from "./base-crud-http";
+import {Product} from "../../model";
 
 @Injectable({
     providedIn: 'root'
 })
-export class ProductHttpService {
+// export class ProductHttpService extends BaseCrudHttp<Product> {
+//     baseUrl() {
+//         return 'http://localhost:8000/api/products';
+//     }
+// }
+export class ProductHttpService implements HttpResource<Product> {
 
-    private baseUrl = 'http://localhost:8000/api/products'
+    private baseUrl = 'http://localhost:8000/api/products';
 
     constructor(private http: HttpClient) {
     }
 
-    list(page: number): Observable<{ data: Array<Product>, meta: any }> {
+    list(searchParams: SearchParams): Observable<{ data: Array<Product>, meta: any }> {
         const token = window.localStorage.getItem('token');
+        const sParams = new SearchParamsBuilder(searchParams).makeObject();
         const params = new HttpParams({
-            fromObject: {
-                page: page + ''
-            }
+            fromObject: (<any>sParams)
         });
         return this.http.get<{ data: Array<Product>, meta: any }>(this.baseUrl, {
             params,

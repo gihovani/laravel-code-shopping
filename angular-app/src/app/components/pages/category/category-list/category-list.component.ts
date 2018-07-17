@@ -7,6 +7,7 @@ import {NotifyMessageService} from "../../../../services/notify-message.service"
 import {CategoryInsertService} from "./category-insert.service";
 import {CategoryEditService} from "./category-edit.service";
 import {CategoryDeleteService} from "./category-delete.service";
+import {Category} from "../../../../model";
 
 @Component({
     selector: 'app-category-list',
@@ -47,7 +48,7 @@ export class CategoryListComponent implements OnInit {
     }
 
     getItems() {
-        this.categoryHttp.list(this.pagination.page).subscribe(response => {
+        this.categoryHttp.list({page: this.pagination.page}).subscribe(response => {
             this.categories = response.data
             this.pagination.totalItems = response.meta.total;
             this.pagination.itemsPerPage = response.meta.per_page;
