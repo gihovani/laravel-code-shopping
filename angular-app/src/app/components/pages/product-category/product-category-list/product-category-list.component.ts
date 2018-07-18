@@ -1,8 +1,11 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {ActivatedRoute} from "@angular/router";
 import {ProductHttpService} from "../../../../services/http/product-http.service";
 import {Product, ProductCategory} from "../../../../model";
 import {ProductCategoryHttpService} from "../../../../services/http/product-category-http.service";
+import {ProductCategoryDeleteModalComponent} from "../product-category-delete-modal/product-category-delete-modal.component";
+import {ProductCategoryDeleteService} from "./product-category-delete.service";
+import {ProductCategoryInsertService} from "./product-category-insert.service";
 
 @Component({
     selector: 'app-product-category-list',
@@ -10,40 +13,33 @@ import {ProductCategoryHttpService} from "../../../../services/http/product-cate
     styleUrls: ['./product-category-list.component.css']
 })
 export class ProductCategoryListComponent implements OnInit {
+    public productId: number = 0;
+    public categoryId: number = 0;
+    public product: Product = null;
+    public productCategory: ProductCategory = null;
 
-    public productId: number;
-    public product: Product;
-    public productCategory: ProductCategory;
+    @ViewChild(ProductCategoryDeleteModalComponent)
+    public deleteModal: ProductCategoryDeleteModalComponent;
 
     constructor(private route: ActivatedRoute,
                 private productHttp: ProductHttpService,
-                private productCategoryHttp: ProductCategoryHttpService) {
+                private productCategoryHttp: ProductCategoryHttpService,
+                protected insertService: ProductCategoryInsertService,
+                protected deleteService: ProductCategoryDeleteService) {
+        this.insertService.listComponent = this;
+        this.deleteService.listComponent = this;
     }
 
     ngOnInit() {
         this.route.params.subscribe(params => {
             this.productId = params.product;
-            this.getProduct();
-            this.getProductCategory();
+            this.getItems();
         });
     }
-
-    getProduct() {
-        this.productHttp.get(this.productId).subscribe(product => this.product = product);
-    }
-
-    getProductCategory() {
+    getItems() {
         this.productCategoryHttp.list(this.productId).subscribe(productCategory => {
             this.productCategory = productCategory
-            console.log(productCategory);
+            this.product = productCategory.product;
         });
-    }
-
-    onInsertError($event) {
-        console.log($event);
-    }
-
-    onInsertSuccess($event: ProductCategory) {
-        this.getProductCategory();
     }
 }

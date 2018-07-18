@@ -1,5 +1,4 @@
 import {Observable} from "rxjs/internal/Observable";
-import {HttpParams} from "@angular/common/http";
 
 export interface SearchParams {
     page?: number;

@@ -2,12 +2,16 @@ import {HttpResource, SearchParams, SearchParamsBuilder} from "./http-resource";
 import {HttpClient, HttpParams} from "@angular/common/http";
 import {map} from "rxjs/operators";
 import {Observable} from "rxjs/internal/Observable";
+import {Injectable} from "@angular/core";
 
-export abstract class BaseCrudHttp<T> implements HttpResource<T> {
+@Injectable({
+    providedIn: 'root'
+})
+export abstract class BaseHttp<T> implements HttpResource<T> {
+    abstract baseUrl(id?: number): string;
+
     constructor(private http: HttpClient) {
     }
-
-    abstract baseUrl();
 
     create(data: T): Observable<T> {
         const token = window.localStorage.getItem('token');
@@ -20,7 +24,7 @@ export abstract class BaseCrudHttp<T> implements HttpResource<T> {
 
     destroy(id: number): Observable<any> {
         const token = window.localStorage.getItem('token');
-        return this.http.delete(`${this.baseUrl()}/${id}`, {
+        return this.http.delete(this.baseUrl(id), {
             headers: {
                 'Authorization': `Bearer ${token}`
             }
@@ -29,7 +33,7 @@ export abstract class BaseCrudHttp<T> implements HttpResource<T> {
 
     get(id: number): Observable<T> {
         const token = window.localStorage.getItem('token');
-        return this.http.get<{ data: T }>(`${this.baseUrl()}/${id}`, {
+        return this.http.get<{ data: T }>(this.baseUrl(id), {
             headers: {
                 'Authorization': `Bearer ${token}`
             }
@@ -52,7 +56,7 @@ export abstract class BaseCrudHttp<T> implements HttpResource<T> {
 
     update(id: number, data: T): Observable<T> {
         const token = window.localStorage.getItem('token');
-        return this.http.put<{ data: T }>(`${this.baseUrl()}/${id}`, data, {
+        return this.http.put<{ data: T }>(this.baseUrl(id), data, {
             headers: {
                 'Authorization': `Bearer ${token}`
             }

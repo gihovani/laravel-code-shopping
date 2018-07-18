@@ -3,15 +3,19 @@ import {HttpClient, HttpParams} from "@angular/common/http";
 import {Observable} from "rxjs/internal/Observable";
 import {map} from "rxjs/operators";
 import {HttpResource, SearchParams, SearchParamsBuilder} from "./http-resource";
-import {BaseCrudHttp} from "./base-crud-http";
+import {BaseHttp} from "./base-http";
 import {Product} from "../../model";
 
 @Injectable({
     providedIn: 'root'
 })
-// export class ProductHttpService extends BaseCrudHttp<Product> {
-//     baseUrl() {
-//         return 'http://localhost:8000/api/products';
+// export class ProductHttpService extends BaseHttp<Product>{
+//     baseUrl(id?: number): string {
+//         let url = 'http://localhost:8000/api/products';
+//         if (id) {
+//             url += `/${id}`;
+//         }
+//         return url;
 //     }
 // }
 export class ProductHttpService implements HttpResource<Product> {

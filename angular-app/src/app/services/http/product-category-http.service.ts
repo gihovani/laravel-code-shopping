@@ -9,11 +9,12 @@ import {map} from "rxjs/operators";
 })
 export class ProductCategoryHttpService {
     private baseApi = 'http://localhost:8000/api';
+
     constructor(private http: HttpClient) {
     }
 
     private getBaseUrl(productId: number, categoryId: number = null) {
-        let baseUrl =  `${this.baseApi}/products/${productId}/categories`;
+        let baseUrl = `${this.baseApi}/products/${productId}/categories`;
         if (categoryId) {
             baseUrl += `/${categoryId}`;
         }
@@ -36,5 +37,14 @@ export class ProductCategoryHttpService {
                 'Authorization': `Bearer ${token}`
             }
         }).pipe(map(response => response.data));
+    }
+
+    destroy(productId: number, categoryId: number): Observable<any> {
+        const token = window.localStorage.getItem('token');
+        return this.http.delete(this.getBaseUrl(productId, categoryId), {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        });
     }
 }

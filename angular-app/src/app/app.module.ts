@@ -24,6 +24,7 @@ import {ProductListComponent} from './components/pages/product/product-list/prod
 import {NumberFormatBrPipe} from './pipes/number-format-br.pipe';
 import {ProductCategoryListComponent} from './components/pages/product-category/product-category-list/product-category-list.component';
 import { ProductCategoryNewComponent } from './components/pages/product-category/product-category-new/product-category-new.component';
+import { ProductCategoryDeleteModalComponent } from './components/pages/product-category/product-category-delete-modal/product-category-delete-modal.component';
 
 const routes: Routes = [
     {path: 'login', component: LoginComponent},
@@ -54,13 +55,14 @@ const routes: Routes = [
         ProductListComponent,
         NumberFormatBrPipe,
         ProductCategoryListComponent,
-        ProductCategoryNewComponent
+        ProductCategoryNewComponent,
+        ProductCategoryDeleteModalComponent
     ],
     imports: [
         BrowserModule,
         FormsModule,
         HttpClientModule,
-        RouterModule.forRoot(routes, {enableTracing: true}),
+        RouterModule.forRoot(routes),
         NgxPaginationModule
     ],
     providers: [],
