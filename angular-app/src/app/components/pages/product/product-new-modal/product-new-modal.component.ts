@@ -42,11 +42,6 @@ export class ProductNewModalComponent implements OnInit {
     }
 
     hideModal($event: Event) {
-        this.product = {
-            name: '',
-            price: 0,
-            active: false
-        };
         console.log($event);
     }
 

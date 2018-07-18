@@ -50,7 +50,6 @@ export class UserDeleteModalComponent implements OnInit {
     }
 
     hideModal($event: Event) {
-        this.user = null;
         console.log($event);
     }
 }

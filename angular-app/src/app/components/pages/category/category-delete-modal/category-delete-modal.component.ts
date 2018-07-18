@@ -50,7 +50,6 @@ export class CategoryDeleteModalComponent implements OnInit {
     }
 
     hideModal($event: Event) {
-        this.category = null;
-        // console.log($event);
+        console.log($event);
     }
 }

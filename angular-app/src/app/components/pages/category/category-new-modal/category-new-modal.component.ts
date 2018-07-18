@@ -41,10 +41,6 @@ export class CategoryNewModalComponent implements OnInit {
     }
 
     hideModal($event: Event) {
-        this.category = {
-            name: '',
-            active: false
-        };
         console.log($event);
     }
 }

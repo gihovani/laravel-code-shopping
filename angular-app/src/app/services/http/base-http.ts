@@ -2,11 +2,7 @@ import {HttpResource, SearchParams, SearchParamsBuilder} from "./http-resource";
 import {HttpClient, HttpParams} from "@angular/common/http";
 import {map} from "rxjs/operators";
 import {Observable} from "rxjs/internal/Observable";
-import {Injectable} from "@angular/core";
 
-@Injectable({
-    providedIn: 'root'
-})
 export abstract class BaseHttp<T> implements HttpResource<T> {
     abstract baseUrl(id?: number): string;
 

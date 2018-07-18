@@ -54,11 +54,6 @@ export class UserEditModalComponent implements OnInit {
     }
 
     hideModal($event: Event) {
-        this.user = {
-            name: '',
-            email: '',
-            password: ''
-        };
         console.log($event);
     }
 

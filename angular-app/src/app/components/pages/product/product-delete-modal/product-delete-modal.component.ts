@@ -50,7 +50,6 @@ export class ProductDeleteModalComponent implements OnInit {
     }
 
     hideModal($event: Event) {
-        this.product = null;
         console.log($event);
     }
 
