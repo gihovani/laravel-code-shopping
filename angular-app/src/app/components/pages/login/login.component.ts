@@ -2,6 +2,8 @@ import {Component, OnInit} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {Router} from "@angular/router";
 import {User} from "../../../model";
+import {AuthService} from "../../../services/auth.service";
+import {ModalComponent} from "../../bootstrap/modal/modal.component";
 
 @Component({
     selector: 'login',
@@ -10,26 +12,27 @@ import {User} from "../../../model";
 })
 export class LoginComponent implements OnInit {
 
-    public credentials: User = {
+    public credentials = {
         email: 'admin@user.com',
         password: 'secret'
     };
 
     public showMessageError: boolean = false;
 
-    constructor(private http: HttpClient, private router: Router) {
+    constructor(private authService: AuthService, private router: Router) {
     }
 
     ngOnInit() {
+
     }
 
     submit() {
-        this.http.post<any>('http://localhost:8000/api/login', this.credentials)
-            .subscribe((data) => {
-                const token = data.token;
-                window.localStorage.setItem('token', token);
+        this.authService.login(this.credentials)
+            .subscribe(() => {
                 this.router.navigate(['categories/list']);
-            }, error => this.showMessageError = true);
+            }, error => {
+                this.showMessageError = true;
+            })
         return false;
     }
 }

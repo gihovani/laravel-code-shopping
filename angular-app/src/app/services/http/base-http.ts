@@ -14,52 +14,28 @@ export abstract class BaseHttp<T> implements HttpResource<T> {
     }
 
     create(data: T): Observable<T> {
-        const token = window.localStorage.getItem('token');
-        return this.http.post<{ data: T }>(this.baseUrl(), data, {
-            headers: {
-                'Authorization': `Bearer ${token}`
-            }
-        }).pipe(map(response => response.data));
+        return this.http.post<{ data: T }>(this.baseUrl(), data)
+            .pipe(map(response => response.data));
     }
 
     destroy(id: number): Observable<any> {
-        const token = window.localStorage.getItem('token');
-        return this.http.delete(this.baseUrl(id), {
-            headers: {
-                'Authorization': `Bearer ${token}`
-            }
-        });
+        return this.http.delete(this.baseUrl(id));
     }
 
     get(id: number): Observable<T> {
-        const token = window.localStorage.getItem('token');
-        return this.http.get<{ data: T }>(this.baseUrl(id), {
-            headers: {
-                'Authorization': `Bearer ${token}`
-            }
-        }).pipe(map(response => response.data));
+        return this.http.get<{ data: T }>(this.baseUrl(id)).pipe(map(response => response.data));
     }
 
     list(searchParams: SearchParams): Observable<{ data: Array<T>; meta: any }> {
-        const token = window.localStorage.getItem('token');
         const sParams = new SearchParamsBuilder(searchParams).makeObject();
         const params = new HttpParams({
             fromObject: (<any>sParams)
         });
-        return this.http.get<{ data: Array<T>, meta: any }>(this.baseUrl(), {
-            params,
-            headers: {
-                'Authorization': `Bearer ${token}`
-            }
-        });
+        return this.http.get<{ data: Array<T>, meta: any }>(this.baseUrl(), {params});
     }
 
     update(id: number, data: T): Observable<T> {
-        const token = window.localStorage.getItem('token');
-        return this.http.put<{ data: T }>(this.baseUrl(id), data, {
-            headers: {
-                'Authorization': `Bearer ${token}`
-            }
-        }).pipe(map(response => response.data));
+        return this.http.put<{ data: T }>(this.baseUrl(id), data)
+            .pipe(map(response => response.data));
     }
 }

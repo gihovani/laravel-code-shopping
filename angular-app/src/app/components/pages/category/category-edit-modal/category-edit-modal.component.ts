@@ -56,6 +56,6 @@ export class CategoryEditModalComponent implements OnInit {
             name: '',
             active: false
         };
-        console.log($event);
+        // console.log($event);
     }
 }

@@ -26,9 +26,9 @@ export interface ProductCategory {
 
 export interface User {
     id?: number;
-    name?: string;
+    name: string;
     email: string;
-    password: string;
+    password?: string;
     readonly remember_token?: string;
     readonly created_at?: string;
     readonly updated_at?: string;
