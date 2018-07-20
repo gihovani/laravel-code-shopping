@@ -1,12 +1,10 @@
-<form (submit)="submit()">
-  <modal (onHide)="hideModal($event)">
+<modal (onHide)="hideModal($event)">
     <h5 modal-title>Exclusão de Produto</h5>
     <div modal-body>
-      Deseja excluir o produto {{product?.name}}?
+        Deseja excluir o produto {{product?.name}}?
     </div>
     <div modal-footer>
-      <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
-      <button type="button" class="btn btn-danger" (click)="destroy()">Excluir</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+        <button type="button" class="btn btn-danger" (click)="destroy()">Excluir</button>
     </div>
-  </modal>
-</form>
+</modal>
