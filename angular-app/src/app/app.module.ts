@@ -32,6 +32,8 @@ import {AuthGuard} from "./guards/auth.guard";
 import {RefreshTokenInterceptorService} from "./services/refresh-token-interceptor.service";
 import {AppRoutingModule} from "./app-routing.module";
 import {environment} from "../environments/environment";
+import { SortColumnComponent } from './components/commom/sort-column/sort-column.component';
+import { CategorySearchFormComponent } from './components/pages/category/category-search-form/category-search-form.component';
 
 
 
@@ -68,7 +70,9 @@ function jwtFactory(authService: AuthService) {
         ProductCategoryListComponent,
         ProductCategoryNewComponent,
         ProductCategoryDeleteModalComponent,
-        NavbarComponent
+        NavbarComponent,
+        SortColumnComponent,
+        CategorySearchFormComponent
     ],
     imports: [
         AppRoutingModule,

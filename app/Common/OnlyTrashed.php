@@ -2,13 +2,12 @@
 
 namespace CodeShopping\Common;
 
-
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Http\Request;
+
 
 trait OnlyTrashed
 {
-    protected function onlyTrashedIfRequested(Builder $query)
+    protected function onlyTrashedIfRequested(Builder $query) : Builder
     {
         if (\Request::get('trashed') == '1') {
             $query = $query->onlyTrashed();

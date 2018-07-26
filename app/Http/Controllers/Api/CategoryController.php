@@ -2,17 +2,27 @@
 
 namespace CodeShopping\Http\Controllers\Api;
 
+use CodeShopping\Common\OnlyTrashed;
 use CodeShopping\Http\Controllers\Controller;
+use CodeShopping\Http\Filters\CategoryFilter;
 use CodeShopping\Http\Requests\CategoryRequest;
 use CodeShopping\Http\Resources\CategoryResource;
 use CodeShopping\Models\Category;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
-
 class CategoryController extends Controller
 {
+    use OnlyTrashed;
+
     public function index(Request $request)
     {
-        $categories = $request->has('all') ? Category::all() : Category::paginate(5);
+        /** @var CategoryFilter $filter */
+        $filter = app(CategoryFilter::class);
+        /** @var Builder $filterQuery */
+        $filterQuery = Category::filtered($filter);
+
+        $query = $this->onlyTrashedIfRequested($filterQuery);
+        $categories = $request->has('all') ? $query->get() : $query->paginate(5);
         return CategoryResource::collection($categories);
     }
 

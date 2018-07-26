@@ -4,9 +4,11 @@ namespace CodeShopping\Http\Controllers\Api;
 
 use CodeShopping\Common\OnlyTrashed;
 use CodeShopping\Http\Controllers\Controller;
+use CodeShopping\Http\Filters\ProductFilter;
 use CodeShopping\Http\Requests\ProductRequest;
 use CodeShopping\Http\Resources\ProductResource;
 use CodeShopping\Models\Product;
+use Illuminate\Database\Eloquent\Builder;
 
 
 class ProductController extends Controller
@@ -15,8 +17,12 @@ class ProductController extends Controller
 
     public function index()
     {
-        $query = Product::query();
-        $query = $this->onlyTrashedIfRequested($query);
+        /** @var ProductFilter $filter */
+        $filter = app(ProductFilter::class);
+        /** @var Builder $filterQuery */
+        $filterQuery = Product::filtered($filter);
+
+        $query = $this->onlyTrashedIfRequested($filterQuery);
         $products = $query->paginate(10);
         return ProductResource::collection($products);
     }

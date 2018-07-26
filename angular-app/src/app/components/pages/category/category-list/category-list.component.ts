@@ -7,7 +7,7 @@ import {NotifyMessageService} from "../../../../services/notify-message.service"
 import {CategoryInsertService} from "./category-insert.service";
 import {CategoryEditService} from "./category-edit.service";
 import {CategoryDeleteService} from "./category-delete.service";
-import {Category} from "../../../../model";
+import {Category, SortColumn} from "../../../../model";
 
 @Component({
     selector: 'app-category-list',
@@ -22,6 +22,8 @@ export class CategoryListComponent implements OnInit {
         totalItems: 0,
         itemsPerPage: 15
     };
+    public sortColumn: SortColumn = {column: 'id', sort: 'desc'};
+    public searchText: string;
 
     @ViewChild(CategoryNewModalComponent)
     public newModal: CategoryNewModalComponent;
@@ -48,7 +50,11 @@ export class CategoryListComponent implements OnInit {
     }
 
     getItems() {
-        this.categoryHttp.list({page: this.pagination.page}).subscribe(response => {
+        this.categoryHttp.list({
+            page: this.pagination.page,
+            sort: this.sortColumn.column === '' ? null : this.sortColumn,
+            search: this.searchText
+        }).subscribe(response => {
             this.categories = response.data
             this.pagination.totalItems = response.meta.total;
             this.pagination.itemsPerPage = response.meta.per_page;
@@ -57,6 +63,16 @@ export class CategoryListComponent implements OnInit {
 
     pageChanged(page) {
         this.pagination.page = page;
+        this.getItems();
+    }
+
+
+    sort(sortColumn: SortColumn) {
+        this.getItems();
+    }
+
+    search(search) {
+        this.searchText = search;
         this.getItems();
     }
 }

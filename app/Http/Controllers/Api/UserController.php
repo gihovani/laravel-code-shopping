@@ -4,10 +4,12 @@ namespace CodeShopping\Http\Controllers\Api;
 
 use CodeShopping\Common\OnlyTrashed;
 use CodeShopping\Events\UserCreatedEvent;
+use CodeShopping\Http\Filters\UserFilter;
 use CodeShopping\Http\Requests\UserRequest;
 use CodeShopping\Http\Resources\UserResource;
 use CodeShopping\Models\User;
 use CodeShopping\Http\Controllers\Controller;
+use Illuminate\Database\Eloquent\Builder;
 
 class UserController extends Controller
 {
@@ -15,8 +17,12 @@ class UserController extends Controller
 
     public function index()
     {
-        $query = User::query();
-        $query = $this->onlyTrashedIfRequested($query);
+        /** @var UserFilter $filter */
+        $filter = app(UserFilter::class);
+        /** @var Builder $filterQuery */
+        $filterQuery = User::filtered($filter);
+
+        $query = $this->onlyTrashedIfRequested($filterQuery);
         $users = $query->paginate(10);
         return UserResource::collection($users);
     }
