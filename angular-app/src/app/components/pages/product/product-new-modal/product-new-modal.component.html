@@ -2,26 +2,7 @@
     <modal (onHide)="hideModal($event)">
         <h5 modal-title>Novo Produto</h5>
         <div modal-body>
-            <div class="form-group">
-                <label for="name">Nome</label>
-                <input type="text" id="name" name="name" class="form-control" required
-                       [(ngModel)]="product.name">
-            </div>
-            <div class="form-group">
-                <label for="price">Price</label>
-                <input type="number" id="price" name="price" class="form-control" required
-                       [(ngModel)]="product.price">
-            </div>
-            <div class="form-group">
-                <label for="description">Description</label>
-                <textarea class="form-control" rows="3" id="description" name="description" class="form-control"
-                          [(ngModel)]="product.description" required></textarea>
-            </div>
-            <div class="form-group form-check">
-                <input type="checkbox" id="active" name="active" class="form-check-input"
-                       [(ngModel)]="product.active">
-                <label for="active">Ativo?</label>
-            </div>
+            <product-form [product]="product"></product-form>
         </div>
         <div modal-footer>
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>

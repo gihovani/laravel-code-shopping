@@ -3,17 +3,20 @@
     <table class="table table-striped">
         <thead>
         <tr>
-            <td colspan="6">
+            <td>
                 <button class="btn btn-primary" (click)="insertService.showModal()">Novo Produto
                 </button>
             </td>
+            <td colspan="5">
+                <product-search-form (onSearch)="search($event)"></product-search-form>
+            </td>
         </tr>
         <tr>
-            <th style="width: 5%">ID</th>
-            <th style="width: 45%">Nome</th>
-            <th style="width: 10%">Preço</th>
+            <th style="width: 5%" [sortColumn]="sortColumn" columnName="id" (onSort)="getItems($event)">ID</th>
+            <th style="width: 45%" [sortColumn]="sortColumn" columnName="name" (onSort)="getItems($event)">Nome</th>
+            <th style="width: 10%" [sortColumn]="sortColumn" columnName="price" (onSort)="getItems($event)">Preço</th>
             <th style="width: 10%">Ativo?</th>
-            <th style="width: 10%">Criado Em</th>
+            <th style="width: 10%" [sortColumn]="sortColumn" columnName="created_at" (onSort)="getItems($event)">Criado Em</th>
             <th style="width: 20%">Ações</th>
         </tr>
         </thead>

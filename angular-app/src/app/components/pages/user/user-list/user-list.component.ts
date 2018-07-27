@@ -7,7 +7,7 @@ import {UserEditService} from "./user-edit.service";
 import {UserDeleteService} from "./user-delete.service";
 import {UserEditModalComponent} from "../user-edit-modal/user-edit-modal.component";
 import {UserDeleteModalComponent} from "../user-delete-modal/user-delete-modal.component";
-import {User} from "../../../../model";
+import {SortColumn, User} from "../../../../model";
 
 @Component({
     selector: 'user-list',
@@ -22,6 +22,8 @@ export class UserListComponent implements OnInit {
         totalItems: 0,
         itemsPerPage: 15
     };
+    public sortColumn: SortColumn = {column: 'id', sort: 'desc'};
+    public searchText: string;
 
     @ViewChild(UserNewModalComponent)
     public newModal: UserNewModalComponent;
@@ -48,7 +50,12 @@ export class UserListComponent implements OnInit {
     }
 
     getItems() {
-        this.userHttp.list({page: this.pagination.page}).subscribe(response => {
+        const searchParams = {
+            page: this.pagination.page,
+            sort: this.sortColumn.column === '' ? null : this.sortColumn,
+            search: this.searchText
+        };
+        this.userHttp.list(searchParams).subscribe(response => {
             this.users = response.data
             this.pagination.totalItems = response.meta.total;
             this.pagination.itemsPerPage = response.meta.per_page;
@@ -57,6 +64,11 @@ export class UserListComponent implements OnInit {
 
     pageChanged(page) {
         this.pagination.page = page;
+        this.getItems();
+    }
+
+    search(search) {
+        this.searchText = search;
         this.getItems();
     }
 }

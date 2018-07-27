@@ -7,7 +7,7 @@ import {ProductDeleteModalComponent} from "../product-delete-modal/product-delet
 import {ProductInsertService} from "./product-insert.service";
 import {ProductDeleteService} from "./product-delete.service";
 import {ProductEditService} from "./product-edit.service";
-import {Product} from "../../../../model";
+import {Product, SortColumn} from "../../../../model";
 
 @Component({
     selector: 'app-product-list',
@@ -22,6 +22,8 @@ export class ProductListComponent implements OnInit {
         totalItems: 0,
         itemsPerPage: 15
     };
+    public sortColumn: SortColumn = {column: 'id', sort: 'desc'};
+    public searchText: string;
 
     @ViewChild(ProductNewModalComponent)
     public newModal: ProductNewModalComponent;
@@ -48,7 +50,12 @@ export class ProductListComponent implements OnInit {
     }
 
     getItems() {
-        this.productHttp.list({page: this.pagination.page}).subscribe(response => {
+        const searchParams = {
+            page: this.pagination.page,
+            sort: this.sortColumn.column === '' ? null : this.sortColumn,
+            search: this.searchText
+        };
+        this.productHttp.list(searchParams).subscribe(response => {
             this.items = response.data
             this.pagination.totalItems = response.meta.total;
             this.pagination.itemsPerPage = response.meta.per_page;
@@ -57,6 +64,11 @@ export class ProductListComponent implements OnInit {
 
     pageChanged(page) {
         this.pagination.page = page;
+        this.getItems();
+    }
+
+    search(search) {
+        this.searchText = search;
         this.getItems();
     }
 }

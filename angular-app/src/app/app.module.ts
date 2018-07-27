@@ -1,14 +1,13 @@
 import {BrowserModule} from '@angular/platform-browser';
 import {NgModule} from '@angular/core';
-import {FormsModule} from "@angular/forms";
-import {JwtModule, JWT_OPTIONS} from "@auth0/angular-jwt";
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {JwtModule, JWT_OPTIONS} from '@auth0/angular-jwt';
 
 import {AppComponent} from './app.component';
 import {NgxPaginationModule} from 'ngx-pagination';
 import {LoginComponent} from './components/pages/login/login.component';
-import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
+import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import {CategoryListComponent} from './components/pages/category/category-list/category-list.component';
-import {RouterModule, Routes} from "@angular/router";
 import {AlertErrorComponent} from './components/bootstrap/alert-error/alert-error.component';
 import {ModalComponent} from './components/bootstrap/modal/modal.component';
 import {CategoryNewModalComponent} from './components/pages/category/category-new-modal/category-new-modal.component';
@@ -26,15 +25,18 @@ import {NumberFormatBrPipe} from './pipes/number-format-br.pipe';
 import {ProductCategoryListComponent} from './components/pages/product-category/product-category-list/product-category-list.component';
 import {ProductCategoryNewComponent} from './components/pages/product-category/product-category-new/product-category-new.component';
 import {ProductCategoryDeleteModalComponent} from './components/pages/product-category/product-category-delete-modal/product-category-delete-modal.component';
-import {AuthService} from "./services/auth.service";
-import { NavbarComponent } from './components/bootstrap/navbar/navbar.component';
-import {AuthGuard} from "./guards/auth.guard";
-import {RefreshTokenInterceptorService} from "./services/refresh-token-interceptor.service";
-import {AppRoutingModule} from "./app-routing.module";
-import {environment} from "../environments/environment";
-import { SortColumnComponent } from './components/commom/sort-column/sort-column.component';
-import { CategorySearchFormComponent } from './components/pages/category/category-search-form/category-search-form.component';
-
+import {AuthService} from './services/auth.service';
+import {NavbarComponent} from './components/bootstrap/navbar/navbar.component';
+import {RefreshTokenInterceptorService} from './services/refresh-token-interceptor.service';
+import {AppRoutingModule} from './app-routing.module';
+import {environment} from '../environments/environment';
+import {SortColumnComponent} from './components/commom/sort-column/sort-column.component';
+import {CategorySearchFormComponent} from './components/pages/category/category-search-form/category-search-form.component';
+import {CategoryFormComponent} from './components/pages/category/category-form/category-form.component';
+import {ProductFormComponent} from './components/pages/product/product-form/product-form.component';
+import {ProductSearchFormComponent} from './components/pages/product/product-search-form/product-search-form.component';
+import {UserSearchFormComponent} from './components/pages/user/user-search-form/user-search-form.component';
+import {UserFormComponent} from './components/pages/user/user-form/user-form.component';
 
 
 function jwtFactory(authService: AuthService) {
@@ -72,12 +74,18 @@ function jwtFactory(authService: AuthService) {
         ProductCategoryDeleteModalComponent,
         NavbarComponent,
         SortColumnComponent,
-        CategorySearchFormComponent
+        CategorySearchFormComponent,
+        CategoryFormComponent,
+        ProductFormComponent,
+        ProductSearchFormComponent,
+        UserSearchFormComponent,
+        UserFormComponent
     ],
     imports: [
         AppRoutingModule,
         BrowserModule,
         FormsModule,
+        ReactiveFormsModule,
         HttpClientModule,
         NgxPaginationModule,
         JwtModule.forRoot({

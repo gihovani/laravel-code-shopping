@@ -12,16 +12,16 @@
             </td>
         </tr>
         <tr>
-            <th style="width: 5%" [sortColumn]="sortColumn" columnName="id" (onSort)="sort($event)">
+            <th style="width: 5%" [sortColumn]="sortColumn" columnName="id" (onSort)="getItems($event)">
                 ID
             </th>
-            <th style="width: 65%" [sortColumn]="sortColumn" columnName="name" (onSort)="sort($event)">
+            <th style="width: 65%" [sortColumn]="sortColumn" columnName="name" (onSort)="getItems($event)">
                 Nome
             </th>
             <th style="width: 8%">
                 Ativa?
             </th>
-            <th style="width: 12%" [sortColumn]="sortColumn" columnName="created_at" (onSort)="sort($event)">
+            <th style="width: 12%" [sortColumn]="sortColumn" columnName="created_at" (onSort)="getItems($event)">
                 Criado Em
             </th>
             <th style="width: 10%">

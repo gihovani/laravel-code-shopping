@@ -50,11 +50,12 @@ export class CategoryListComponent implements OnInit {
     }
 
     getItems() {
-        this.categoryHttp.list({
+        const searchParams = {
             page: this.pagination.page,
             sort: this.sortColumn.column === '' ? null : this.sortColumn,
             search: this.searchText
-        }).subscribe(response => {
+        };
+        this.categoryHttp.list(searchParams).subscribe(response => {
             this.categories = response.data
             this.pagination.totalItems = response.meta.total;
             this.pagination.itemsPerPage = response.meta.per_page;
@@ -63,11 +64,6 @@ export class CategoryListComponent implements OnInit {
 
     pageChanged(page) {
         this.pagination.page = page;
-        this.getItems();
-    }
-
-
-    sort(sortColumn: SortColumn) {
         this.getItems();
     }
 
