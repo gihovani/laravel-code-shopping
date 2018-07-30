@@ -2,8 +2,7 @@
   <modal (onHide)="hideModal($event)">
     <h5 modal-title>Nova Categoria</h5>
     <div modal-body>
-      {{form.valid}}
-      {{form.value | json}}
+      <list-error [errors]="errors"></list-error>
       <category-form [form]="form"></category-form>
     </div>
     <div modal-footer>

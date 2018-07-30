@@ -1,5 +1,5 @@
-import {BrowserModule} from '@angular/platform-browser';
 import {NgModule} from '@angular/core';
+import {BrowserModule} from '@angular/platform-browser';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {JwtModule, JWT_OPTIONS} from '@auth0/angular-jwt';
 
@@ -37,6 +37,10 @@ import {ProductFormComponent} from './components/pages/product/product-form/prod
 import {ProductSearchFormComponent} from './components/pages/product/product-search-form/product-search-form.component';
 import {UserSearchFormComponent} from './components/pages/user/user-search-form/user-search-form.component';
 import {UserFormComponent} from './components/pages/user/user-form/user-form.component';
+import {FieldErrorComponent} from './components/bootstrap/field-error/field-error.component';
+import {IsInvalidDirective} from './directives/is-invalid.directive';
+import {ListErrorComponent} from './components/bootstrap/list-error/list-error.component';
+import { CardErrorComponent } from './components/bootstrap/card-error/card-error.component';
 
 
 function jwtFactory(authService: AuthService) {
@@ -79,7 +83,11 @@ function jwtFactory(authService: AuthService) {
         ProductFormComponent,
         ProductSearchFormComponent,
         UserSearchFormComponent,
-        UserFormComponent
+        UserFormComponent,
+        FieldErrorComponent,
+        IsInvalidDirective,
+        ListErrorComponent,
+        CardErrorComponent
     ],
     imports: [
         AppRoutingModule,
