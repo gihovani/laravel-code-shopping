@@ -1,20 +1,20 @@
-<div class="form-group">
-  <label for="name">Nome</label>
-  <input type="text" id="name" name="name" class="form-control" required
-         [(ngModel)]="product.name">
+<div class="form-group" [formGroup]="form">
+    <label [for]="name.id">{{name.label}}</label>
+    <input type="text" [id]="name.id" class="form-control" formControlName="name" isInvalid>
+    <field-error [field]="form.get('name')" [label]="name.label" [messages]="name.validationMessage"></field-error>
 </div>
-<div class="form-group">
-  <label for="price">Price</label>
-  <input type="number" id="price" name="price" class="form-control" required
-         [(ngModel)]="product.price">
+<div class="form-group" [formGroup]="form">
+    <label [for]="price.id">{{price.label}}</label>
+    <input type="number" [id]="price.id" class="form-control" formControlName="price" isInvalid>
+    <field-error [field]="form.get('price')" [label]="price.label" [messages]="price.validationMessage"></field-error>
 </div>
-<div class="form-group">
-  <label for="description">Description</label>
-  <textarea class="form-control" rows="3" id="description" name="description" class="form-control"
-            [(ngModel)]="product.description" required></textarea>
+<div class="form-group" [formGroup]="form">
+    <label [for]="description.id">{{description.label}}</label>
+    <textarea class="form-control" rows="3" [id]="description.id" formControlName="description" class="form-control" isInvalid></textarea>
+    <field-error [field]="form.get('description')" [label]="description.label"></field-error>
 </div>
-<div class="form-group form-check">
-  <input type="checkbox" id="active" name="active" class="form-check-input"
-         [(ngModel)]="product.active">
-  <label for="active">Ativo?</label>
+<div class="form-group form-check" [formGroup]="form">
+    <input type="checkbox" id="active" class="form-check-input"
+           formControlName="active">
+    <label for="active">Ativo?</label>
 </div>

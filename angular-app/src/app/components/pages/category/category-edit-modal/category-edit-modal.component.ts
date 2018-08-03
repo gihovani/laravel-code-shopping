@@ -2,16 +2,19 @@ import {Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angula
 import {HttpErrorResponse} from "@angular/common/http";
 import {ModalComponent} from "../../../bootstrap/modal/modal.component";
 import {CategoryHttpService} from "../../../../services/http/category-http.service";
-import {FormBuilder, FormGroup} from "@angular/forms";
+import {FormBuilder, FormGroup, Validators} from "@angular/forms";
+import categoryFieldsOptions from "../category-form/category-fields-options";
 
 @Component({
-  selector: 'category-edit-modal',
-  templateUrl: './category-edit-modal.component.html',
-  styleUrls: ['./category-edit-modal.component.css']
+    selector: 'category-edit-modal',
+    templateUrl: './category-edit-modal.component.html',
+    styleUrls: ['./category-edit-modal.component.css']
 })
 export class CategoryEditModalComponent implements OnInit {
-    private _categoryId:number;
+    private _categoryId: number;
     public form: FormGroup;
+    public errors: {};
+
     @ViewChild(ModalComponent)
     public modal: ModalComponent;
 
@@ -21,9 +24,10 @@ export class CategoryEditModalComponent implements OnInit {
     public onError: EventEmitter<HttpErrorResponse> = new EventEmitter<HttpErrorResponse>();
 
     constructor(private categoryHttp: CategoryHttpService, private formBuilder: FormBuilder) {
+        const maxLength = categoryFieldsOptions.name.validationMessage.maxlength;
         this.form = this.formBuilder.group({
             id: 0,
-            name: '',
+            name: ['', [Validators.required, Validators.maxLength(maxLength)]],
             active: false
         });
     }
@@ -35,6 +39,7 @@ export class CategoryEditModalComponent implements OnInit {
     set categoryId(value) {
         if (!value) return;
 
+        this.form.reset();
         this._categoryId = value;
         this.categoryHttp.get(value).subscribe(response => {
             this.form.patchValue(response);
@@ -45,7 +50,12 @@ export class CategoryEditModalComponent implements OnInit {
         this.categoryHttp.update(this._categoryId, this.form.value).subscribe((category) => {
             this.modal.hide();
             this.onSuccess.emit(category);
-        }, error => this.onError.emit(error));
+        }, responseError => {
+            if (responseError.status === 402) {
+                this.errors = responseError.error.errors;
+            }
+            this.onError.emit(responseError);
+        });
     }
 
     showModal() {

@@ -2,6 +2,8 @@ const messages = {
     required: ':name é obrigatório',
     minlength: ':name precisa ter no mínimo :min caracteres',
     maxlength: ':name não pode ter mais de :min caracteres',
+    min: ':name não pode ser menor que :min',
+    max: ':name não pode ser maior que :min',
     email: ':name não é um e-mail válido'
 };
 

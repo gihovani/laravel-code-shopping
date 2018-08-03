@@ -60,6 +60,8 @@ export class CategoryListComponent implements OnInit {
             this.pagination.totalItems = response.meta.total;
             this.pagination.itemsPerPage = response.meta.per_page;
         });
+
+        this.categoryId = 0;
     }
 
     pageChanged(page) {

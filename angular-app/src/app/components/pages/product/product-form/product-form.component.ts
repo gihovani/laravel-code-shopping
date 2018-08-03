@@ -1,21 +1,40 @@
-import {Component, Input, OnInit} from '@angular/core';
-import {Product} from "../../../../model";
+import {ChangeDetectorRef, Component, Input, OnInit} from '@angular/core';
+import {FormGroup} from "@angular/forms";
+import productFieldsOptions from "./product-fields-options";
 
 @Component({
-  selector: 'product-form',
-  templateUrl: './product-form.component.html',
-  styleUrls: ['./product-form.component.css']
+    selector: 'product-form',
+    templateUrl: './product-form.component.html',
+    styleUrls: ['./product-form.component.css']
 })
 export class ProductFormComponent implements OnInit {
-  @Input()
-    public product: Product = {
-        name: '',
-        price: 0,
-        active: false
-    };
-  constructor() { }
+    @Input()
+    public form: FormGroup;
 
-  ngOnInit() {
-  }
+    constructor(private changeRef: ChangeDetectorRef) {
+    }
+
+    ngOnInit() {
+    }
+
+    ngOnChanges() {
+        this.changeRef.detectChanges();
+    }
+
+    get fieldsOptions() {
+        return productFieldsOptions;
+    }
+
+    get name() {
+        return this.fieldsOptions.name;
+    }
+
+    get price() {
+        return this.fieldsOptions.price;
+    }
+
+    get description() {
+        return this.fieldsOptions.description;
+    }
 
 }

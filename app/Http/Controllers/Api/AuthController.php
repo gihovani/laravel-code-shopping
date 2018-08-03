@@ -14,7 +14,6 @@ class AuthController extends Controller
     public function login(Request $request)
     {
         $this->validateLogin($request);
-
         $credentions = $this->credentials($request);
         $token = \JWTAuth::attempt($credentions);
         return $token ?

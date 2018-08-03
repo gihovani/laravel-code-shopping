@@ -1,6 +1,6 @@
 import {FieldsOptions} from "../../../../common/fields-options";
 
-const fieldsOptions: FieldsOptions = {
+const categoryFieldsOptions: FieldsOptions = {
     name: {
         id: 'name',
         label: 'Nome',
@@ -14,4 +14,4 @@ const fieldsOptions: FieldsOptions = {
     }
 };
 
-export default fieldsOptions;
+export default categoryFieldsOptions;

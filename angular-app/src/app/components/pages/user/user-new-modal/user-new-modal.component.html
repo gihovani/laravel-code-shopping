@@ -2,7 +2,8 @@
   <modal (onHide)="hideModal($event)">
     <h5 modal-title>Novo Usuário</h5>
     <div modal-body>
-      <user-form [user]="user"></user-form>
+      <list-error [errors]="errors"></list-error>
+      <user-form [form]="form"></user-form>
     </div>
     <div modal-footer>
       <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>

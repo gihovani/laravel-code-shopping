@@ -60,6 +60,8 @@ export class ProductListComponent implements OnInit {
             this.pagination.totalItems = response.meta.total;
             this.pagination.itemsPerPage = response.meta.per_page;
         });
+
+        this.productId = 0;
     }
 
     pageChanged(page) {

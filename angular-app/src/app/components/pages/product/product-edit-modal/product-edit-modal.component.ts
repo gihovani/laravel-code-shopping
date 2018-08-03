@@ -2,7 +2,8 @@ import {Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angula
 import {HttpErrorResponse} from "@angular/common/http";
 import {ModalComponent} from "../../../bootstrap/modal/modal.component";
 import {ProductHttpService} from "../../../../services/http/product-http.service";
-import {Product} from "../../../../model";
+import {FormBuilder, FormGroup, Validators} from "@angular/forms";
+import productFieldsOptions from "../product-form/product-fields-options";
 
 @Component({
     selector: 'product-edit-modal',
@@ -10,14 +11,10 @@ import {Product} from "../../../../model";
     styleUrls: ['./product-edit-modal.component.css']
 })
 export class ProductEditModalComponent implements OnInit {
-
     private _productId: number;
+    public form: FormGroup;
+    public errors: {};
 
-    public product: Product = {
-        name: '',
-        price: 0,
-        active: false
-    };
     @ViewChild(ModalComponent)
     public modal: ModalComponent;
 
@@ -26,7 +23,16 @@ export class ProductEditModalComponent implements OnInit {
     @Output()
     public onError: EventEmitter<HttpErrorResponse> = new EventEmitter<HttpErrorResponse>();
 
-    constructor(private productHttp: ProductHttpService) {
+    constructor(private productHttp: ProductHttpService, private formBuilder: FormBuilder) {
+        const maxLength = productFieldsOptions.name.validationMessage.maxlength;
+        const minPrice = productFieldsOptions.price.validationMessage.min;
+        this.form = this.formBuilder.group({
+            id: 0,
+            name: ['', [Validators.required, Validators.maxLength(maxLength)]],
+            price: ['', [Validators.required, Validators.min(minPrice)]],
+            description: '',
+            active: false
+        });
     }
 
     ngOnInit() {
@@ -36,17 +42,23 @@ export class ProductEditModalComponent implements OnInit {
     set productId(value) {
         if (!value) return;
 
+        this.form.reset();
         this._productId = value;
         this.productHttp.get(value).subscribe(response => {
-            this.product = response;
+            this.form.patchValue(response);
         });
     }
 
     submit() {
-        this.productHttp.update(this._productId, this.product).subscribe((product) => {
+        this.productHttp.update(this._productId, this.form.value).subscribe((product) => {
             this.modal.hide();
             this.onSuccess.emit(product);
-        }, error => this.onError.emit(error));
+        }, responseError => {
+            if (responseError.status === 422) {
+                this.errors = responseError.error.errors;
+            }
+            this.onError.emit(responseError);
+        });
     }
 
     showModal() {

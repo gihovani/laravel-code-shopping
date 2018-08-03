@@ -16,6 +16,7 @@ export class ProductEditService {
     }
 
     showModal(productId: number) {
+        this._listComponent.productId = 0;
         this._listComponent.productId = productId;
         this._listComponent.editModal.showModal();
     }

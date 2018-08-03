@@ -3,7 +3,7 @@ import {HttpErrorResponse} from '@angular/common/http';
 import {ModalComponent} from '../../../bootstrap/modal/modal.component';
 import {CategoryHttpService} from "../../../../services/http/category-http.service";
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import fieldsOptions from '../category-form/category-fields-options';
+import categoryFieldsOptions from '../category-form/category-fields-options';
 
 @Component({
     selector: 'category-new-modal',
@@ -23,7 +23,7 @@ export class CategoryNewModalComponent implements OnInit {
     public onError: EventEmitter<HttpErrorResponse> = new EventEmitter<HttpErrorResponse>();
 
     constructor(private categoryHttp: CategoryHttpService, private formBuilder: FormBuilder) {
-        const maxLength = fieldsOptions.name.validationMessage.maxlength;
+        const maxLength = categoryFieldsOptions.name.validationMessage.maxlength;
         this.form = this.formBuilder.group({
             name: ['', [Validators.required, Validators.maxLength(maxLength)]],
             active: false
@@ -33,13 +33,8 @@ export class CategoryNewModalComponent implements OnInit {
     ngOnInit() {
     }
 
-
     submit() {
         this.categoryHttp.create(this.form.value).subscribe(category => {
-            this.form.reset({
-                name: '',
-                active: false
-            });
             this.modal.hide();
             this.onSuccess.emit(category);
         }, responseError => {

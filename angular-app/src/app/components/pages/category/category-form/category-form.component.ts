@@ -1,6 +1,6 @@
 import {ChangeDetectorRef, Component, Input, OnInit} from '@angular/core';
 import {FormGroup} from "@angular/forms";
-import fieldsOptions from './category-fields-options';
+import categoryFieldsOptions from './category-fields-options';
 
 @Component({
     selector: 'category-form',
@@ -23,7 +23,7 @@ export class CategoryFormComponent implements OnInit {
     }
 
     get fieldsOptions() {
-        return fieldsOptions;
+        return categoryFieldsOptions;
     }
 
     get name() {

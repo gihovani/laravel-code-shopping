@@ -60,6 +60,8 @@ export class UserListComponent implements OnInit {
             this.pagination.totalItems = response.meta.total;
             this.pagination.itemsPerPage = response.meta.per_page;
         });
+
+        this.userId = 0;
     }
 
     pageChanged(page) {

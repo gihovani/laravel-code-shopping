@@ -1,8 +1,9 @@
 <form (submit)="submit()">
   <modal (onHide)="hideModal($event)">
-    <h5 modal-title>Editar Produto - {{product.name}}</h5>
+    <h5 modal-title>Editar Produto - {{form.get('name').value}}</h5>
     <div modal-body>
-      <product-form [product]="product"></product-form>
+      <list-error [errors]="errors"></list-error>
+      <product-form [form]="form"></product-form>
     </div>
     <div modal-footer>
       <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
