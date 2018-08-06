@@ -24,6 +24,14 @@ export interface ProductCategory {
     categories: Category[];
 };
 
+export interface ProductInput {
+    id?: number;
+    amount: number;
+    product: Product;
+    readonly created_at?: string;
+    readonly updated_at?: string;
+};
+
 export interface User {
     id?: number;
     name: string;

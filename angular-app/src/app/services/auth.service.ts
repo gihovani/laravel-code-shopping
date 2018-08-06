@@ -52,6 +52,10 @@ export class AuthService {
             );
     }
 
+    get authorizationHeader() {
+        return `Bearer ${this.getToken()}`;
+    }
+
     private setUserFromToken(token: string) {
         const decodedToken = new JwtHelperService().decodeToken(token);
         this.me = decodedToken ? {

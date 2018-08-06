@@ -1,14 +1,13 @@
 import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 
 @Component({
-    selector: 'category-search-form',
-    templateUrl: './category-search-form.component.html',
-    styleUrls: ['./category-search-form.component.css']
+    selector: 'product-input-search-form',
+    templateUrl: './product-input-search-form.component.html',
+    styleUrls: ['./product-input-search-form.component.css']
 })
-export class CategorySearchFormComponent implements OnInit {
+export class ProductInputSearchFormComponent implements OnInit {
 
     public search = '';
-
     @Output()
     public onSearch: EventEmitter<string> = new EventEmitter<string>();
 
@@ -22,8 +21,9 @@ export class CategorySearchFormComponent implements OnInit {
         this.onSearch.emit(this.search);
         return false;
     }
+
     clear() {
-        this.search = '';
+        this.search = ''
         this.submit();
     }
 }

@@ -10,7 +10,7 @@ import {ProductEditService} from "./product-edit.service";
 import {Product, SortColumn} from "../../../../model";
 
 @Component({
-    selector: 'app-product-list',
+    selector: 'product-list',
     templateUrl: './product-list.component.html',
     styleUrls: ['./product-list.component.css']
 })

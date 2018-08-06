@@ -40,7 +40,12 @@ import {UserFormComponent} from './components/pages/user/user-form/user-form.com
 import {FieldErrorComponent} from './components/bootstrap/field-error/field-error.component';
 import {IsInvalidDirective} from './directives/is-invalid.directive';
 import {ListErrorComponent} from './components/bootstrap/list-error/list-error.component';
-import { CardErrorComponent } from './components/bootstrap/card-error/card-error.component';
+import {CardErrorComponent} from './components/bootstrap/card-error/card-error.component';
+import {ProductInputListComponent} from './components/pages/product-input/product-input-list/product-input-list.component';
+import {ProductInputFormComponent} from './components/pages/product-input/product-input-form/product-input-form.component';
+import {ProductInputNewModalComponent} from './components/pages/product-input/product-input-new-modal/product-input-new-modal.component';
+import {ProductInputSearchFormComponent} from './components/pages/product-input/product-input-search-form/product-input-search-form.component';
+import {Select2Module} from "ng2-select2";
 
 
 function jwtFactory(authService: AuthService) {
@@ -87,7 +92,11 @@ function jwtFactory(authService: AuthService) {
         FieldErrorComponent,
         IsInvalidDirective,
         ListErrorComponent,
-        CardErrorComponent
+        CardErrorComponent,
+        ProductInputListComponent,
+        ProductInputFormComponent,
+        ProductInputNewModalComponent,
+        ProductInputSearchFormComponent
     ],
     imports: [
         AppRoutingModule,
@@ -96,6 +105,7 @@ function jwtFactory(authService: AuthService) {
         ReactiveFormsModule,
         HttpClientModule,
         NgxPaginationModule,
+        Select2Module,
         JwtModule.forRoot({
             jwtOptionsProvider: {
                 provide: JWT_OPTIONS,

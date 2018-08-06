@@ -8,7 +8,7 @@ import {ProductCategoryDeleteService} from "./product-category-delete.service";
 import {ProductCategoryInsertService} from "./product-category-insert.service";
 
 @Component({
-    selector: 'app-product-category-list',
+    selector: 'product-category-list',
     templateUrl: './product-category-list.component.html',
     styleUrls: ['./product-category-list.component.css']
 })
