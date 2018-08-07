@@ -52,6 +52,8 @@ export class UserEditModalComponent implements OnInit {
         this.userHttp.update(this._userId, this.form.value).subscribe((user) => {
             this.modal.hide();
             this.onSuccess.emit(user);
+            this.form.reset();
+            this.errors = {};
         }, responseError => {
             if (responseError.status === 402) {
                 this.errors = responseError.error.errors;

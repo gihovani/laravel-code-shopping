@@ -22,7 +22,7 @@ class CategoryController extends Controller
         $filterQuery = Category::filtered($filter);
 
         $query = $this->onlyTrashedIfRequested($filterQuery);
-        $categories = $request->has('all') ? $query->get() : $query->paginate(5);
+        $categories = $request->has('all') ? $query->get() : $query->paginate();
         return CategoryResource::collection($categories);
     }
 

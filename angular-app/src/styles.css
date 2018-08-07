@@ -26,3 +26,7 @@
 .fa-trash-alt {
     color: red;
 }
+
+.is-invalid .select2-selection {
+    border-color: #dc3545 !important;
+}

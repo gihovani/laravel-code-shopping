@@ -53,6 +53,8 @@ export class ProductEditModalComponent implements OnInit {
         this.productHttp.update(this._productId, this.form.value).subscribe((product) => {
             this.modal.hide();
             this.onSuccess.emit(product);
+            this.form.reset();
+            this.errors = {};
         }, responseError => {
             if (responseError.status === 422) {
                 this.errors = responseError.error.errors;

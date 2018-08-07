@@ -41,6 +41,8 @@ export class ProductNewModalComponent implements OnInit {
         this.productHttp.create(this.form.value).subscribe(product => {
             this.modal.hide();
             this.onSuccess.emit(product);
+            this.form.reset();
+            this.errors = {};
         }, responseError => {
             if (responseError.status === 422) {
                 this.errors = responseError.error.errors;

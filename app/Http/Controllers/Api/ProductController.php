@@ -9,13 +9,14 @@ use CodeShopping\Http\Requests\ProductRequest;
 use CodeShopping\Http\Resources\ProductResource;
 use CodeShopping\Models\Product;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Http\Request;
 
 
 class ProductController extends Controller
 {
     use OnlyTrashed;
 
-    public function index()
+    public function index(Request $request)
     {
         /** @var ProductFilter $filter */
         $filter = app(ProductFilter::class);
@@ -23,7 +24,9 @@ class ProductController extends Controller
         $filterQuery = Product::filtered($filter);
 
         $query = $this->onlyTrashedIfRequested($filterQuery);
-        $products = $query->paginate(10);
+        $products = $filter->hasFilterParameter() && $request->has('all') ?
+            $query->get() :
+            $query->paginate();
         return ProductResource::collection($products);
     }
 

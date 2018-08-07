@@ -37,6 +37,8 @@ export class CategoryNewModalComponent implements OnInit {
         this.categoryHttp.create(this.form.value).subscribe(category => {
             this.modal.hide();
             this.onSuccess.emit(category);
+            this.form.reset();
+            this.errors = {};
         }, responseError => {
             if (responseError.status === 422) {
                 this.errors = responseError.error.errors;

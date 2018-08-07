@@ -11,14 +11,10 @@ export class ProductFormComponent implements OnInit {
     @Input()
     public form: FormGroup;
 
-    constructor(private changeRef: ChangeDetectorRef) {
+    constructor() {
     }
 
     ngOnInit() {
-    }
-
-    ngOnChanges() {
-        this.changeRef.detectChanges();
     }
 
     get fieldsOptions() {

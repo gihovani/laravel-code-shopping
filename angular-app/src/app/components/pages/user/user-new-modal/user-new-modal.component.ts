@@ -39,6 +39,8 @@ export class UserNewModalComponent implements OnInit {
         this.userHttp.create(this.form.value).subscribe(user => {
             this.modal.hide();
             this.onSuccess.emit(user);
+            this.form.reset();
+            this.errors = {};
         }, responseError => {
             if (responseError.status === 422) {
                 this.errors = responseError.error.errors;

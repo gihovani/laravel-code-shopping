@@ -50,6 +50,8 @@ export class CategoryEditModalComponent implements OnInit {
         this.categoryHttp.update(this._categoryId, this.form.value).subscribe((category) => {
             this.modal.hide();
             this.onSuccess.emit(category);
+            this.form.reset();
+            this.errors = {};
         }, responseError => {
             if (responseError.status === 402) {
                 this.errors = responseError.error.errors;

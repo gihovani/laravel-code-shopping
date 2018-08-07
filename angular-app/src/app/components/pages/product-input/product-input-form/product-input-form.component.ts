@@ -18,15 +18,11 @@ export class ProductInputFormComponent implements OnInit {
     @ViewChild(Select2Component, {read: ElementRef})
     select2Element: ElementRef;
 
-    constructor(private changeRef: ChangeDetectorRef, public productIdField: ProductIdFieldService) {
+    constructor(public productIdField: ProductIdFieldService) {
     }
 
     ngOnInit() {
-        this.productIdField.make(this.select2Element);
-    }
-
-    ngOnChanges() {
-        this.changeRef.detectChanges();
+        this.productIdField.make(this.select2Element, this.form.get('product_id'));
     }
 
     get fieldsOptions() {

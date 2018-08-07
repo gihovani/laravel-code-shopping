@@ -1,8 +1,9 @@
 import {Component, EventEmitter, OnInit, Output, ViewChild} from '@angular/core';
-import {FormBuilder, FormGroup} from "@angular/forms";
+import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {ModalComponent} from "../../../bootstrap/modal/modal.component";
 import {HttpErrorResponse} from "@angular/common/http";
 import {ProductInputHttpService} from "../../../../services/http/product-input-http.service";
+import productInputFieldsOptions from "../product-input-form/product-input-fields-options";
 
 @Component({
     selector: 'product-input-new-modal',
@@ -22,9 +23,10 @@ export class ProductInputNewModalComponent implements OnInit {
     public onError: EventEmitter<HttpErrorResponse> = new EventEmitter<HttpErrorResponse>();
 
     constructor(private productInputHttp: ProductInputHttpService, private formBuilder: FormBuilder) {
+        const min = productInputFieldsOptions.amount.validationMessage.min;
         this.form = this.formBuilder.group({
-            product_id: 0,
-            amount: 0
+            product_id: [null, [Validators.required]],
+            amount: [null, [Validators.required, Validators.min(min)]]
         });
     }
 
@@ -35,6 +37,8 @@ export class ProductInputNewModalComponent implements OnInit {
         this.productInputHttp.create(this.form.value).subscribe(productInput => {
             this.modal.hide();
             this.onSuccess.emit(productInput);
+            this.form.reset();
+            this.errors = {};
         }, responseError => {
             if (responseError.status === 422) {
                 this.errors = responseError.error.errors;
