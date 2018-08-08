@@ -1,6 +1,6 @@
 import {ElementRef, Injectable} from '@angular/core';
-import {AuthService} from "../../../../services/auth.service";
-import {environment} from "../../../../../environments/environment";
+import {AuthService} from "../../../services/auth.service";
+import {environment} from "../../../../environments/environment";
 import {AbstractControl} from "@angular/forms";
 
 declare const $;

@@ -1,8 +1,7 @@
 <div class="form-group">
     <label [for]="product_id.id">{{product_id.label}}</label>
     <!--<input type="number" [id]="product_id.id" class="form-control" formControlName="product_id" isInvalid required>-->
-    <select2 [data]="productIdField.data" [options]="productIdField.options" [isInvalidControl]="form.get('product_id')"
-             (valueChanged)="productIdField.updateFormControl($event.value)" class="form-control undo-form-control"></select2>
+    <product-id-autocomplete [productIdFormControl]="form.get('product_id')"></product-id-autocomplete>
     <field-error [field]="form.get('product_id')" [label]="product_id.label"></field-error>
 </div>
 <div class="form-group" [formGroup]="form">
