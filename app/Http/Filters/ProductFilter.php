@@ -10,7 +10,7 @@ class ProductFilter extends SimpleQueryFilter
     use QueryRangeFilter;
 
     protected $simpleFilters = ['search', 'interval', 'price'];
-    protected $simpleSorts = ['id', 'name', 'price', 'created_at'];
+    protected $simpleSorts = ['id', 'name', 'price', 'stock', 'created_at'];
 
     protected function applySearch($value)
     {
@@ -27,13 +27,5 @@ class ProductFilter extends SimpleQueryFilter
     protected function applyInterval($value)
     {
         $this->query = $this->rangeFilter($this->query, 'created_at', $value);
-    }
-
-    public function hasFilterParameter() {
-        $contains = $this->parser->getFilters()->contains(function ($filter) {
-            return $filter->getField() === 'search' && !empty($filter->getValue());
-        });
-
-        return $contains;
     }
 }
