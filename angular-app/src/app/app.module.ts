@@ -1,7 +1,7 @@
 import {NgModule} from '@angular/core';
 import {BrowserModule} from '@angular/platform-browser';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-import {JwtModule, JWT_OPTIONS} from '@auth0/angular-jwt';
+import {JWT_OPTIONS, JwtModule} from '@auth0/angular-jwt';
 
 import {AppComponent} from './app.component';
 import {NgxPaginationModule} from 'ngx-pagination';
@@ -46,7 +46,11 @@ import {ProductInputFormComponent} from './components/pages/product-input/produc
 import {ProductInputNewModalComponent} from './components/pages/product-input/product-input-new-modal/product-input-new-modal.component';
 import {ProductInputSearchFormComponent} from './components/pages/product-input/product-input-search-form/product-input-search-form.component';
 import {Select2Module} from "ng2-select2";
-import { ProductIdAutocompleteComponent } from './components/select2/product-id-autocomplete/product-id-autocomplete.component';
+import {ProductIdAutocompleteComponent} from './components/select2/product-id-autocomplete/product-id-autocomplete.component';
+import {ProductOutputListComponent} from './components/pages/product-output/product-output-list/product-output-list.component';
+import {ProductOutputFormComponent} from './components/pages/product-output/product-output-form/product-output-form.component';
+import {ProductOutputNewModalComponent} from './components/pages/product-output/product-output-new-modal/product-output-new-modal.component';
+import {ProductOutputSearchFormComponent} from './components/pages/product-output/product-output-search-form/product-output-search-form.component';
 
 
 function jwtFactory(authService: AuthService) {
@@ -99,7 +103,11 @@ function jwtFactory(authService: AuthService) {
         ProductInputFormComponent,
         ProductInputNewModalComponent,
         ProductInputSearchFormComponent,
-        ProductIdAutocompleteComponent
+        ProductIdAutocompleteComponent,
+        ProductOutputListComponent,
+        ProductOutputFormComponent,
+        ProductOutputNewModalComponent,
+        ProductOutputSearchFormComponent
     ],
     imports: [
         AppRoutingModule,

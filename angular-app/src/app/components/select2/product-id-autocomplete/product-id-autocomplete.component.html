@@ -1,2 +1,2 @@
-<select2 [data]="productIdField.data" [options]="productIdField.options" [isInvalidControl]="productIdFormControl"
-         (valueChanged)="productIdField.updateFormControl($event.value)" class="form-control undo-form-control"></select2>
+<select2 [data]="select2Service.data" [options]="select2Service.options" [isInvalidControl]="productIdFormControl"
+         (valueChanged)="select2Service.updateFormControl($event.value)" class="form-control undo-form-control"></select2>

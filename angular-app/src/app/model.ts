@@ -32,6 +32,14 @@ export interface ProductInput {
     readonly updated_at?: string;
 };
 
+export interface ProductOutput {
+    id?: number;
+    amount: number;
+    product: Product;
+    readonly created_at?: string;
+    readonly updated_at?: string;
+};
+
 export interface User {
     id?: number;
     name: string;
@@ -41,8 +49,3 @@ export interface User {
     readonly created_at?: string;
     readonly updated_at?: string;
 };
-
-export interface SortColumn {
-    column: string;
-    sort: string;
-}

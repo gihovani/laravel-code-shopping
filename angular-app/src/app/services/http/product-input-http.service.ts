@@ -4,7 +4,8 @@ import {ProductInput} from "../../model";
 import {environment} from "../../../environments/environment";
 import {Observable} from "rxjs/internal/Observable";
 import {map} from "rxjs/operators";
-import {SearchParams, SearchParamsBuilder} from "./http-resource";
+import {SearchParamsBuilder} from "./http-resource";
+import {FieldsSearchParams} from "../../common/fields-search-params";
 
 @Injectable({
     providedIn: 'root'
@@ -31,7 +32,7 @@ export class ProductInputHttpService {
         return this.http.get<{ data: ProductInput }>(this.baseUrl(id)).pipe(map(response => response.data));
     }
 
-    list(searchParams: SearchParams): Observable<{ data: Array<ProductInput>; meta: any }> {
+    list(searchParams: FieldsSearchParams): Observable<{ data: Array<ProductInput>; meta: any }> {
         const sParams = new SearchParamsBuilder(searchParams).makeObject();
         const params = new HttpParams({
             fromObject: (<any>sParams)

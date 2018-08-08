@@ -7,7 +7,9 @@ import {UserEditService} from "./user-edit.service";
 import {UserDeleteService} from "./user-delete.service";
 import {UserEditModalComponent} from "../user-edit-modal/user-edit-modal.component";
 import {UserDeleteModalComponent} from "../user-delete-modal/user-delete-modal.component";
-import {SortColumn, User} from "../../../../model";
+import {User} from "../../../../model";
+import {FieldsPagination} from "../../../../common/fields-pagination";
+import {FieldsSortColumn} from "../../../../common/fields-sort-column";
 
 @Component({
     selector: 'user-list',
@@ -17,12 +19,15 @@ import {SortColumn, User} from "../../../../model";
 export class UserListComponent implements OnInit {
     public users: Array<User> = [];
     public userId: number;
-    public pagination = {
+    public pagination: FieldsPagination = {
         page: 1,
         totalItems: 0,
         itemsPerPage: 15
     };
-    public sortColumn: SortColumn = {column: 'id', sort: 'desc'};
+    public sortColumn: FieldsSortColumn = {
+        column: 'created_at',
+        sort: 'desc'
+    };
     public searchText: string;
 
     @ViewChild(UserNewModalComponent)

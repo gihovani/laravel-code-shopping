@@ -7,7 +7,9 @@ import {ProductDeleteModalComponent} from "../product-delete-modal/product-delet
 import {ProductInsertService} from "./product-insert.service";
 import {ProductDeleteService} from "./product-delete.service";
 import {ProductEditService} from "./product-edit.service";
-import {Product, SortColumn} from "../../../../model";
+import {Product} from "../../../../model";
+import {FieldsPagination} from "../../../../common/fields-pagination";
+import {FieldsSortColumn} from "../../../../common/fields-sort-column";
 
 @Component({
     selector: 'product-list',
@@ -17,12 +19,15 @@ import {Product, SortColumn} from "../../../../model";
 export class ProductListComponent implements OnInit {
     public items: Array<Product> = [];
     public productId: number;
-    public pagination = {
+    public pagination: FieldsPagination = {
         page: 1,
         totalItems: 0,
         itemsPerPage: 15
     };
-    public sortColumn: SortColumn = {column: 'id', sort: 'desc'};
+    public sortColumn: FieldsSortColumn = {
+        column: 'created_at',
+        sort: 'desc'
+    };
     public searchText: string;
 
     @ViewChild(ProductNewModalComponent)

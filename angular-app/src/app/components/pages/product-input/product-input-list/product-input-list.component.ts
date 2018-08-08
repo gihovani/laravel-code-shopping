@@ -4,6 +4,8 @@ import {ProductInput} from "../../../../model";
 import {ProductInputNewModalComponent} from "../product-input-new-modal/product-input-new-modal.component";
 import {NotifyMessageService} from "../../../../services/notify-message.service";
 import {ProductInputInsertService} from "./product-input-insert.service";
+import {FieldsPagination} from "../../../../common/fields-pagination";
+import {FieldsSortColumn} from "../../../../common/fields-sort-column";
 
 @Component({
     selector: 'product-input-list',
@@ -11,14 +13,13 @@ import {ProductInputInsertService} from "./product-input-insert.service";
     styleUrls: ['./product-input-list.component.css']
 })
 export class ProductInputListComponent implements OnInit {
-
     public inputs: Array<ProductInput> = [];
-    public pagination = {
+    public pagination: FieldsPagination = {
         page: 1,
         totalItems: 0,
         itemsPerPage: 15
     };
-    public sortColumn = {
+    public sortColumn: FieldsSortColumn = {
         column: 'created_at',
         sort: 'desc'
     };

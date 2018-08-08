@@ -1,7 +1,8 @@
-import {HttpResource, SearchParams, SearchParamsBuilder} from "./http-resource";
+import {HttpResource, SearchParamsBuilder} from "./http-resource";
 import {HttpClient, HttpParams} from "@angular/common/http";
 import {map} from "rxjs/operators";
 import {Observable} from "rxjs/internal/Observable";
+import {FieldsSearchParams} from "../../common/fields-search-params";
 
 export abstract class BaseHttp<T> implements HttpResource<T> {
     abstract baseUrl(id?: number): string;
@@ -22,7 +23,7 @@ export abstract class BaseHttp<T> implements HttpResource<T> {
         return this.http.get<{ data: T }>(this.baseUrl(id)).pipe(map(response => response.data));
     }
 
-    list(searchParams: SearchParams): Observable<{ data: Array<T>; meta: any }> {
+    list(searchParams: FieldsSearchParams): Observable<{ data: Array<T>; meta: any }> {
         const sParams = new SearchParamsBuilder(searchParams).makeObject();
         const params = new HttpParams({
             fromObject: (<any>sParams)

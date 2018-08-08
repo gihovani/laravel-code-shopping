@@ -1,16 +1,17 @@
 <div class="row">
     <h1>Listagem de Categorias</h1>
+</div>
+<div class="row mb-2">
+    <div class="col-md-2">
+        <button class="btn btn-block btn-primary" (click)="insertService.showModal()">Nova Categoria</button>
+    </div>
+    <div class="col-md-10">
+        <category-search-form (onSearch)="search($event)"></category-search-form>
+    </div>
+</div>
+<div class="row">
     <table class="table table-striped">
         <thead>
-        <tr>
-            <td>
-                <button class="btn btn-primary" (click)="insertService.showModal()">Nova Categoria
-                </button>
-            </td>
-            <td colspan="4">
-                <category-search-form (onSearch)="search($event)"></category-search-form>
-            </td>
-        </tr>
         <tr>
             <th style="width: 5%" [sortColumn]="sortColumn" columnName="id" (onSort)="getItems($event)">
                 ID
@@ -33,7 +34,7 @@
         <tr *ngFor="let category of categories | paginate: {itemsPerPage: pagination.itemsPerPage, currentPage: pagination.page, totalItems: pagination.totalItems}">
             <td>{{category.id}}</td>
             <td>{{category.name}}</td>
-            <td>
+            <td class="text-center">
                 <i class="fas" [ngClass]="{'fa-check': category.active, 'fa-times': !category.active}"></i>
             </td>
             <td>{{category.created_at | date: 'dd/MM/yyyy'}}</td>

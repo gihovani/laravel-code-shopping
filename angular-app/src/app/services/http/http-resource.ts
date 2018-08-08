@@ -1,18 +1,11 @@
 import {Observable} from "rxjs/internal/Observable";
-import {SortColumn} from "../../model";
-
-export interface SearchParams {
-    page?: number;
-    all?: any;
-    search?: string;
-    sort?: SortColumn
-}
+import {FieldsSearchParams} from "../../common/fields-search-params";
 
 export class SearchParamsBuilder {
-    constructor(private searchParams: SearchParams) {
+    constructor(private searchParams: FieldsSearchParams) {
     }
 
-    makeObject(): SearchParams {
+    makeObject(): FieldsSearchParams {
         const sParams: any = {
             page: this.searchParams.page + ''
         };
@@ -34,7 +27,7 @@ export class SearchParamsBuilder {
 
 export interface HttpResource<T> {
 
-    list(searchParams: SearchParams): Observable<{ data: Array<T>, meta: any }>;
+    list(searchParams: FieldsSearchParams): Observable<{ data: Array<T>, meta: any }>;
 
     get(id: number): Observable<T>;
 

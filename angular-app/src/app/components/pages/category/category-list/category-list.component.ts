@@ -7,7 +7,9 @@ import {NotifyMessageService} from "../../../../services/notify-message.service"
 import {CategoryInsertService} from "./category-insert.service";
 import {CategoryEditService} from "./category-edit.service";
 import {CategoryDeleteService} from "./category-delete.service";
-import {Category, SortColumn} from "../../../../model";
+import {Category} from "../../../../model";
+import {FieldsPagination} from "../../../../common/fields-pagination";
+import {FieldsSortColumn} from "../../../../common/fields-sort-column";
 
 @Component({
     selector: 'app-category-list',
@@ -17,12 +19,15 @@ import {Category, SortColumn} from "../../../../model";
 export class CategoryListComponent implements OnInit {
     public categories: Array<Category> = [];
     public categoryId: number;
-    public pagination = {
+    public pagination: FieldsPagination = {
         page: 1,
         totalItems: 0,
         itemsPerPage: 15
     };
-    public sortColumn: SortColumn = {column: 'id', sort: 'desc'};
+    public sortColumn: FieldsSortColumn = {
+        column: 'created_at',
+        sort: 'desc'
+    };
     public searchText: string;
 
     @ViewChild(CategoryNewModalComponent)

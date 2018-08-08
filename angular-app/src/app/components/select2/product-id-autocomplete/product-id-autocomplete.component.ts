@@ -1,7 +1,8 @@
 import {Component, ElementRef, Input, OnInit, ViewChild} from '@angular/core';
 import {Select2Component} from "ng2-select2";
-import {ProductIdFieldService} from "./product-id-field.service";
 import {AbstractControl} from "@angular/forms";
+import {environment} from "../../../../environments/environment";
+import {Select2Service} from "../select2.service";
 
 @Component({
     selector: 'product-id-autocomplete',
@@ -14,11 +15,12 @@ export class ProductIdAutocompleteComponent implements OnInit {
     @ViewChild(Select2Component, {read: ElementRef})
     select2Element: ElementRef;
 
-    constructor(public productIdField: ProductIdFieldService) {
+    constructor(public select2Service: Select2Service) {
     }
 
     ngOnInit() {
-        this.productIdField.make(this.select2Element, this.productIdFormControl);
+        const url = `${environment.api.url}/products`;
+        this.select2Service.make(url, this.select2Element, this.productIdFormControl);
     }
 
 }
