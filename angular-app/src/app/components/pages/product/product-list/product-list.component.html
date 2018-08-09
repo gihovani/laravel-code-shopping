@@ -41,6 +41,9 @@
                 <a href="javascript:void(0)" (click)="deleteService.showModal(product.id)">
                     <i class="fas fa-trash-alt"></i>
                 </a> |
+                <a [routerLink]="['/products', product.id, 'photos', 'list']">
+                    <i class="fas fa-camera-retro"></i>
+                </a> |
                 <a [routerLink]="['/products', product.id, 'categories', 'list']">
                     Categorias
                 </a>

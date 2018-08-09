@@ -1,0 +1,7 @@
+<list-error [errors]="errors"></list-error>
+<div class="form-group">
+    <div class="custom-file">
+        <input type="file" class="custom-file-input" id="photo" multiple (change)="submit($event.target.files)">
+        <label class="custom-file-label" for="photo">Procurar</label>
+    </div>
+</div>

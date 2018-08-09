@@ -19,6 +19,14 @@ export interface Product {
     readonly updated_at?: string;
 };
 
+export interface ProductPhoto {
+    id?: number;
+    photo_url: string;
+    product?: Product;
+    readonly created_at?: string;
+    readonly updated_at?: string;
+};
+
 export interface ProductCategory {
     product: Product;
     categories: Category[];

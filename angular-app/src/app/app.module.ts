@@ -51,6 +51,10 @@ import {ProductOutputListComponent} from './components/pages/product-output/prod
 import {ProductOutputFormComponent} from './components/pages/product-output/product-output-form/product-output-form.component';
 import {ProductOutputNewModalComponent} from './components/pages/product-output/product-output-new-modal/product-output-new-modal.component';
 import {ProductOutputSearchFormComponent} from './components/pages/product-output/product-output-search-form/product-output-search-form.component';
+import {ProductPhotoManagerComponent} from './components/pages/product-photo/product-photo-manager/product-photo-manager.component';
+import {ProductPhotoUploadComponent} from './components/pages/product-photo/product-photo-upload/product-photo-upload.component';
+import {ProductPhotoEditModalComponent} from './components/pages/product-photo/product-photo-edit-modal/product-photo-edit-modal.component';
+import { ProductPhotoDeleteModalComponent } from './components/pages/product-photo/product-photo-delete-modal/product-photo-delete-modal.component';
 
 
 function jwtFactory(authService: AuthService) {
@@ -107,7 +111,11 @@ function jwtFactory(authService: AuthService) {
         ProductOutputListComponent,
         ProductOutputFormComponent,
         ProductOutputNewModalComponent,
-        ProductOutputSearchFormComponent
+        ProductOutputSearchFormComponent,
+        ProductPhotoManagerComponent,
+        ProductPhotoUploadComponent,
+        ProductPhotoEditModalComponent,
+        ProductPhotoDeleteModalComponent
     ],
     imports: [
         AppRoutingModule,
