@@ -98,7 +98,7 @@ export class ProductPhotoManagerComponent implements OnInit {
         $.fancybox.getInstance().close();
         this.deleteModal.hideModal();
         const index = this.getImageIndexFromPhotos();
-        delete this.photos[index];
+        this.photos.splice(index, 1);
         this.notifyMessage.success('Foto apagada com sucesso!');
     }
 
