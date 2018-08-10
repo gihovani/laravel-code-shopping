@@ -1,6 +1,7 @@
 <modal (onHide)="hideModal($event)">
     <h5 modal-title>Exclusão de Usuário</h5>
     <div modal-body>
+        <list-error [errors]="errors"></list-error>
         Deseja excluir o usuário {{user?.name}}?
     </div>
     <div modal-footer>

@@ -12,6 +12,7 @@ import {User} from "../../../../model";
 export class UserDeleteModalComponent implements OnInit {
     private _userId: number;
     public user: User = null;
+    public errors = {};
 
     @Output()
     public onSuccess: EventEmitter<any> = new EventEmitter<any>();
@@ -42,7 +43,13 @@ export class UserDeleteModalComponent implements OnInit {
         this.userHttp.destroy(this._userId).subscribe(user => {
             this.modal.hide();
             this.onSuccess.emit(user);
-        }, error => this.onError.emit(error));
+        }, responseError => {
+            if (responseError.status === 422) {
+                this.errors = responseError.error.errors;
+            }
+
+            this.onError.emit(responseError);
+        });
     }
 
     showModal() {

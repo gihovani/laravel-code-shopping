@@ -12,6 +12,7 @@ import {Category} from "../../../../model";
 export class CategoryDeleteModalComponent implements OnInit {
     private _categoryId: number;
     public category: Category = null;
+    public errors = {};
 
     @Output()
     public onSuccess: EventEmitter<any> = new EventEmitter<any>();
@@ -42,7 +43,14 @@ export class CategoryDeleteModalComponent implements OnInit {
         this.categoryHttp.destroy(this._categoryId).subscribe(category => {
             this.modal.hide();
             this.onSuccess.emit(category);
-        }, error => this.onError.emit(error));
+            this.errors = {};
+        }, responseError => {
+            if (responseError.status === 422) {
+                this.errors = responseError.error.errors;
+            }
+
+            this.onError.emit(responseError);
+        });
     }
 
     showModal() {

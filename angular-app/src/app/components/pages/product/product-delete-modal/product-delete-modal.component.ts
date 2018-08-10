@@ -12,6 +12,7 @@ import {Product} from "../../../../model";
 export class ProductDeleteModalComponent implements OnInit {
     private _productId: number;
     public product: Product = null;
+    public errors = {};
 
     @Output()
     public onSuccess: EventEmitter<any> = new EventEmitter<any>();
@@ -42,7 +43,14 @@ export class ProductDeleteModalComponent implements OnInit {
         this.productHttp.destroy(this._productId).subscribe(product => {
             this.modal.hide();
             this.onSuccess.emit(product);
-        }, error => this.onError.emit(error));
+            this.errors = {};
+        }, responseError => {
+            if (responseError.status === 422) {
+                this.errors = responseError.error.errors;
+            }
+
+            this.onError.emit(responseError);
+        });
     }
 
     showModal() {
