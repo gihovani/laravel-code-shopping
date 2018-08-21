@@ -4,11 +4,11 @@ namespace CodeShopping\Http\Controllers\Api;
 
 use CodeShopping\Common\OnlyTrashed;
 use CodeShopping\Events\UserCreatedEvent;
+use CodeShopping\Http\Controllers\Controller;
 use CodeShopping\Http\Filters\UserFilter;
 use CodeShopping\Http\Requests\UserRequest;
 use CodeShopping\Http\Resources\UserResource;
 use CodeShopping\Models\User;
-use CodeShopping\Http\Controllers\Controller;
 use Illuminate\Database\Eloquent\Builder;
 
 class UserController extends Controller

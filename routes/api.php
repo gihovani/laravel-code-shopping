@@ -14,6 +14,7 @@ Route::group([
     'as' => 'api.'
 ], function () {
     Route::name('login')->post('login', 'AuthController@login');
+    Route::name('login_vendor')->post('login_vendor', 'AuthController@loginFirebase');
     Route::name('refresh')->post('refresh', 'AuthController@refresh');
     Route::name('products.index')->get('products', 'ProductController@index')->middleware('auth:api');
 

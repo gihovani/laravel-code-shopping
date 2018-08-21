@@ -3,8 +3,8 @@
 namespace CodeShopping\Models;
 
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\Notifiable;
 use Mnabialek\LaravelEloquentFilter\Traits\Filterable;
 use Tymon\JWTAuth\Contracts\JWTSubject;
 
@@ -29,12 +29,12 @@ class User extends Authenticatable implements JWTSubject
     protected $hidden = [
         'password', 'remember_token',
     ];
-    
+
     protected $dates = ['deleted_at'];
 
     public function fill(array $attributes)
     {
-        (!isset($attributes['password']))?:$attributes['password'] = \Hash::make($attributes['password']);
+        (!isset($attributes['password'])) ?: $attributes['password'] = \Hash::make($attributes['password']);
         return parent::fill($attributes);
     }
 
@@ -60,5 +60,10 @@ class User extends Authenticatable implements JWTSubject
             'name' => $this->name,
             'email' => $this->email
         ];
+    }
+
+    public function profile()
+    {
+        return $this->hasOne(UserProfile::class)->withDefault();
     }
 }

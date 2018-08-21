@@ -11,7 +11,13 @@ class UsersTableSeeder extends Seeder
      */
     public function run()
     {
-        factory(\CodeShopping\Models\User::class, 1)->create(['email' => 'admin@user.com']);
+        factory(\CodeShopping\Models\User::class, 1)
+            ->create(['email' => 'admin@user.com'])
+            ->each(function ($user) {
+                $user->profile->phone_number = '+16505551234';
+                $user->profile->save();
+            });
         factory(\CodeShopping\Models\User::class, 50)->create();
+
     }
 }
