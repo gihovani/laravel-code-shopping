@@ -21,12 +21,17 @@
         </div>
         <div class="form-group">
             <label [for]="phone_number.id">{{phone_number.label}}</label>
-            <input type="text" [id]="phone_number.id" class="form-control" formControlName="phone_number" readonly>
-            <field-error [label]="phone_number.label" [field]="form.get('phone_number')"></field-error>
+            <div class="input-group">
+                <input type="text" [id]="phone_number.id" class="form-control" formControlName="phone_number" readonly>
+                <div class="input-group-append" [hidden]="!has_photo">
+                    <button class="btn btn-outline-info" (click)="openPhoneNumberAuthModal()">Novo</button>
+                </div>
+            </div>
         </div>
         <div class="form-group">
             <div class="input-group">
-                <input type="file" [id]="photo.id" class="form-control" (change)="onChoosePhoto($event.target.files)" style="height: 44px">
+                <input type="file" [id]="photo.id" class="form-control" (change)="onChoosePhoto($event.target.files)"
+                       style="height: 44px">
                 <div class="input-group-append" [hidden]="!has_photo">
                     <div class="input-group-text">
                         <img [src]="authService.me.profile.photo_url" height="30">
@@ -43,3 +48,5 @@
 
     </form>
 </div>
+
+<phone-number-auth-modal (onSuccess)="onPhoneNumberVerification($event)"></phone-number-auth-modal>

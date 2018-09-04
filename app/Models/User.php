@@ -12,6 +12,9 @@ class User extends Authenticatable implements JWTSubject
 {
     use Notifiable, SoftDeletes, Filterable;
 
+    const ROLE_SELLER = 1;
+    const ROLE_CUSTOMER = 2;
+
     /**
      * The attributes that are mass assignable.
      *
@@ -31,6 +34,54 @@ class User extends Authenticatable implements JWTSubject
     ];
 
     protected $dates = ['deleted_at'];
+
+    public static function createCustomer($attributes = array()): User
+    {
+        try {
+            UserProfile::uploadFile($attributes['photo']);
+            \DB::beginTransaction();
+            $user = self::createCustomerUser($attributes);
+            UserProfile::saveProfile($user, $attributes);
+            \DB::commit();
+        } catch (\Exception $e) {
+            //excluir a foto
+            \DB::rollBack();
+            throw $e;
+        }
+        return $user;
+    }
+
+    private static function createCustomerUser($attributes = array()): User
+    {
+        $attributes['password'] = \Hash::make(str_random(8));
+        $user = User::create($attributes);
+        $user->role = User::ROLE_CUSTOMER;
+        $user->save();
+
+        return $user;
+    }
+
+    public function updateWithProfile($attributes = array()): User
+    {
+        try {
+            if (isset($attributes['photo'])) {
+                UserProfile::uploadFile($attributes['photo']);
+            }
+            \DB::beginTransaction();
+            $this->fill($attributes);
+            $this->save();
+            UserProfile::saveProfile($this, $attributes);
+            \DB::commit();
+        } catch (\Exception $e) {
+            if (isset($attributes['photo'])) {
+                //excluir a foto
+                UserProfile::deleteFile($attributes['photo']);
+            }
+            \DB::rollBack();
+            throw $e;
+        }
+        return $this;
+    }
 
     public function fill(array $attributes)
     {
@@ -58,7 +109,12 @@ class User extends Authenticatable implements JWTSubject
         return [
             'id' => $this->id,
             'name' => $this->name,
-            'email' => $this->email
+            'email' => $this->email,
+            'profile' => [
+                'has_photo' => $this->profile->photo ? true : false,
+                'photo_url' => $this->profile->photo_url,
+                'phone_number' => $this->profile->phone_number
+            ]
         ];
     }
 

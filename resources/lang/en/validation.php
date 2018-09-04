@@ -123,6 +123,8 @@ return [
     | specify a specific custom language line for a given attribute rule.
     |
     */
+    'token' => 'The :attribute is invalid.',
+    'phonenumberunique' => 'Phone number has used.',
 
     'custom' => [
         'attribute-name' => [

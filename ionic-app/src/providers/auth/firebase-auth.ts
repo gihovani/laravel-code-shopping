@@ -42,6 +42,33 @@ export class FirebaseAuthProvider {
 
     }
 
+    private async getFirebaseUi(): Promise<any> {
+        return new Promise((resolve, reject) => {
+            if (window.hasOwnProperty('firebaseui')) {
+                resolve(firebaseui);
+                return;
+            }
+            scriptjs('https://www.gstatic.com/firebasejs/ui/3.3.0/firebase-ui-auth__pt.js', () => {
+                resolve(firebaseui);
+            }, (responseError) => {
+                reject(responseError);
+            });
+        });
+    }
+
+    async getToken(): Promise<string> {
+        try {
+            const user = await this.getUser();
+            if (!user) {
+                throw new Error('User not found');
+            }
+            const token = await user.getIdTokenResult();
+            return token.token;
+        } catch (e) {
+            return Promise.reject(e);
+        }
+    }
+
     getUser(): Promise<firebase.User | null> {
         const currentUser = this.getCurrentUser();
         if (currentUser) {
@@ -61,34 +88,9 @@ export class FirebaseAuthProvider {
         });
     }
 
-    getCurrentUser() : firebase.User | null {
-        return;
+    private getCurrentUser(): firebase.User | null {
+        return this.firebase.auth().currentUser;
     }
 
-    async getToken(): Promise<string> {
-        try {
-            const user = await this.getUser();
-            if (!user) {
-                throw new Error('User not found');
-            }
-            const token = await user.getIdTokenResult();
-            return token.token;
-        } catch (e) {
-            return Promise.reject(e);
-        }
-    }
 
-    private async getFirebaseUi(): Promise<any> {
-        return new Promise((resolve, reject) => {
-            if (window.hasOwnProperty('firebaseui')) {
-                resolve(firebaseui);
-                return;
-            }
-            scriptjs('https://www.gstatic.com/firebasejs/ui/3.3.0/firebase-ui-auth__pt.js', () => {
-                resolve(firebaseui);
-            }, (responseError) => {
-                reject(responseError);
-            });
-        });
-    }
 }

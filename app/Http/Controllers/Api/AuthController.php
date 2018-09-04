@@ -25,7 +25,7 @@ class AuthController extends Controller
     public function loginFirebase(Request $request)
     {
         $this->validate($request, [
-            'token' => new FirebaseTokenVerification()
+            'token' => ['required', new FirebaseTokenVerification()]
         ]);
 
         $firebaseAuth = app(FirebaseAuth::class);

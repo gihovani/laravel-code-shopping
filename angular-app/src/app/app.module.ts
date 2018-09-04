@@ -30,7 +30,7 @@ import {NavbarComponent} from './components/bootstrap/navbar/navbar.component';
 import {RefreshTokenInterceptorService} from './services/refresh-token-interceptor.service';
 import {AppRoutingModule} from './app-routing.module';
 import {environment} from '../environments/environment';
-import {SortColumnComponent} from './components/commom/sort-column/sort-column.component';
+import {SortColumnComponent} from './components/common/sort-column/sort-column.component';
 import {CategorySearchFormComponent} from './components/pages/category/category-search-form/category-search-form.component';
 import {CategoryFormComponent} from './components/pages/category/category-form/category-form.component';
 import {ProductFormComponent} from './components/pages/product/product-form/product-form.component';
@@ -54,8 +54,9 @@ import {ProductOutputSearchFormComponent} from './components/pages/product-outpu
 import {ProductPhotoManagerComponent} from './components/pages/product-photo/product-photo-manager/product-photo-manager.component';
 import {ProductPhotoUploadComponent} from './components/pages/product-photo/product-photo-upload/product-photo-upload.component';
 import {ProductPhotoEditModalComponent} from './components/pages/product-photo/product-photo-edit-modal/product-photo-edit-modal.component';
-import { ProductPhotoDeleteModalComponent } from './components/pages/product-photo/product-photo-delete-modal/product-photo-delete-modal.component';
-import { UserProfileComponent } from './components/pages/user-profile/user-profile.component';
+import {ProductPhotoDeleteModalComponent} from './components/pages/product-photo/product-photo-delete-modal/product-photo-delete-modal.component';
+import {UserProfileComponent} from './components/pages/user-profile/user-profile.component';
+import {PhoneNumberAuthModalComponent} from './components/common/phone-number-auth-modal/phone-number-auth-modal.component';
 
 
 function jwtFactory(authService: AuthService) {
@@ -117,7 +118,8 @@ function jwtFactory(authService: AuthService) {
         ProductPhotoUploadComponent,
         ProductPhotoEditModalComponent,
         ProductPhotoDeleteModalComponent,
-        UserProfileComponent
+        UserProfileComponent,
+        PhoneNumberAuthModalComponent
     ],
     imports: [
         AppRoutingModule,

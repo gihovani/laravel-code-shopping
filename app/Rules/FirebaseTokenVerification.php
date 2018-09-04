@@ -43,6 +43,6 @@ class FirebaseTokenVerification implements Rule
      */
     public function message()
     {
-        return 'Firebase token is invalid.';
+        return trans('validation.token');
     }
 }

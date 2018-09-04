@@ -1,5 +1,7 @@
 <?php
 
+use CodeShopping\Models\User;
+use CodeShopping\Models\UserProfile;
 use Illuminate\Database\Seeder;
 
 class UsersTableSeeder extends Seeder
@@ -11,13 +13,35 @@ class UsersTableSeeder extends Seeder
      */
     public function run()
     {
-        factory(\CodeShopping\Models\User::class, 1)
+        \File::deleteDirectory(UserProfile::photoPath(), true);
+        factory(User::class, 1)
             ->create(['email' => 'admin@user.com'])
-            ->each(function ($user) {
-                $user->profile->phone_number = '+16505551234';
-                $user->profile->save();
+            ->each(function (User $user) {
+                User::reguard();
+                $user->updateWithProfile([
+                    'phone_number' => '+16505551234',
+                    'photo' => $this->getAdminPhoto()
+                ]);
+                User::unguard();
             });
-        factory(\CodeShopping\Models\User::class, 50)->create();
+        factory(User::class, 1)
+            ->create(['email' => 'customer@user.com', 'role' => User::ROLE_CUSTOMER])
+            ->each(function (User $user) {
+                User::reguard();
+                $user->updateWithProfile([
+                    'phone_number' => '+16505551235',
+                ]);
+                User::unguard();
+            });
+        factory(User::class, 50)->create(['role' => User::ROLE_CUSTOMER]);
 
+    }
+
+    public function getAdminPhoto()
+    {
+        return new \Illuminate\Http\UploadedFile(
+            storage_path('app/faker/users/ninja-496.png'),
+            str_random(16) . '.png'
+        );
     }
 }

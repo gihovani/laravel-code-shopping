@@ -123,6 +123,9 @@ return [
     |
     */
 
+    'token' => 'O campo :attribute não está válido.',
+    'phonenumberunique' => 'Seu telefone já está cadastrado.',
+
     'custom' => [
         'attribute-name' => [
             'rule-name' => 'custom-message',

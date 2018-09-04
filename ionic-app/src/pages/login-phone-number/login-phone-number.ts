@@ -25,7 +25,7 @@ export class LoginPhoneNumberPage {
     }
 
     ionViewDidLoad() {
-        this.firebaseAuth.firebase.auth().onAuthStateChanged(user => {
+        const unsubscribed = this.firebaseAuth.firebase.auth().onAuthStateChanged(user => {
             if (user) {
                 this.authService.login().subscribe(token => {
                     //redirect to main page
@@ -34,6 +34,7 @@ export class LoginPhoneNumberPage {
                     //redirect to create account
                     this.redirectToCustomerCreatePage();
                 });
+                unsubscribed();
             }
         });
 
