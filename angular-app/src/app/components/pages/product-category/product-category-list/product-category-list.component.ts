@@ -38,7 +38,7 @@ export class ProductCategoryListComponent implements OnInit {
     }
     getItems() {
         this.productCategoryHttp.list(this.productId).subscribe(productCategory => {
-            this.productCategory = productCategory
+            this.productCategory = productCategory;
             this.product = productCategory.product;
         });
     }

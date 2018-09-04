@@ -55,6 +55,7 @@ import {ProductPhotoManagerComponent} from './components/pages/product-photo/pro
 import {ProductPhotoUploadComponent} from './components/pages/product-photo/product-photo-upload/product-photo-upload.component';
 import {ProductPhotoEditModalComponent} from './components/pages/product-photo/product-photo-edit-modal/product-photo-edit-modal.component';
 import { ProductPhotoDeleteModalComponent } from './components/pages/product-photo/product-photo-delete-modal/product-photo-delete-modal.component';
+import { UserProfileComponent } from './components/pages/user-profile/user-profile.component';
 
 
 function jwtFactory(authService: AuthService) {
@@ -115,7 +116,8 @@ function jwtFactory(authService: AuthService) {
         ProductPhotoManagerComponent,
         ProductPhotoUploadComponent,
         ProductPhotoEditModalComponent,
-        ProductPhotoDeleteModalComponent
+        ProductPhotoDeleteModalComponent,
+        UserProfileComponent
     ],
     imports: [
         AppRoutingModule,

@@ -53,7 +53,7 @@ export class CategoryEditModalComponent implements OnInit {
             this.form.reset();
             this.errors = {};
         }, responseError => {
-            if (responseError.status === 402) {
+            if (responseError.status === 422) {
                 this.errors = responseError.error.errors;
             }
             this.onError.emit(responseError);

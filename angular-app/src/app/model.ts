@@ -5,7 +5,7 @@ export interface Category {
     active: boolean;
     readonly created_at?: string;
     readonly updated_at?: string;
-};
+}
 
 export interface Product {
     id?: number;
@@ -17,7 +17,7 @@ export interface Product {
     active: boolean;
     readonly created_at?: string;
     readonly updated_at?: string;
-};
+}
 
 export interface ProductPhoto {
     id?: number;
@@ -25,12 +25,12 @@ export interface ProductPhoto {
     product?: Product;
     readonly created_at?: string;
     readonly updated_at?: string;
-};
+}
 
 export interface ProductCategory {
     product: Product;
     categories: Category[];
-};
+}
 
 export interface ProductInput {
     id?: number;
@@ -38,7 +38,7 @@ export interface ProductInput {
     product: Product;
     readonly created_at?: string;
     readonly updated_at?: string;
-};
+}
 
 export interface ProductOutput {
     id?: number;
@@ -46,14 +46,30 @@ export interface ProductOutput {
     product: Product;
     readonly created_at?: string;
     readonly updated_at?: string;
-};
+}
 
 export interface User {
     id?: number;
     name: string;
     email: string;
     password?: string;
+    profile?: UserProfile;
     readonly remember_token?: string;
     readonly created_at?: string;
     readonly updated_at?: string;
-};
+}
+
+export interface UserProfile {
+    has_photo: boolean;
+    photo_url: string;
+    phone_number: string;
+}
+
+export interface Profile {
+    name?: string;
+    email?: string;
+    password?: string;
+    photo_url?: File | false | null;
+    phone_number?: string;
+    token?: string;
+}

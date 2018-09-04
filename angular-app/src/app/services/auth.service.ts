@@ -61,7 +61,8 @@ export class AuthService {
         this.me = decodedToken ? {
             id: decodedToken.sub,
             name: decodedToken.name,
-            email: decodedToken.email
+            email: decodedToken.email,
+            profile: decodedToken.profile
         } : null;
         return
     }
