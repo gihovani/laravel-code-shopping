@@ -38,19 +38,19 @@ export class FirebaseAuthService {
                 }
             }
         };
-        if (!this.ui) {
-            this.makeFormFirebaseUi(selectorElement, uiConfig);
-        } else {
-            this.ui.delete().then(() => {
-                this.makeFormFirebaseUi(selectorElement, uiConfig);
-            });
-        }
-
+        this.makeFormFirebaseUi(selectorElement, uiConfig);
     }
 
     private makeFormFirebaseUi(selectorElement, uiConfig) {
-        this.ui = new firebaseui.auth.AuthUI(firebase.auth());
-        this.ui.start(selectorElement, uiConfig);
+        if (!this.ui) {
+            this.ui = new firebaseui.auth.AuthUI(firebase.auth());
+            this.ui.start(selectorElement, uiConfig);
+        } else {
+            this.ui.delete().then(() => {
+                this.ui = new firebaseui.auth.AuthUI(firebase.auth());
+                this.ui.start(selectorElement, uiConfig);
+            });
+        }
     }
 
     private async getFirebaseUi(): Promise<any> {

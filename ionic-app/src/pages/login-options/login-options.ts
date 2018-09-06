@@ -45,7 +45,7 @@ export class LoginOptionsPage {
                 {
                     text: 'Não, quero criar uma conta',
                     handler: () => {
-                        this.navCtrl.push(ResetPhoneNumberPage);
+                        this.navCtrl.push(LoginPhoneNumberPage);
                     }
                 },
                 {
