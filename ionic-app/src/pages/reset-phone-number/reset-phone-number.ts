@@ -1,5 +1,9 @@
-import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import {Component} from '@angular/core';
+import {AlertController, IonicPage, NavController, NavParams, ToastController} from 'ionic-angular';
+import {FormControl, Validators} from "@angular/forms";
+import {FirebaseAuthProvider} from "../../providers/auth/firebase-auth";
+import {CustomerHttpProvider} from "../../providers/http/customer-http";
+import {LoginOptionsPage} from "../login-options/login-options";
 
 /**
  * Generated class for the ResetPhoneNumberPage page.
@@ -15,11 +19,65 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 })
 export class ResetPhoneNumberPage {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  email = new FormControl('', [Validators.required, Validators.email]);
+  canShowFirebaseUi = false;
+
+
+  constructor(public navCtrl: NavController,
+              public navParams: NavParams,
+              private firebaseAuth: FirebaseAuthProvider,
+              private customerHttp: CustomerHttpProvider,
+              private alertCtrl: AlertController,
+              private toastCtrl: ToastController) {
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad ResetPhoneNumberPage');
   }
 
+  showFirebaseUi() {
+    this.canShowFirebaseUi = true;
+    this.handleUpdate();
+  }
+
+  handleUpdate() {
+    this.firebaseAuth
+      .makePhoneNumberForm('#firebase-ui')
+      .then(() => {
+        const email = this.email.value;
+        this.customerHttp
+          .requestUpdatePhoneNumber(email)
+          .subscribe(() => {
+            this.handleUpdateSuccess();
+          }, () => {
+            this.handleUpdateError();
+          });
+      });
+  }
+
+  handleUpdateSuccess() {
+    const alert = this.alertCtrl.create({
+      title: 'Alerta',
+      subTitle: `
+              Um e-mail com a validação da mudança foi enviado.
+              Valide-o para logar com o novo telefone.
+              `,
+      buttons: [{
+        text: 'Ok',
+        handler: () => {
+          this.navCtrl.setRoot(LoginOptionsPage)
+        }
+      }]
+    });
+    alert.present();
+  }
+
+  handleUpdateError() {
+    const toast = this.toastCtrl.create({
+      message: 'Não foi possível fazer a alteração do telefone.',
+      duration: 3000
+    });
+    toast.present();
+    this.handleUpdate();
+  }
 }

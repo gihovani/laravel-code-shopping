@@ -16,6 +16,10 @@ Route::group([
     Route::name('login')->post('login', 'AuthController@login');
     Route::name('login_vendor')->post('login_vendor', 'AuthController@loginFirebase');
     Route::name('refresh')->post('refresh', 'AuthController@refresh');
+    Route::name('customers.phone_numbers')
+        ->post('customers/phone_numbers', 'CustomerController@requestPhoneNumberUpdate');
+    Route::name('customers.update_phone_number')
+        ->patch('customers/phone_numbers/{token}', 'CustomerController@updatePhoneNumber');
     Route::name('customers')->post('customers', 'CustomerController@store');
 
     Route::group(['middleware' => ['auth:api', 'jwt.refresh']], function () {
