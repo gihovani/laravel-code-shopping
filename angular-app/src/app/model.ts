@@ -73,3 +73,12 @@ export interface Profile {
     phone_number?: string;
     token?: string;
 }
+
+export interface ChatGroup {
+    id?: number;
+    name: string;
+    photo?: File;
+    photo_url: string;
+    readonly created_at?: string;
+    readonly updated_at?: string;
+}

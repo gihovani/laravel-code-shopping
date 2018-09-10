@@ -22,7 +22,8 @@ Route::group([
         ->patch('customers/phone_numbers/{token}', 'CustomerController@updatePhoneNumber');
     Route::name('customers')->post('customers', 'CustomerController@store');
 
-    Route::group(['middleware' => ['auth:api', 'jwt.refresh']], function () {
+    Route::group(['middleware' => ['auth:api']], function () {
+//    Route::group(['middleware' => ['auth:api', 'jwt.refresh']], function () {
         Route::name('profile')->patch('profile', 'UserProfileController@update');
 
         Route::group(['middleware' => ['can:is_seller']], function () {
@@ -70,6 +71,13 @@ Route::group([
             ]);
             Route::patch('users/{user}/restore', 'UserController@restore');
             Route::resource('users', 'UserController', [
+                'except' => [
+                    'create',
+                    'edit'
+                ]
+            ]);
+
+            Route::resource('chat_groups', 'ChatGroupController', [
                 'except' => [
                     'create',
                     'edit'
