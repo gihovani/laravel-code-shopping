@@ -2,13 +2,14 @@
 
 namespace CodeShopping\Models;
 
+use CodeShopping\Firebase\FirebaseSync;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Http\UploadedFile;
 
 class ChatGroup extends Model
 {
-    use SoftDeletes;
+    use SoftDeletes, FirebaseSync;
 
     const BASE_PATH = 'app/public';
     const DIR_CHAT_GROUPS = 'chat_groups';
@@ -88,11 +89,33 @@ class ChatGroup extends Model
         return $dir;
     }
 
+    public function users()
+    {
+        return $this->belongsToMany(User::class);
+    }
+
+
+    protected function syncFbRemove()
+    {
+        $this->syncFbSet();
+    }
+
+    protected function syncFbSet()
+    {
+        $data = $this->toArray();
+        $data['photo_url'] = $this->photo_url_base;
+        unset($data['photo']);
+        $this->getModalReference()->update($data);
+    }
 
     public function getPhotoUrlAttribute()
     {
-        $path = self::photoDir();
-        return asset('storage/' . $path . '/' . $this->photo);
+        return asset('storage/' . $this->photo_url_base);
     }
 
+    public function getPhotoUrlBaseAttribute()
+    {
+        $path = self::photoDir();
+        return $path . '/' . $this->photo;
+    }
 }

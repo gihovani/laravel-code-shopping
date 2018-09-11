@@ -1,5 +1,4 @@
 import {Injectable} from '@angular/core';
-// import firebaseConfig from '../../app/firebase-config';
 import scriptjs from 'scriptjs';
 import * as firebase from 'firebase';
 import firebaseConfig from "../../app/firebase-config";

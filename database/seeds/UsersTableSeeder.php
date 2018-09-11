@@ -24,6 +24,7 @@ class UsersTableSeeder extends Seeder
                 ]);
                 User::unguard();
             });
+
         factory(User::class, 1)
             ->create(['email' => 'customer@user.com', 'role' => User::ROLE_CUSTOMER])
             ->each(function (User $user) {
@@ -33,7 +34,9 @@ class UsersTableSeeder extends Seeder
                 ]);
                 User::unguard();
             });
-        factory(User::class, 50)->create(['role' => User::ROLE_CUSTOMER]);
+
+        factory(User::class, 20)
+            ->create(['role' => User::ROLE_CUSTOMER]);
 
     }
 

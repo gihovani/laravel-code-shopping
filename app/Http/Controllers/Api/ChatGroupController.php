@@ -12,7 +12,8 @@ class ChatGroupController extends Controller
 {
     public function index()
     {
-        $chatGroups = ChatGroup::paginate();
+        $chatGroups = ChatGroup::withCount('users')
+            ->paginate();
         return ChatGroupResource::collection($chatGroups);
     }
 
@@ -35,7 +36,6 @@ class ChatGroupController extends Controller
 
     public function destroy(ChatGroup $chat_group)
     {
-        $chat_group->deletePhoto();
         $chat_group->delete();
         return response()->json([], 204);
     }

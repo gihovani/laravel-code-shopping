@@ -1,0 +1,15 @@
+<ion-content>
+    <ion-list>
+        <ion-item *ngFor="let group of groups">
+            <ion-avatar item-start>
+                <img [src]="group.photo_url" alt="">
+            </ion-avatar>
+            <h2>
+                {{group.name}}
+            </h2>
+            <h3>
+                Quais são as características do produto x?
+            </h3>
+        </ion-item>
+    </ion-list>
+</ion-content>

@@ -79,6 +79,7 @@ export interface ChatGroup {
     name: string;
     photo?: File;
     photo_url: string;
+    count_users?: number;
     readonly created_at?: string;
     readonly updated_at?: string;
 }

@@ -20,6 +20,7 @@ class ChatGroupResource extends JsonResource
             'photo_url' => $this->photo_url,
             'created_at' => $this->created_at->format('Y-m-d H:i:s'),
             'updated_at' => $this->updated_at->format('Y-m-d H:i:s'),
+            'count_users' => $this->users_count
         ];
     }
 }
