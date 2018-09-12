@@ -84,6 +84,14 @@ Route::group([
                 ]
             ]);
 
+            Route::resource('chat_groups.users', 'ChatGroupUserController', [
+                'only' => [
+                    'index',
+                    'store',
+                    'destroy'
+                ]
+            ]);
+
         });
     });
 });

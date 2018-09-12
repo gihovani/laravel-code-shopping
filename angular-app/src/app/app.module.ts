@@ -57,11 +57,17 @@ import {ProductPhotoEditModalComponent} from './components/pages/product-photo/p
 import {ProductPhotoDeleteModalComponent} from './components/pages/product-photo/product-photo-delete-modal/product-photo-delete-modal.component';
 import {UserProfileComponent} from './components/pages/user-profile/user-profile.component';
 import {PhoneNumberAuthModalComponent} from './components/common/phone-number-auth-modal/phone-number-auth-modal.component';
-import { ChatGroupListComponent } from './components/pages/chat-group/chat-group-list/chat-group-list.component';
-import { ChatGroupDeleteModalComponent } from './components/pages/chat-group/chat-group-delete-modal/chat-group-delete-modal.component';
-import { ChatGroupEditModalComponent } from './components/pages/chat-group/chat-group-edit-modal/chat-group-edit-modal.component';
-import { ChatGroupFormComponent } from './components/pages/chat-group/chat-group-form/chat-group-form.component';
-import { ChatGroupNewModalComponent } from './components/pages/chat-group/chat-group-new-modal/chat-group-new-modal.component';
+import {ChatGroupListComponent} from './components/pages/chat-group/chat-group-list/chat-group-list.component';
+import {ChatGroupDeleteModalComponent} from './components/pages/chat-group/chat-group-delete-modal/chat-group-delete-modal.component';
+import {ChatGroupEditModalComponent} from './components/pages/chat-group/chat-group-edit-modal/chat-group-edit-modal.component';
+import {ChatGroupFormComponent} from './components/pages/chat-group/chat-group-form/chat-group-form.component';
+import {ChatGroupNewModalComponent} from './components/pages/chat-group/chat-group-new-modal/chat-group-new-modal.component';
+import {ChatGroupUserListComponent} from './components/pages/chat-group-user/chat-group-user-list/chat-group-user-list.component';
+import {ChatGroupUserNewComponent} from './components/pages/chat-group-user/chat-group-user-new/chat-group-user-new.component';
+import { UserIdAutocompleteComponent } from './components/select2/user-id-autocomplete/user-id-autocomplete.component';
+import { SellerIdAutocompleteComponent } from './components/select2/seller-id-autocomplete/seller-id-autocomplete.component';
+import { CustomerIdAutocompleteComponent } from './components/select2/customer-id-autocomplete/customer-id-autocomplete.component';
+import { ChatGroupUserDeleteModalComponent } from './components/pages/chat-group-user/chat-group-user-delete-modal/chat-group-user-delete-modal.component';
 
 
 function jwtFactory(authService: AuthService) {
@@ -129,7 +135,13 @@ function jwtFactory(authService: AuthService) {
         ChatGroupDeleteModalComponent,
         ChatGroupEditModalComponent,
         ChatGroupFormComponent,
-        ChatGroupNewModalComponent
+        ChatGroupNewModalComponent,
+        ChatGroupUserListComponent,
+        ChatGroupUserNewComponent,
+        UserIdAutocompleteComponent,
+        SellerIdAutocompleteComponent,
+        CustomerIdAutocompleteComponent,
+        ChatGroupUserDeleteModalComponent
     ],
     imports: [
         AppRoutingModule,

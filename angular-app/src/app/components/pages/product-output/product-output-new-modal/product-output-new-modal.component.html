@@ -1,5 +1,5 @@
 <form (submit)="submit()">
-    <modal (onHide)="hideModal($event)">
+    <modal (onHide)="hideModal($event)" class="select2-parent">
         <h5 modal-title>Nova Saída</h5>
         <div modal-body>
             <list-error [errors]="errors"></list-error>

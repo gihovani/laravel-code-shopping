@@ -2,11 +2,14 @@
 
 namespace CodeShopping\Models;
 
+use CodeShopping\Firebase\FirebaseSync;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\UploadedFile;
 
 class UserProfile extends Model
 {
+    use FirebaseSync;
+
     const BASE_PATH = 'app/public';
     const DIR_USERS = 'users';
     const DIR_USER_PHOTO = self::DIR_USERS . '/photos';
@@ -15,14 +18,16 @@ class UserProfile extends Model
 
     protected $fillable = ['photo', 'phone_number'];
 
-    public static function createTokenToChangePhoneNumber(UserProfile $profile, $phoneNumber) : string {
+    public static function createTokenToChangePhoneNumber(UserProfile $profile, $phoneNumber): string
+    {
         $token = base64_encode($phoneNumber);
         $profile->phone_number_token_to_change = $token;
         $profile->save();
         return $token;
     }
 
-    public static function updatePhoneNumber($token) : UserProfile {
+    public static function updatePhoneNumber($token): UserProfile
+    {
         $profile = UserProfile::where('phone_number_token_to_change', '=', $token)->firstOrFail();
         $phoneNumber = base64_decode($token);
         $profile->phone_number = $phoneNumber;
@@ -87,14 +92,27 @@ class UserProfile extends Model
 
     public function getPhotoUrlAttribute()
     {
+        return $this->photo ?
+            asset('storage/' . $this->photo_url_base) :
+            $this->photo_url_base;
+    }
+
+    public function getPhotoUrlBaseAttribute()
+    {
         $path = self::photoDir();
         return $this->photo ?
-            asset('storage/' . $path . '/' . $this->photo) :
+            $path . '/' . $this->photo :
             'https://www.gravatar.com/avatar/nouser.jpg';
     }
 
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+
+
+    protected function syncFbSet()
+    {
+        $this->user->syncFbSetCustom();
     }
 }

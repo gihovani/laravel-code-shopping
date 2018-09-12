@@ -1,7 +1,7 @@
 <form (submit)="submit()">
     <modal (onHide)="hideModal($event)">
         <h5 modal-title>Nova Entrada</h5>
-        <div modal-body>
+        <div modal-body class="select2-parent">
             <list-error [errors]="errors"></list-error>
             <product-input-form [form]="form"></product-input-form>
         </div>

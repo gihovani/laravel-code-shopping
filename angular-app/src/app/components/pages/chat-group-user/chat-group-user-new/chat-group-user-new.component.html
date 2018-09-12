@@ -1,0 +1,8 @@
+<form class="form" (submit)="submit()" class="select2-parent">
+    <list-error [errors]="errors"></list-error>
+    <div class="form-group">
+        <customer-id-autocomplete [userIdFormControl]="form.get('user_id')"></customer-id-autocomplete>
+        <field-error [field]="form.get('user_id')" [label]="user_id.label"></field-error>
+    </div>
+    <button class="btn btn-primary">Adicionar</button>
+</form>

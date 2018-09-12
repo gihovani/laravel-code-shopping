@@ -1,8 +1,6 @@
-import {ChangeDetectorRef, Component, ElementRef, Input, OnInit, ViewChild} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {FormGroup} from "@angular/forms";
 import productInputFieldsOptions from "./product-input-fields-options";
-import {Select2Service} from "../../../select2/select2.service";
-import {Select2Component} from "ng2-select2";
 
 
 @Component({
