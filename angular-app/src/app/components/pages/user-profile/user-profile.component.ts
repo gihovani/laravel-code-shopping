@@ -24,8 +24,8 @@ export class UserProfileComponent implements OnInit {
     constructor(private userProfileHttp: UserProfileHttpService,
                 private formBuilder: FormBuilder,
                 private notifyMessage: NotifyMessageService,
-                public authService: AuthService,
-                private firebaseAuth: FirebaseAuthService) {
+                private firebaseAuth: FirebaseAuthService,
+                public authService: AuthService) {
         const maxLength = userFieldsOptions.name.validationMessage.maxLength;
         const minLength = userFieldsOptions.password.validationMessage.maxLength;
         this.form = this.formBuilder.group({

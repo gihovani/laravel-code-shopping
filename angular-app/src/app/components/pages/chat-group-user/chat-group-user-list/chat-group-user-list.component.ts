@@ -29,8 +29,8 @@ export class ChatGroupUserListComponent implements OnInit {
 
     constructor(private chatGroupUserHttp: ChatGroupUserHttpService,
                 private route: ActivatedRoute,
-                protected insertService: ChatGroupUserInsertService,
-                protected deleteService: ChatGroupUserDeleteService) {
+                public insertService: ChatGroupUserInsertService,
+                public deleteService: ChatGroupUserDeleteService) {
         this.insertService.listComponent = this;
         this.deleteService.listComponent = this;
     }

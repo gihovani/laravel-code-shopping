@@ -41,9 +41,9 @@ export class ChatGroupListComponent implements OnInit {
 
     constructor(private notifyMessage: NotifyMessageService,
                 private chatGroupHttp: ChatGroupHttpService,
-                protected insertService: ChatGroupInsertService,
-                protected editService: ChatGroupEditService,
-                protected deleteService: ChatGroupDeleteService) {
+                public insertService: ChatGroupInsertService,
+                public editService: ChatGroupEditService,
+                public deleteService: ChatGroupDeleteService) {
 
         this.insertService.listComponent = this;
         this.editService.listComponent = this;
@@ -67,6 +67,10 @@ export class ChatGroupListComponent implements OnInit {
         });
 
         this.chatGroupId = 0;
+    }
+
+    onSort($event) {
+        this.getItems();
     }
 
     pageChanged(page) {

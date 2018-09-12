@@ -41,9 +41,9 @@ export class CategoryListComponent implements OnInit {
 
     constructor(private notifyMessage: NotifyMessageService,
                 private categoryHttp: CategoryHttpService,
-                protected insertService: CategoryInsertService,
-                protected editService: CategoryEditService,
-                protected deleteService: CategoryDeleteService) {
+                public insertService: CategoryInsertService,
+                public editService: CategoryEditService,
+                public deleteService: CategoryDeleteService) {
 
         this.insertService.listComponent = this;
         this.editService.listComponent = this;
@@ -71,6 +71,10 @@ export class CategoryListComponent implements OnInit {
 
     pageChanged(page) {
         this.pagination.page = page;
+        this.getItems();
+    }
+
+    onSort($event) {
         this.getItems();
     }
 

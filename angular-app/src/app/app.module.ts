@@ -64,22 +64,11 @@ import {ChatGroupFormComponent} from './components/pages/chat-group/chat-group-f
 import {ChatGroupNewModalComponent} from './components/pages/chat-group/chat-group-new-modal/chat-group-new-modal.component';
 import {ChatGroupUserListComponent} from './components/pages/chat-group-user/chat-group-user-list/chat-group-user-list.component';
 import {ChatGroupUserNewComponent} from './components/pages/chat-group-user/chat-group-user-new/chat-group-user-new.component';
-import { UserIdAutocompleteComponent } from './components/select2/user-id-autocomplete/user-id-autocomplete.component';
-import { SellerIdAutocompleteComponent } from './components/select2/seller-id-autocomplete/seller-id-autocomplete.component';
-import { CustomerIdAutocompleteComponent } from './components/select2/customer-id-autocomplete/customer-id-autocomplete.component';
-import { ChatGroupUserDeleteModalComponent } from './components/pages/chat-group-user/chat-group-user-delete-modal/chat-group-user-delete-modal.component';
+import {UserIdAutocompleteComponent} from './components/select2/user-id-autocomplete/user-id-autocomplete.component';
+import {SellerIdAutocompleteComponent} from './components/select2/seller-id-autocomplete/seller-id-autocomplete.component';
+import {CustomerIdAutocompleteComponent} from './components/select2/customer-id-autocomplete/customer-id-autocomplete.component';
+import {ChatGroupUserDeleteModalComponent} from './components/pages/chat-group-user/chat-group-user-delete-modal/chat-group-user-delete-modal.component';
 
-
-function jwtFactory(authService: AuthService) {
-    return {
-        whitelistedDomains: [
-            new RegExp(`${environment.api.host}/*`)
-        ],
-        tokenGetter: () => {
-            return authService.getToken();
-        }
-    }
-}
 
 @NgModule({
     declarations: [
@@ -154,7 +143,16 @@ function jwtFactory(authService: AuthService) {
         JwtModule.forRoot({
             jwtOptionsProvider: {
                 provide: JWT_OPTIONS,
-                useFactory: jwtFactory,
+                useFactory: (authService: AuthService) => {
+                    return {
+                        whitelistedDomains: [
+                            new RegExp(`${environment.api.host}/*`)
+                        ],
+                        tokenGetter: () => {
+                            return authService.getToken();
+                        }
+                    }
+                },
                 deps: [AuthService]
             }
         })

@@ -41,9 +41,9 @@ export class UserListComponent implements OnInit {
 
     constructor(private notifyMessage: NotifyMessageService,
                 private userHttp: UserHttpService,
-                protected insertService: UserInsertService,
-                protected editService: UserEditService,
-                protected deleteService: UserDeleteService) {
+                public insertService: UserInsertService,
+                public editService: UserEditService,
+                public deleteService: UserDeleteService) {
 
         this.insertService.listComponent = this;
         this.editService.listComponent = this;
@@ -67,6 +67,10 @@ export class UserListComponent implements OnInit {
         });
 
         this.userId = 0;
+    }
+
+    onSort($event) {
+        this.getItems();
     }
 
     pageChanged(page) {

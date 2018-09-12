@@ -41,9 +41,9 @@ export class ProductListComponent implements OnInit {
 
     constructor(private notifyMessage: NotifyMessageService,
                 private productHttp: ProductHttpService,
-                protected insertService: ProductInsertService,
-                protected editService: ProductEditService,
-                protected deleteService: ProductDeleteService) {
+                public insertService: ProductInsertService,
+                public editService: ProductEditService,
+                public deleteService: ProductDeleteService) {
 
         this.insertService.listComponent = this;
         this.editService.listComponent = this;
@@ -67,6 +67,10 @@ export class ProductListComponent implements OnInit {
         });
 
         this.productId = 0;
+    }
+
+    onSort($event) {
+        this.getItems();
     }
 
     pageChanged(page) {

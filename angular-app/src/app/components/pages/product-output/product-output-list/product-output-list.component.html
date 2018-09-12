@@ -13,16 +13,16 @@
     <table class="table table-striped">
         <thead>
         <tr>
-            <th style="width: 5%" [sortColumn]="sortColumn" columnName="id" (onSort)="getItems($event)">
+            <th style="width: 5%" [sortColumn]="sortColumn" columnName="id" (onSort)="onSort($event)">
                 ID
             </th>
-            <th style="width: 65%" [sortColumn]="sortColumn" columnName="product_name" (onSort)="getItems($event)">
+            <th style="width: 65%" [sortColumn]="sortColumn" columnName="product_name" (onSort)="onSort($event)">
                 Produto
             </th>
             <th style="width: 10%">
                 Quant.
             </th>
-            <th style="width: 20%" [sortColumn]="sortColumn" columnName="created_at" (onSort)="getItems($event)">
+            <th style="width: 20%" [sortColumn]="sortColumn" columnName="created_at" (onSort)="onSort($event)">
                 Criado Em
             </th>
         </tr>

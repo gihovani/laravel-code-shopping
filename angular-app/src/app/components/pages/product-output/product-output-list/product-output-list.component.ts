@@ -53,6 +53,9 @@ export class ProductOutputListComponent implements OnInit {
         });
     }
 
+    onSort($event) {
+        this.getItems();
+    }
 
     pageChanged(page) {
         this.pagination.page = page;

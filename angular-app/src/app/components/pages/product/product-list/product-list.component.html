@@ -13,12 +13,12 @@
     <table class="table table-striped">
         <thead>
         <tr>
-            <th style="width: 3%" [sortColumn]="sortColumn" columnName="id" (onSort)="getItems($event)">ID</th>
-            <th style="width: 40%" [sortColumn]="sortColumn" columnName="name" (onSort)="getItems($event)">Nome</th>
-            <th style="width: 10%" [sortColumn]="sortColumn" columnName="stock" (onSort)="getItems($event)">Estoque</th>
-            <th style="width: 10%" [sortColumn]="sortColumn" columnName="price" (onSort)="getItems($event)">Preço</th>
+            <th style="width: 3%" [sortColumn]="sortColumn" columnName="id" (onSort)="onSort($event)">ID</th>
+            <th style="width: 40%" [sortColumn]="sortColumn" columnName="name" (onSort)="onSort($event)">Nome</th>
+            <th style="width: 10%" [sortColumn]="sortColumn" columnName="stock" (onSort)="onSort($event)">Estoque</th>
+            <th style="width: 10%" [sortColumn]="sortColumn" columnName="price" (onSort)="onSort($event)">Preço</th>
             <th style="width: 5%">Ativo?</th>
-            <th style="width: 12%" [sortColumn]="sortColumn" columnName="created_at" (onSort)="getItems($event)">Criado
+            <th style="width: 12%" [sortColumn]="sortColumn" columnName="created_at" (onSort)="onSort($event)">Criado
                 Em
             </th>
             <th style="width: 20%">Ações</th>

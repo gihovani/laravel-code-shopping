@@ -24,8 +24,8 @@ export class ProductCategoryListComponent implements OnInit {
     constructor(private route: ActivatedRoute,
                 private productHttp: ProductHttpService,
                 private productCategoryHttp: ProductCategoryHttpService,
-                protected insertService: ProductCategoryInsertService,
-                protected deleteService: ProductCategoryDeleteService) {
+                public insertService: ProductCategoryInsertService,
+                public deleteService: ProductCategoryDeleteService) {
         this.insertService.listComponent = this;
         this.deleteService.listComponent = this;
     }
