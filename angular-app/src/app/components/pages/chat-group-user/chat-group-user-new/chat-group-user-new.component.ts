@@ -1,6 +1,6 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {HttpErrorResponse} from "@angular/common/http";
-import {FormBuilder, FormGroup, Validators} from "@angular/forms";
+import {FormBuilder, FormGroup} from "@angular/forms";
 import chatGroupUserFieldsOptions from "./chat-group-user-fields-options";
 import {ChatGroupUserHttpService} from "../../../../services/http/chat-group-user-http.service";
 
@@ -32,8 +32,7 @@ export class ChatGroupUserNewComponent implements OnInit {
     }
 
     submit() {
-        const userId = this.form.get('user_id').value;
-        this.chatGroupUserHttp.create(this.chatGroupId, userId).subscribe(response => {
+        this.chatGroupUserHttp.create(this.chatGroupId, this.getUserIds()).subscribe(response => {
             this.onSuccess.emit(response);
             this.form.reset();
             this.errors = {};
@@ -44,6 +43,19 @@ export class ChatGroupUserNewComponent implements OnInit {
             this.onError.emit(responseError);
         });
         return false;
+    }
+
+    getUserIds(): number[] {
+        const usersId = this.form.get('user_id').value;
+        if (!usersId) {
+            return [];
+        }
+
+        if (typeof usersId === 'string') {
+            return [parseInt(usersId)];
+        }
+
+        return usersId;
     }
 
     get fieldsOptions() {
