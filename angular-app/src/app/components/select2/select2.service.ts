@@ -16,11 +16,6 @@ export class Select2Service {
     constructor(private authService: AuthService) {
     }
 
-    get parent() {
-        const modalElement = this.select2Native.closest('.select2-parent');
-        return modalElement.firstChild;
-    }
-
     get select2Native(): HTMLElement {
         return this.select2Element.nativeElement;
     }
@@ -28,16 +23,32 @@ export class Select2Service {
     make(autocompleteUrl: string, select2Element: ElementRef, formControl: AbstractControl) {
         this.select2Element = select2Element;
         this.formControl = formControl;
-        this.data = [];
+        this.setResetData();
         this.setOptions(autocompleteUrl);
         this.onClosingDropDown();
         this.resetSelect2OnSetNull();
     }
 
+    private setResetData() {
+        this.data = null;
+        setTimeout(() => {
+            this.data = [];
+        },300);
+    }
+
+    private setOptionsParent() {
+        const modalElement = this.select2Native.closest('.select2-parent');
+        if (!modalElement) {
+            alert('.select2-parent not found!');
+            return;
+        }
+
+        this.options.dropdownParent = $(modalElement.firstChild);
+    }
+
     private setOptions(autocompleteUrl: string) {
         const options = {
             minimumInputLength: 1,
-            dropdownParent: $(this.parent),
             theme: 'bootstrap4',
             ajax: {
                 url: autocompleteUrl,
@@ -71,6 +82,7 @@ export class Select2Service {
             }
         };
         this.options = {...options, ...this.options};
+        this.setOptionsParent();
     }
 
     private getJQueryElement() {
