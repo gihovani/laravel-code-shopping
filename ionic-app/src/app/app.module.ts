@@ -1,6 +1,7 @@
 import {BrowserModule} from '@angular/platform-browser';
 import {ErrorHandler, NgModule} from '@angular/core';
 import {IonicApp, IonicErrorHandler, IonicModule} from 'ionic-angular';
+import {JWT_OPTIONS, JwtModule} from '@auth0/angular-jwt';
 
 import {MyApp} from './app.component';
 import {HomePage} from '../pages/home/home';
@@ -20,6 +21,7 @@ import {ReactiveFormsModule} from "@angular/forms";
 import {CustomerHttpProvider} from '../providers/http/customer-http';
 import {SuperTabsModule} from "ionic2-super-tabs";
 import {ChatGroupListComponent} from "../components/chat-group-list/chat-group-list";
+import {ChatMessagesPageModule} from "../pages/chat-messages/chat-messages/chat-messages.module";
 
 @NgModule({
     declarations: [
@@ -38,7 +40,22 @@ import {ChatGroupListComponent} from "../components/chat-group-list/chat-group-l
         IonicModule.forRoot(MyApp),
         HttpClientModule,
         ReactiveFormsModule,
-        SuperTabsModule.forRoot()
+        SuperTabsModule.forRoot(),
+        ChatMessagesPageModule,
+        JwtModule.forRoot({
+            jwtOptionsProvider: {
+                provide: JWT_OPTIONS,
+                useFactory: (authProvider: AuthProvider) => {
+                    return {
+                        // whitelistedDomains: [ new RegExp(`${environment.api.host}/*`) ],
+                        tokenGetter: () => {
+                            return authProvider.getToken();
+                        }
+                    }
+                },
+                deps: [AuthProvider]
+            }
+        })
     ],
     bootstrap: [IonicApp],
     entryComponents: [
