@@ -14,7 +14,7 @@ import {LoginPhoneNumberPage} from "../pages/login-phone-number/login-phone-numb
 import {ResetPhoneNumberPage} from "../pages/reset-phone-number/reset-phone-number";
 import {FirebaseAuthProvider} from '../providers/auth/firebase-auth';
 import {AuthProvider} from '../providers/auth/auth';
-import {HttpClientModule} from "@angular/common/http";
+import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
 import {MainPage} from "../pages/main/main";
 import {CustomerCreatePage} from "../pages/customer-create/customer-create";
 import {ReactiveFormsModule} from "@angular/forms";
@@ -22,6 +22,8 @@ import {CustomerHttpProvider} from '../providers/http/customer-http';
 import {SuperTabsModule} from "ionic2-super-tabs";
 import {ChatGroupListComponent} from "../components/chat-group-list/chat-group-list";
 import {ChatMessagesPageModule} from "../pages/chat-messages/chat-messages/chat-messages.module";
+import {ChatMessageHttpProvider} from '../providers/http/chat-message-http';
+import {RefreshTokenInterceptorProvider} from '../providers/refresh-token-interceptor/refresh-token-interceptor';
 
 @NgModule({
     declarations: [
@@ -47,7 +49,7 @@ import {ChatMessagesPageModule} from "../pages/chat-messages/chat-messages/chat-
                 provide: JWT_OPTIONS,
                 useFactory: (authProvider: AuthProvider) => {
                     return {
-                        // whitelistedDomains: [ new RegExp(`${environment.api.host}/*`) ],
+                        whitelistedDomains: [new RegExp(`localhost:8000/*`)],
                         tokenGetter: () => {
                             return authProvider.getToken();
                         }
@@ -75,7 +77,13 @@ import {ChatMessagesPageModule} from "../pages/chat-messages/chat-messages/chat-
         {provide: ErrorHandler, useClass: IonicErrorHandler},
         FirebaseAuthProvider,
         AuthProvider,
-        CustomerHttpProvider
+        CustomerHttpProvider,
+        ChatMessageHttpProvider,
+        {
+            provide: HTTP_INTERCEPTORS,
+            useClass: RefreshTokenInterceptorProvider,
+            multi: true
+        }
     ]
 })
 export class AppModule {

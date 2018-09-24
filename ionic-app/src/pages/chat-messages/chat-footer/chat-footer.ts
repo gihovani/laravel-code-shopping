@@ -1,4 +1,6 @@
-import { Component } from '@angular/core';
+import {Component, ViewChild} from '@angular/core';
+import {ChatMessageHttpProvider} from "../../../providers/http/chat-message-http";
+import {TextInput} from "ionic-angular";
 
 /**
  * Generated class for the ChatFooterComponent component.
@@ -7,16 +9,45 @@ import { Component } from '@angular/core';
  * Components.
  */
 @Component({
-  selector: 'chat-footer',
-  templateUrl: 'chat-footer.html'
+    selector: 'chat-footer',
+    templateUrl: 'chat-footer.html'
 })
 export class ChatFooterComponent {
 
-  text: string;
+    text: string = '';
+    @ViewChild('inputFileImage')
+    inputFileImage: TextInput;
 
-  constructor() {
-    console.log('Hello ChatFooterComponent Component');
-    this.text = 'Hello World';
-  }
+    constructor(private chatMessageHttp: ChatMessageHttpProvider) {
 
+    }
+
+    sendMessage(data: {content, type}) {
+        this.chatMessageHttp.create(1, data)
+            .subscribe(response => {
+                this.text = '';
+                console.log('enviou');
+            });
+    }
+
+    sendMessageText() {
+        if (!this.text.length) {
+            return;
+        }
+
+        this.sendMessage({content: this.text, type: 'text'});
+    }
+    sendMessageImage(files: FileList) {
+        if (!files.length) {
+            return;
+        }
+
+        this.sendMessage({content: files[0], type: 'image'});
+    }
+
+    selectImage() {
+        const nativeElement: HTMLElement = this.inputFileImage.getElementRef().nativeElement;
+        const inputFile = nativeElement.querySelector('input');
+        inputFile.click();
+    }
 }

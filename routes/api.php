@@ -25,6 +25,7 @@ Route::group([
     Route::group(['middleware' => ['auth:api']], function () {
 //    Route::group(['middleware' => ['auth:api', 'jwt.refresh']], function () {
         Route::name('profile')->patch('profile', 'UserProfileController@update');
+        Route::name('chat_groups.messages')->post('chat_groups/{chat_group}/messages', 'ChatMessageFbController@store');
 
         Route::group(['middleware' => ['can:is_seller']], function () {
             Route::name('logout')->post('logout', 'AuthController@logout');
