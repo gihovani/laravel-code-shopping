@@ -24,6 +24,7 @@ import {ChatGroupListComponent} from "../components/chat-group-list/chat-group-l
 import {ChatMessagesPageModule} from "../pages/chat-messages/chat-messages/chat-messages.module";
 import {ChatMessageHttpProvider} from '../providers/http/chat-message-http';
 import {RefreshTokenInterceptorProvider} from '../providers/refresh-token-interceptor/refresh-token-interceptor';
+import {environment} from "@app/env";
 
 @NgModule({
     declarations: [
@@ -49,7 +50,7 @@ import {RefreshTokenInterceptorProvider} from '../providers/refresh-token-interc
                 provide: JWT_OPTIONS,
                 useFactory: (authProvider: AuthProvider) => {
                     return {
-                        whitelistedDomains: [new RegExp(`localhost:8000/*`)],
+                        whitelistedDomains: [new RegExp(`${environment.api.host}/*`)],
                         tokenGetter: () => {
                             return authProvider.getToken();
                         }

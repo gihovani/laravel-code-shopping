@@ -10,7 +10,8 @@ export const environment = {
         get url() {
             return `${this.protocol}://${this.host}/api`
         }
-    }
+    },
+    baseFilesUrl: 'http://10.10.41.2:8000/storage'
 };
 
 /*

@@ -4,6 +4,7 @@ import {fromPromise} from "rxjs/observable/fromPromise";
 import {FirebaseAuthProvider} from "../auth/firebase-auth";
 import {flatMap} from "rxjs/operators";
 import {Observable} from "rxjs";
+import {environment} from "@app/env";
 
 interface Customer {
   name: string;
@@ -24,7 +25,7 @@ export class CustomerHttpProvider {
     return fromPromise(this.firebaseAuth.getToken())
       .pipe(flatMap(token => {
         formData.append('token', token);
-        return this.http.post<{ token: string }>('http://localhost:8000/api/customers', formData);
+        return this.http.post<{ token: string }>(`${environment.api.url}/customers`, formData);
       }));
   }
 
@@ -42,7 +43,7 @@ export class CustomerHttpProvider {
   requestUpdatePhoneNumber(email: string): Observable<any> {
     return fromPromise(this.firebaseAuth.getToken())
       .pipe(flatMap(token => {
-        return this.http.post<{ token: string }>('http://localhost:8000/api/customers/phone_numbers',
+        return this.http.post<{ token: string }>(`${environment.api.url}/customers/phone_numbers`,
           {email, token}
         );
       }));
