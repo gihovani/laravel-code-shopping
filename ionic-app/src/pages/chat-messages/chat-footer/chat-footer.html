@@ -1,6 +1,6 @@
 <ion-input type="file" [hidden]="true" #inputFileImage (change)="sendMessageImage($event.target.files)"></ion-input>
 <ion-list>
-    <ion-item-sliding>
+    <ion-item-sliding #itemSliding (ionDrag)="onDrag()">
         <ion-item class="no-padding-no-margin chat-bg">
             <ion-grid>
                 <ion-row>
@@ -11,8 +11,11 @@
                         </ion-item>
                     </ion-col>
                     <ion-col col-2 col-sm-2 col-md-1 col-xl-1 class="no-padding-no-margin">
-                        <button ion-button class="btn-send-message" (click)="sendMessageText()">
-                            <ion-icon name="send"></ion-icon>
+                        <button ion-button class="btn-send-message"
+                                ion-long-press [interval]="1000 * 60 * 5"
+                                (onPressStart)="holdAudioButton()" (onPressEnd)="releaseAudioButton()"
+                                (click)="sendMessageText()">
+                            <ion-icon [name]="getIconSendMessage()"></ion-icon>
                         </button>
                     </ion-col>
                 </ion-row>

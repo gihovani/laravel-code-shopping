@@ -1,6 +1,8 @@
 import {Component} from '@angular/core';
 import {FirebaseAuthProvider} from "../../providers/auth/firebase-auth";
 import {ChatGroup} from "../../model";
+import {NavController} from "ionic-angular";
+import {ChatMessagesPage} from "../../pages/chat-messages/chat-messages/chat-messages";
 
 /**
  * Generated class for the ChatGroupListComponent component.
@@ -15,7 +17,8 @@ import {ChatGroup} from "../../model";
 export class ChatGroupListComponent {
     groups: ChatGroup[] = [];
 
-    constructor(private firebaseAuth: FirebaseAuthProvider) {
+    constructor(private firebaseAuth: FirebaseAuthProvider,
+                public navCtrl: NavController) {
     }
 
     ngOnInit() {
@@ -32,6 +35,12 @@ export class ChatGroupListComponent {
                 this.groups[index] = group;
             }
         })
+    }
+
+    itemTapped(item: ChatGroup) {
+        this.navCtrl.setRoot(ChatMessagesPage, {
+            item: item
+        });
     }
 
 }

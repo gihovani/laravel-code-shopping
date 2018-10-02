@@ -37,3 +37,10 @@ export interface UserProfile {
     phone_number: string;
     firebase_uid: string;
 }
+
+export interface AudioPlatformConfig {
+    basePath: string;
+    name: string;
+    mimeType: string;
+    fullPath: string;
+}

@@ -14,7 +14,7 @@ import {LoginPhoneNumberPage} from "../pages/login-phone-number/login-phone-numb
 import {ResetPhoneNumberPage} from "../pages/reset-phone-number/reset-phone-number";
 import {FirebaseAuthProvider} from '../providers/auth/firebase-auth';
 import {AuthProvider} from '../providers/auth/auth';
-import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
+import {HttpClientModule} from "@angular/common/http";
 import {MainPage} from "../pages/main/main";
 import {CustomerCreatePage} from "../pages/customer-create/customer-create";
 import {ReactiveFormsModule} from "@angular/forms";
@@ -23,8 +23,9 @@ import {SuperTabsModule} from "ionic2-super-tabs";
 import {ChatGroupListComponent} from "../components/chat-group-list/chat-group-list";
 import {ChatMessagesPageModule} from "../pages/chat-messages/chat-messages/chat-messages.module";
 import {ChatMessageHttpProvider} from '../providers/http/chat-message-http';
-import {RefreshTokenInterceptorProvider} from '../providers/refresh-token-interceptor/refresh-token-interceptor';
 import {environment} from "@app/env";
+import {Media} from "@ionic-native/media";
+import {File} from "@ionic-native/file";
 
 @NgModule({
     declarations: [
@@ -80,11 +81,9 @@ import {environment} from "@app/env";
         AuthProvider,
         CustomerHttpProvider,
         ChatMessageHttpProvider,
-        {
-            provide: HTTP_INTERCEPTORS,
-            useClass: RefreshTokenInterceptorProvider,
-            multi: true
-        }
+        Media,
+        File
+
     ]
 })
 export class AppModule {

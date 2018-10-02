@@ -6,8 +6,13 @@ use Closure;
 
 class CorsMiddleware
 {
-    private $origins = ['http://localhost:4200', 'http://localhost:8100',
-        'http://10.10.41.2:4200', 'http://10.10.41.2:8100'];
+    private $origins = [
+        'http://localhost:4200',
+        'http://localhost:8100',
+        'http://10.10.41.2:4200',
+        'http://10.10.41.2:8100',
+        'http://192.168.2.1:8100'
+    ];
 
     /**
      * Handle an incoming request.

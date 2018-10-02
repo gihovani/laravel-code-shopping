@@ -54,6 +54,9 @@ class ChatMessageFbRequest extends FormRequest
         $validator->sometimes('content', 'required|image|max:' . (3 * 1024), function ($input) {
             return $input->type === 'image';
         });
+        $validator->sometimes('content', 'required|mimeTypes:audio/wav,audio/x-hx-aac-adts|max:' . (3 * 1024), function ($input) {
+            return $input->type === 'audio';
+        });
         return $validator;
     }
 }

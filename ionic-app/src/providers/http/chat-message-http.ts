@@ -16,7 +16,7 @@ export class ChatMessageHttpProvider {
         console.log('Hello ChatMessageHttpProvider Provider');
     }
 
-    create(chatGroupId: number, data: { content, type }): Observable<any> {
+    create(chatGroupId: number, data: { content: string | Blob, type: string }): Observable<any> {
         const formData = new FormData();
         formData.append('content', data.content);
         formData.append('type', data.type);

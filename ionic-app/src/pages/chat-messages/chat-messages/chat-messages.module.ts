@@ -8,6 +8,8 @@ import {ChatContentRightComponent} from "../chat-content-right/chat-content-righ
 import {ChatContentDetailComponent} from "../chat-content-detail/chat-content-detail";
 import {MomentModule} from "ngx-moment";
 import {PipesModule} from "../../../pipes/pipes.module";
+import {LongPressModule} from "ionic-long-press";
+import {AudioRecorderProvider} from "../../../providers/audio-recorder/audio-recorder";
 
 @NgModule({
     declarations: [
@@ -21,8 +23,12 @@ import {PipesModule} from "../../../pipes/pipes.module";
     imports: [
         IonicPageModule.forChild(ChatMessagesPage),
         MomentModule,
-        PipesModule
+        PipesModule,
+        LongPressModule
     ],
+    providers: [
+        AudioRecorderProvider
+    ]
 })
 export class ChatMessagesPageModule {
 }
