@@ -7,6 +7,9 @@ use Kreait\Firebase;
 
 trait FirebaseSync
 {
+    protected static $OPERATION_CREATE = 1;
+    protected static $OPERATION_UPDATE = 2;
+
     public static function bootFirebaseSync()
     {
         static::created(function ($model) {
@@ -36,17 +39,34 @@ trait FirebaseSync
 
     protected function syncFbCreate()
     {
-        $this->syncFbSet();
+        $this->syncFbSet(self::$OPERATION_CREATE);
     }
 
     protected function syncFbUpdate()
     {
-        $this->syncFbSet();
+        $this->syncFbSet(self::$OPERATION_UPDATE);
     }
 
-    protected function syncFbSet()
+    protected function syncFbSet($operation = null)
     {
-        $this->getModalReference()->update($this->toArray());
+        $data = $this->toArray();
+        $this->setTimestamps($data, $operation);
+        $this->getModalReference()->update($data);
+    }
+
+    protected function setTimestamps(&$data, $operation = null)
+    {
+        if ($operation === self::$OPERATION_CREATE) {
+            $data['created_at'] = ['.sv' => 'timestamp'];
+            $data['updated_at'] = ['.sv' => 'timestamp'];
+        }
+
+        if ($operation === self::$OPERATION_UPDATE) {
+            if (isset($data['created_at'])) {
+                unset($data['created_at']);
+            }
+            $data['updated_at'] = ['.sv' => 'timestamp'];
+        }
     }
 
     protected function syncFbRemove()

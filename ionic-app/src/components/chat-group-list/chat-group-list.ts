@@ -1,8 +1,7 @@
 import {Component} from '@angular/core';
 import {FirebaseAuthProvider} from "../../providers/auth/firebase-auth";
-import {ChatGroup} from "../../model";
-import {NavController} from "ionic-angular";
-import {ChatMessagesPage} from "../../pages/chat-messages/chat-messages/chat-messages";
+import {ChatGroup, ChatMessage} from "../../model";
+import {ChatGroupFbProvider} from "../../providers/firebase/chat-group-fb";
 
 /**
  * Generated class for the ChatGroupListComponent component.
@@ -18,29 +17,32 @@ export class ChatGroupListComponent {
     groups: ChatGroup[] = [];
 
     constructor(private firebaseAuth: FirebaseAuthProvider,
-                public navCtrl: NavController) {
+                private chatGroupFb: ChatGroupFbProvider) {
     }
 
     ngOnInit() {
-        const database = this.firebaseAuth.firebase.database();
-        database.ref('chat_groups').on('child_added', (data) => {
-            const group = data.val() as ChatGroup;
-            this.groups.push(group);
-        });
+        this.chatGroupFb
+            .list()
+            .subscribe(groups => this.groups = groups);
 
-        database.ref('chat_groups').on('child_changed', (data) => {
-            const group = data.val() as ChatGroup;
-            const index = this.groups.findIndex(g => g.id == group.id);
-            if (index >= 0) {
-                this.groups[index] = group;
-            }
-        })
+        this.chatGroupFb
+            .onAdded()
+            .subscribe(group => this.groups.unshift(group));
+
+        this.chatGroupFb
+            .onChanged()
+            .subscribe(group => {
+                const index = this.groups.findIndex(g => g.id === group.id);
+                if (index < 0) {
+                    return;
+                }
+                this.groups.splice(index, 1);
+                this.groups.unshift(group)
+            });
+
     }
 
-    itemTapped(item: ChatGroup) {
-        this.navCtrl.setRoot(ChatMessagesPage, {
-            item: item
-        });
+    formatTextMessage(message: ChatMessage) {
+        return message.content.length > 20 ? message.content.slice(0, 20) + '...' : message.content;
     }
-
 }

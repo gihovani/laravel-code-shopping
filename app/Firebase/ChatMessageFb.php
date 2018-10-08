@@ -34,12 +34,14 @@ class ChatMessageFb
         }
 
         $reference = $this->getMessageReference();
-        $reference->push([
+        $newReference = $reference->push([
             'type' => $attributes['type'],
             'content' => $attributes['content'],
             'created_at' => ['.sv' => 'timestamp'],
             'user_id' => $attributes['firebase_uid']
         ]);
+        $this->setLastMessage($newReference->getKey());
+        $this->chatGroup->updateInFb();
     }
 
     private function upload(UploadedFile $file)
@@ -66,9 +68,21 @@ class ChatMessageFb
         $this->getMessageReference()->remove();
     }
 
+    public function setLastMessage($messageUid)
+    {
+        $path = "{$this->getChatGroupMessagesReference()}/last_message_id";
+        $reference = $this->getFirebaseDatabase()->getReference($path);
+        $reference->set($messageUid);
+    }
+
     private function getMessageReference()
     {
-        $path = "/chat_groups/{$this->chatGroup->id}/messages";
+        $path = "{$this->getChatGroupMessagesReference()}/messages";
         return $this->getFirebaseDatabase()->getReference($path);
+    }
+
+    private function getChatGroupMessagesReference()
+    {
+        return "/chat_groups_messages/{$this->chatGroup->id}";
     }
 }

@@ -101,12 +101,17 @@ class ChatGroup extends Model
         $this->syncFbSet();
     }
 
-    protected function syncFbSet()
+    protected function syncFbSet($operation = null)
     {
         $data = $this->toArray();
         $data['photo_url'] = $this->photo_url_base;
         unset($data['photo']);
+        $this->setTimestamps($data, $operation);
         $this->getModalReference()->update($data);
+    }
+
+    public function updateInFb() {
+        $this->syncFbSet(self::$OPERATION_UPDATE);
     }
 
     public function getPhotoUrlAttribute()
@@ -125,7 +130,8 @@ class ChatGroup extends Model
         $users = User::whereIn('id', $pivotIds)->get();
         $data = [];
         foreach ($users as $user) {
-            $data["chat_groups/{$model->id}/users/{$user->profile->firebase_uid}"] = true;
+            $key = $this->chatGroupUsersKey($model, $user);
+            $data[$key] = true;
         };
         $this->getFirebaseDatabase()->getReference()->update($data);
 
@@ -136,9 +142,15 @@ class ChatGroup extends Model
         $users = User::whereIn('id', $pivotIds)->get();
         $data = [];
         foreach ($users as $user) {
-            $data["chat_groups/{$model->id}/users/{$user->profile->firebase_uid}"] = null;
+            $key = $this->chatGroupUsersKey($model, $user);
+            $data[$key] = null;
         };
         $this->getFirebaseDatabase()->getReference()->update($data);
 
+    }
+
+    private function chatGroupUsersKey($model, $user)
+    {
+        return "chat_groups_users/{$model->id}/{$user->profile->firebase_uid}";
     }
 }

@@ -26,6 +26,7 @@ import {ChatMessageHttpProvider} from '../providers/http/chat-message-http';
 import {environment} from "@app/env";
 import {Media} from "@ionic-native/media";
 import {File} from "@ionic-native/file";
+import {ChatGroupFbProvider} from '../providers/firebase/chat-group-fb';
 
 @NgModule({
     declarations: [
@@ -82,7 +83,8 @@ import {File} from "@ionic-native/file";
         CustomerHttpProvider,
         ChatMessageHttpProvider,
         Media,
-        File
+        File,
+        ChatGroupFbProvider
 
     ]
 })

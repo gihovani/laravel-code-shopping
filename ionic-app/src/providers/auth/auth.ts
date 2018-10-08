@@ -53,6 +53,7 @@ export class AuthProvider {
             id: decodedToken.sub,
             name: decodedToken.name,
             email: decodedToken.email,
+            role: decodedToken.role,
             profile: decodedToken.profile
         } : null;
         return
