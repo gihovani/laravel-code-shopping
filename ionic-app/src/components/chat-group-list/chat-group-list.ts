@@ -2,6 +2,9 @@ import {Component} from '@angular/core';
 import {FirebaseAuthProvider} from "../../providers/auth/firebase-auth";
 import {ChatGroup, ChatMessage} from "../../model";
 import {ChatGroupFbProvider} from "../../providers/firebase/chat-group-fb";
+import {App} from "ionic-angular";
+import {ChatMessagesPage} from "../../pages/chat-messages/chat-messages/chat-messages";
+import {ChatGroupViewerProvider} from "../../providers/chat-group-viewer/chat-group-viewer";
 
 /**
  * Generated class for the ChatGroupListComponent component.
@@ -15,19 +18,30 @@ import {ChatGroupFbProvider} from "../../providers/firebase/chat-group-fb";
 })
 export class ChatGroupListComponent {
     groups: ChatGroup[] = [];
+    chatActive: ChatGroup;
 
     constructor(private firebaseAuth: FirebaseAuthProvider,
-                private chatGroupFb: ChatGroupFbProvider) {
+                private chatGroupFb: ChatGroupFbProvider,
+                private app: App,
+                private chatGroupViewer: ChatGroupViewerProvider) {
     }
 
     ngOnInit() {
         this.chatGroupFb
             .list()
-            .subscribe(groups => this.groups = groups);
+            .subscribe(groups => {
+                groups.forEach((group) => {
+                    this.chatGroupViewer.loadViewed(group);
+                });
+                this.groups = groups;
+            });
 
         this.chatGroupFb
             .onAdded()
-            .subscribe(group => this.groups.unshift(group));
+            .subscribe(group => {
+                this.chatGroupViewer.loadViewed(group);
+                this.groups.unshift(group)
+            });
 
         this.chatGroupFb
             .onChanged()
@@ -35,6 +49,12 @@ export class ChatGroupListComponent {
                 const index = this.groups.findIndex(g => g.id === group.id);
                 if (index < 0) {
                     return;
+                }
+
+                if (!this.chatActive || group.id !== this.chatActive.id) {
+                    this.chatGroupViewer.loadViewed(group);
+                } else {
+                    this.chatGroupViewer.viewed(group);
                 }
                 this.groups.splice(index, 1);
                 this.groups.unshift(group)
@@ -44,5 +64,11 @@ export class ChatGroupListComponent {
 
     formatTextMessage(message: ChatMessage) {
         return message.content.length > 20 ? message.content.slice(0, 20) + '...' : message.content;
+    }
+
+    goToMessages(group: ChatGroup) {
+        this.chatGroupViewer.viewed(group);
+        this.chatActive = group;
+        this.app.getRootNav().push(ChatMessagesPage, {'chat_group': group});
     }
 }

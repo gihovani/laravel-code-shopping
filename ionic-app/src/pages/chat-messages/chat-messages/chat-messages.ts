@@ -1,8 +1,10 @@
-import {Component} from '@angular/core';
-import {IonicPage, NavController, NavParams} from 'ionic-angular';
+import {Component, ViewChild} from '@angular/core';
+import {Content, InfiniteScroll, IonicPage, NavController, NavParams} from 'ionic-angular';
 import {FirebaseAuthProvider} from "../../../providers/auth/firebase-auth";
-import {ChatMessage} from "../../../model";
-import {Observable} from "rxjs";
+import {ChatGroup, ChatMessage} from "../../../model";
+import {ChatMessageFb} from "../../../providers/firebase/chat-message-fb";
+import {IsCurrentUserPipe} from "../../../pipes/is-current-user/is-current-user";
+import {RedirectIfNotAuthProvider} from "../../../providers/redirect-if-not-auth/redirect-if-not-auth";
 
 
 /**
@@ -18,25 +20,79 @@ import {Observable} from "rxjs";
     templateUrl: 'chat-messages.html',
 })
 export class ChatMessagesPage {
-    messages: ChatMessage[] = [];
+    chatGroup: ChatGroup;
+    messages: { key: string, value: ChatMessage }[] = [];
+    limit = 20;
+    showContent = false;
+    canMoreMessages = true;
+    countNewMessages = 0;
+
+    @ViewChild(Content)
+    content: Content;
 
     constructor(public navCtrl: NavController,
                 public navParams: NavParams,
-                private firebaseAuth: FirebaseAuthProvider) {
+                private chatMessageFb: ChatMessageFb,
+                private firebaseAuth: FirebaseAuthProvider,
+                private isCurrentUser: IsCurrentUserPipe,
+                private redirectIfNotAuth: RedirectIfNotAuthProvider) {
+
+        this.chatGroup = this.navParams.get('chat_group');
+        // this.chatGroup = {
+        //     id: 1,
+        //     name: '',
+        //     photo_url: '',
+        //     viewed: false
+        // };
+    }
+
+    ionViewCanEnter() {
+        return this.redirectIfNotAuth.ionViewCanEnter();
     }
 
     ionViewDidLoad() {
-        const database = this.firebaseAuth.firebase.database();
-        database.ref('/chat_groups/1/messages').on('child_added', (data) => {
-            const message = data.val();
-            message.user = Observable.create((observer) => {
-                database.ref(`/users/${message.user_id}`).on('value', (data) => {
-                    const user = data.val();
-                    observer.next(user);
-                });
+        this.chatMessageFb.latest(this.chatGroup, this.limit)
+            .subscribe((messages) => {
+                this.messages = messages;
+                setTimeout(() => {
+                    this.scrollToBottom();
+                    this.showContent = true;
+                }, 500);
             });
+        this.chatMessageFb.onAdded(this.chatGroup).subscribe((message) => {
             this.messages.push(message);
+            this.countNewMessages++;
+
+            if (this.isCurrentUser.transform(message.value.user_id)) {
+                this.scrollToBottom();
+            }
         });
+    }
+
+    doInfinite(infinityScroll: InfiniteScroll) {
+        this.chatMessageFb.oldest(this.chatGroup, this.limit, this.messages[0].key).subscribe((messages) => {
+            if (messages.length) {
+                this.canMoreMessages = false;
+            }
+            this.messages.unshift(...messages);
+            infinityScroll.complete();
+        }, error => {
+            infinityScroll.complete();
+        });
+    }
+
+    scrollToBottom() {
+        this.countNewMessages = 0;
+        this.content.scrollToBottom(0);
+    }
+
+    showButtonScrollBottom() {
+        const dimensions = this.content.getContentDimensions();
+        const contentHeight = dimensions.contentHeight;
+        const scrollTop = dimensions.scrollTop;
+        const scrollHeight = dimensions.scrollHeight;
+
+        return scrollHeight > scrollTop + contentHeight;
     }
 
 }

@@ -10,6 +10,9 @@ import {MomentModule} from "ngx-moment";
 import {PipesModule} from "../../../pipes/pipes.module";
 import {LongPressModule} from "ionic-long-press";
 import {AudioRecorderProvider} from "../../../providers/audio-recorder/audio-recorder";
+import {ChatMessageFb} from "../../../providers/firebase/chat-message-fb";
+import {PhotoViewer} from "@ionic-native/photo-viewer";
+import {RedirectIfNotAuthProvider} from "../../../providers/redirect-if-not-auth/redirect-if-not-auth";
 
 @NgModule({
     declarations: [
@@ -27,7 +30,10 @@ import {AudioRecorderProvider} from "../../../providers/audio-recorder/audio-rec
         LongPressModule
     ],
     providers: [
-        AudioRecorderProvider
+        AudioRecorderProvider,
+        ChatMessageFb,
+        PhotoViewer,
+        RedirectIfNotAuthProvider
     ]
 })
 export class ChatMessagesPageModule {

@@ -2,7 +2,11 @@ import {Injectable} from '@angular/core';
 import {Media, MediaObject} from "@ionic-native/media";
 import {File} from "@ionic-native/file";
 import {AudioPlatformConfig} from "../../model";
-import {Platform} from "ionic-angular";
+import {AlertController, Platform} from "ionic-angular";
+import {Diagnostic} from "@ionic-native/diagnostic";
+import {StoragePermissionProvider} from "../storage-permission/storage-permission";
+
+const CAN_ACCESS_MICROPHONE_KEY = 'can_access_microphone';
 
 /*
   Generated class for the AudioRecorderProvider provider.
@@ -16,8 +20,37 @@ export class AudioRecorderProvider {
     private recorder: MediaObject;
     private audioPlatformConfig: AudioPlatformConfig;
 
-    constructor(private media: Media, private file: File, private platform: Platform) {
+    constructor(private media: Media,
+                private file: File,
+                private platform: Platform,
+                private storagePermission: StoragePermissionProvider,
+                private diagnostic: Diagnostic,
+                private alertCtrl: AlertController) {
+    }
 
+    async requestPermission(): Promise<boolean> {
+        if (!this.storagePermission.canWriteInStorage) {
+            await this.storagePermission.requestPermission();
+        }
+        if (!this.canAccessMicrophone) {
+            await this.platform.ready();
+            const resultMicrophoneAuth = await this.diagnostic.requestMicrophoneAuthorization();
+            this.canAccessMicrophone = (resultMicrophoneAuth === 'GRANTED');
+        }
+        return this.storagePermission.canWriteInStorage && this.canAccessMicrophone;
+    }
+
+    get hasPermission() {
+        return this.storagePermission.canWriteInStorage && this.canAccessMicrophone;
+    }
+
+    private get canAccessMicrophone(): boolean {
+        const canWriteInStorage = window.localStorage.getItem(CAN_ACCESS_MICROPHONE_KEY);
+        return canWriteInStorage === 'true';
+    }
+
+    private set canAccessMicrophone(value) {
+        window.localStorage.setItem(CAN_ACCESS_MICROPHONE_KEY, value ? 'true' : 'false');
     }
 
     startRecord() {
@@ -66,4 +99,24 @@ export class AudioRecorderProvider {
         return platform == 'ios' ? ios : android;
     }
 
+    showAlertToCloseApp() {
+        const alert = this.alertCtrl.create({
+            title: 'Aviso',
+            message: 'Permissões concedidas. É necessário reabir o app para continuar. Deseja fazer isso agora?',
+            buttons: [
+                {
+                    text: 'Ok',
+                    handler: () => {
+                        this.startRecord();
+                        this.stopRecord().then(() => {
+                            this.platform.exitApp();
+                        });
+                    }
+                }, {
+                    text: 'Cancelar'
+                }
+            ]
+        });
+        alert.present();
+    }
 }

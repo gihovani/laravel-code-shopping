@@ -1,9 +1,10 @@
 import {Component} from '@angular/core';
-import {IonicPage, NavController, NavParams} from 'ionic-angular';
+import {IonicPage, Loading, LoadingController, NavController, NavParams} from 'ionic-angular';
 import {FirebaseAuthProvider} from "../../providers/auth/firebase-auth";
 import {AuthProvider} from "../../providers/auth/auth";
 import {MainPage} from "../main/main";
 import {CustomerCreatePage} from "../customer-create/customer-create";
+import {environment} from "@app/env";
 
 /**
  * Generated class for the LoginPhoneNumberPage page.
@@ -19,33 +20,47 @@ import {CustomerCreatePage} from "../customer-create/customer-create";
 })
 export class LoginPhoneNumberPage {
 
+    showFirebaseUI = environment.showFirebaseUI;
+    loader: Loading;
+
     constructor(public navCtrl: NavController,
                 public navParams: NavParams,
                 private firebaseAuth: FirebaseAuthProvider,
-                private authService: AuthProvider) {
+                private authService: AuthProvider,
+                private loadingCtrl: LoadingController) {
     }
 
     ionViewDidLoad() {
         const unsubscribed = this.firebaseAuth.firebase.auth()
             .onAuthStateChanged(user => {
                 if (user) {
+                    this.loader = this.loadingCtrl.create({
+                        content: 'Carregando...'
+                    });
+                    this.loader.present();
                     this.handleAuthUser();
                     unsubscribed();
                 }
             });
 
-        this.firebaseAuth.makePhoneNumberForm('#firebase-ui');
+        if (environment.showFirebaseUI) {
+            this.firebaseAuth.makePhoneNumberForm('#firebase-ui');
+        }
     }
 
     handleAuthUser() {
         this.authService.login().subscribe(token => {
+            this.loader.dismiss();
             //redirect to main page
             this.redirectToMainPage();
         }, responseError => {
+            this.loader.dismiss();
             //redirect to create account
-            this.firebaseAuth.makePhoneNumberForm('#firebase-ui').then(() => {
-                this.handleAuthUser();
-            });
+            if (environment.showFirebaseUI) {
+                this.firebaseAuth.makePhoneNumberForm('#firebase-ui').then(() => {
+                    this.handleAuthUser();
+                });
+            }
             this.redirectToCustomerCreatePage();
         });
     }

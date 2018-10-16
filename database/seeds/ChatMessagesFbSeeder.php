@@ -4,6 +4,10 @@ use Illuminate\Database\Seeder;
 
 class ChatMessagesFbSeeder extends Seeder
 {
+    private $allFakerFiles;
+    private $fakerFilesPath = 'app/faker/chat_message_files';
+    protected $numMessages = 10;
+
     /**
      * Run the database seeds.
      *
@@ -11,14 +15,22 @@ class ChatMessagesFbSeeder extends Seeder
      */
     public function run()
     {
-        $chatGroups = \CodeShopping\Models\ChatGroup::all();
+        $this->allFakerFiles = $this->getFakerFiles();
+        $chatGroups = $this->getChatGroups();
         $users = \CodeShopping\Models\User::all();
         $chatMessage = new \CodeShopping\Firebase\ChatMessageFb();
-        $chatGroups->each(function ($group) use ($users, $chatMessage) {
+        $self = $this;
+        $chatGroups->each(function ($group) use ($users, $chatMessage, $self) {
             $chatMessage->deleteMessages($group);
-            foreach (range(1, 10) as $value) {
-                $content = Faker\Factory::create()->sentence(10);
-                $type = 'text';
+            foreach (range(1, $self->numMessages) as $value) {
+                $textOfFile = rand(1, 10) % 2 == 0 ? 'text' : 'file';
+                if ($textOfFile === 'text') {
+                    $content = Faker\Factory::create()->sentence(10);
+                    $type = 'text';
+                } else {
+                    $content = $self->getUploadedFile();
+                    $type = $content->getExtension() === 'wav' ? 'audio' : 'image';
+                }
 
                 $chatMessage->create([
                     'chat_group' => $group,
@@ -28,5 +40,26 @@ class ChatMessagesFbSeeder extends Seeder
                 ]);
             }
         });
+    }
+
+    protected function getChatGroups() {
+        return \CodeShopping\Models\ChatGroup::all();
+    }
+
+    private function getFakerFiles(): \Illuminate\Support\Collection
+    {
+        $path = storage_path($this->fakerFilesPath);
+        return collect(\File::allFiles($path));
+    }
+
+    private function getUploadedFile()
+    {
+        /** @var SplFileInfo $file */
+        $file = $this->allFakerFiles->random();
+        $uploadedFile = new \Illuminate\Http\UploadedFile(
+            $file->getRealPath(),
+            str_random(16) . '.' . $file->getExtension()
+        );
+        return $uploadedFile;
     }
 }

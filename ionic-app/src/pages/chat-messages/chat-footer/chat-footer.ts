@@ -1,6 +1,6 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {ChatMessageHttpProvider} from "../../../providers/http/chat-message-http";
-import {ItemSliding, TextInput} from "ionic-angular";
+import {AlertController, ItemSliding, TextInput, ToastController} from "ionic-angular";
 import Timer from 'easytimer.js/dist/easytimer.js';
 import {AudioRecorderProvider} from "../../../providers/audio-recorder/audio-recorder";
 import {Subject} from "rxjs";
@@ -22,6 +22,7 @@ export class ChatFooterComponent implements OnInit {
     messageType = 'text';
     timer = new Timer();
     recording = false;
+    sending = false;
 
     @ViewChild('inputFileImage')
     inputFileImage: TextInput;
@@ -31,7 +32,9 @@ export class ChatFooterComponent implements OnInit {
     subjectReleaseAudioButton = new Subject();
 
     constructor(private chatMessageHttp: ChatMessageHttpProvider,
-                private audioRecorder: AudioRecorderProvider) {
+                private audioRecorder: AudioRecorderProvider,
+                private alertCtrl: AlertController,
+                private toastCtrl: ToastController) {
     }
 
     private getMinutSeconds() {
@@ -79,6 +82,10 @@ export class ChatFooterComponent implements OnInit {
     }
 
     holdAudioButton() {
+        if (!this.audioRecorder.hasPermission) {
+            this.showAlertPermission();
+            return;
+        }
         this.recording = true;
         this.audioRecorder.startRecord();
         this.timer.start({precision: 'seconds'});
@@ -89,16 +96,48 @@ export class ChatFooterComponent implements OnInit {
         });
     }
 
+    showAlertPermission() {
+        const alert = this.alertCtrl.create({
+            title: 'Aviso',
+            message: 'No momento você não tem permissões para gravar áudios. Deseja Ativar?',
+            buttons: [
+                {
+                    text: 'Ok',
+                    handler: () => {
+                        this.audioRecorder.requestPermission().then(result => {
+                            if (result) {
+                                this.audioRecorder.showAlertToCloseApp();
+                            } else {
+                                const toast = this.toastCtrl.create({
+                                    message: 'Não é possivel gravar áudio.',
+                                    duration: 3000
+                                });
+                                toast.present();
+                            }
+                        });
+                    }
+                }, {
+                    text: 'Cancelar'
+                }
+            ]
+        });
+        alert.present();
+    }
 
     releaseAudioButton() {
         this.subjectReleaseAudioButton.next();
     }
 
     sendMessage(data: { content, type }) {
+        this.sending = true;
         this.chatMessageHttp.create(1, data)
             .subscribe(response => {
-                this.text = '';
-                console.log('enviou');
+                if (data.type === 'text') {
+                    this.text = '';
+                }
+                this.sending = false;
+            }, error => {
+                this.sending = false;
             });
     }
 

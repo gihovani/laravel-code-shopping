@@ -14,7 +14,7 @@ import {LoginPhoneNumberPage} from "../pages/login-phone-number/login-phone-numb
 import {ResetPhoneNumberPage} from "../pages/reset-phone-number/reset-phone-number";
 import {FirebaseAuthProvider} from '../providers/auth/firebase-auth';
 import {AuthProvider} from '../providers/auth/auth';
-import {HttpClientModule} from "@angular/common/http";
+import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
 import {MainPage} from "../pages/main/main";
 import {CustomerCreatePage} from "../pages/customer-create/customer-create";
 import {ReactiveFormsModule} from "@angular/forms";
@@ -27,6 +27,16 @@ import {environment} from "@app/env";
 import {Media} from "@ionic-native/media";
 import {File} from "@ionic-native/file";
 import {ChatGroupFbProvider} from '../providers/firebase/chat-group-fb';
+import {FirebasePhoneNumberCheckComponent} from "../components/firebase-phone-number-check/firebase-phone-number-check";
+import {SelectCountriesCodeComponent} from "../components/select-countries-code/select-countries-code";
+import {RefreshTokenInterceptor} from "../providers/auth/refresh-token-interceptor";
+import {RedirectIfNotAuthProvider} from '../providers/redirect-if-not-auth/redirect-if-not-auth';
+import {PipesModule} from "../pipes/pipes.module";
+import {ChatGroupViewerProvider} from '../providers/chat-group-viewer/chat-group-viewer';
+import {DirectivesModule} from "../directives/directives.module";
+import {StoragePermissionProvider} from '../providers/storage-permission/storage-permission';
+import {Diagnostic} from "@ionic-native/diagnostic";
+import {MoreOptionsComponent} from "../components/more-options/more-options";
 
 @NgModule({
     declarations: [
@@ -38,7 +48,10 @@ import {ChatGroupFbProvider} from '../providers/firebase/chat-group-fb';
         ResetPhoneNumberPage,
         CustomerCreatePage,
         MainPage,
-        ChatGroupListComponent
+        ChatGroupListComponent,
+        FirebasePhoneNumberCheckComponent,
+        SelectCountriesCodeComponent,
+        MoreOptionsComponent
     ],
     imports: [
         BrowserModule,
@@ -47,6 +60,8 @@ import {ChatGroupFbProvider} from '../providers/firebase/chat-group-fb';
         ReactiveFormsModule,
         SuperTabsModule.forRoot(),
         ChatMessagesPageModule,
+        PipesModule,
+        DirectivesModule,
         JwtModule.forRoot({
             jwtOptionsProvider: {
                 provide: JWT_OPTIONS,
@@ -72,7 +87,10 @@ import {ChatGroupFbProvider} from '../providers/firebase/chat-group-fb';
         ResetPhoneNumberPage,
         CustomerCreatePage,
         MainPage,
-        ChatGroupListComponent
+        ChatGroupListComponent,
+        FirebasePhoneNumberCheckComponent,
+        SelectCountriesCodeComponent,
+        MoreOptionsComponent
     ],
     providers: [
         StatusBar,
@@ -84,7 +102,16 @@ import {ChatGroupFbProvider} from '../providers/firebase/chat-group-fb';
         ChatMessageHttpProvider,
         Media,
         File,
-        ChatGroupFbProvider
+        ChatGroupFbProvider,
+        {
+            provide: HTTP_INTERCEPTORS,
+            useClass: RefreshTokenInterceptor,
+            multi: true
+        },
+        RedirectIfNotAuthProvider,
+        ChatGroupViewerProvider,
+        StoragePermissionProvider,
+        Diagnostic
 
     ]
 })
