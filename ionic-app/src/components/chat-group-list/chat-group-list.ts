@@ -19,6 +19,7 @@ import {ChatGroupViewerProvider} from "../../providers/chat-group-viewer/chat-gr
 export class ChatGroupListComponent {
     groups: ChatGroup[] = [];
     chatActive: ChatGroup;
+    chatGroupIdToFirstOpen = null;
 
     constructor(private firebaseAuth: FirebaseAuthProvider,
                 private chatGroupFb: ChatGroupFbProvider,
@@ -34,6 +35,7 @@ export class ChatGroupListComponent {
                     this.chatGroupViewer.loadViewed(group);
                 });
                 this.groups = groups;
+                this.goToMessagesFromNotification();
             });
 
         this.chatGroupFb
@@ -64,6 +66,25 @@ export class ChatGroupListComponent {
 
     formatTextMessage(message: ChatMessage) {
         return message.content.length > 20 ? message.content.slice(0, 20) + '...' : message.content;
+    }
+
+    goToMessagesFromNotification(groupId: number = null) {
+        if (groupId) {
+            this.chatGroupIdToFirstOpen = groupId;
+        }
+
+        if (this.chatGroupIdToFirstOpen) {
+            const group = this.getById(this.chatGroupIdToFirstOpen);
+            if (group) {
+                this.goToMessages(group);
+            }
+        }
+    }
+
+    getById(chatGroupId) {
+        const index = this.groups.findIndex((group) => group.id == chatGroupId);
+
+        return (index < 0) ? null : this.groups[index];
     }
 
     goToMessages(group: ChatGroup) {

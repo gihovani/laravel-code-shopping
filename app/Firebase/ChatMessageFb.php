@@ -9,6 +9,7 @@
 namespace CodeShopping\Firebase;
 
 
+use CodeShopping\Events\ChatMessageSentEvent;
 use CodeShopping\Models\ChatGroup;
 use Illuminate\Http\UploadedFile;
 
@@ -38,10 +39,14 @@ class ChatMessageFb
             'type' => $attributes['type'],
             'content' => $attributes['content'],
             'created_at' => ['.sv' => 'timestamp'],
-            'user_id' => $attributes['firebase_uid']
+            'user_id' => $attributes['user']->profile->firebase_uid
         ]);
         $this->setLastMessage($newReference->getKey());
         $this->chatGroup->updateInFb();
+
+        if (!(app()->runningInConsole() && app()->runningUnitTests())) {
+            event(new ChatMessageSentEvent($this->chatGroup, $attributes['type'], $attributes['content'], $attributes['user']));
+        }
     }
 
     private function upload(UploadedFile $file)

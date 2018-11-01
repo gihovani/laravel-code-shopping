@@ -1,18 +1,17 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
-import {Profile, User} from "../../model";
-import {tap} from "rxjs/operators";
-import {environment} from "../../../environments/environment";
-import {AuthService} from "../auth.service";
 
-@Injectable({
-    providedIn: 'root'
-})
-export class UserProfileHttpService {
+import {tap} from "rxjs/operators";
+import {Profile, User} from "../../model";
+import {environment} from "@app/env";
+import {AuthProvider} from "../auth/auth";
+
+@Injectable()
+export class UserProfileHttp {
 
     constructor(private http: HttpClient,
-                private authService: AuthService) {
+                private authService: AuthProvider) {
     }
 
     baseUrl(): string {

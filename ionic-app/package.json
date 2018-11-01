@@ -10,7 +10,8 @@
     "build": "ionic-app-scripts build",
     "lint": "ionic-app-scripts lint",
     "env": "node generate-env.js",
-    "device": "ionic cordova run android --livereload --device"
+    "device": "ionic cordova run android --device --livereload",
+    "emulator": "ionic cordova run android --emulator --livereload"
   },
   "config": {
     "ionic_webpack": "./config/webpack.config.js"
@@ -29,6 +30,7 @@
     "@ionic-native/core": "~4.11.0",
     "@ionic-native/diagnostic": "^4.15.0",
     "@ionic-native/file": "^4.15.0",
+    "@ionic-native/firebase-messaging": "^4.16.0",
     "@ionic-native/media": "^4.15.0",
     "@ionic-native/photo-viewer": "^4.15.0",
     "@ionic-native/splash-screen": "~4.11.0",
@@ -39,6 +41,7 @@
     "cordova-plugin-device": "2.0.2",
     "cordova-plugin-file": "^6.0.1",
     "cordova-plugin-firebase-authentication": "^1.0.1",
+    "cordova-plugin-firebase-messaging": "^1.1.4",
     "cordova-plugin-ionic-keyboard": "^2.0.5",
     "cordova-plugin-ionic-webview": "^2.0.0",
     "cordova-plugin-media": "^5.0.2",
@@ -79,7 +82,11 @@
         "FIREBASE_AUTH_VERSION": "16.0.+"
       },
       "com-sarriaroman-photoviewer": {},
-      "cordova.plugins.diagnostic": {}
+      "cordova.plugins.diagnostic": {},
+      "cordova-plugin-firebase-messaging": {
+        "FIREBASE_MESSAGING_VERSION": "17.3.+",
+        "ANDROID_SUPPORT_VERSION": "27.+"
+      }
     },
     "platforms": [
       "android"

@@ -38,6 +38,16 @@ export interface User {
     readonly updated_at?: string;
 }
 
+export interface Profile {
+    name?: string;
+    email?: string;
+    password?: string;
+    photo_url?: File | false | null;
+    phone_number?: string;
+    token?: string;
+    device_token?: string;
+}
+
 export enum Role {
     SELLER = 1,
     CUSTOMER = 2

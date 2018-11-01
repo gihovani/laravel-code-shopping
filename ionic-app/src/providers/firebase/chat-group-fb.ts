@@ -81,7 +81,7 @@ export class ChatGroupFbProvider {
         return Observable.create(observer => {
             this.database.ref(`chat_groups_messages/${group.id}/last_message_id`)
                 .on('value', data => {
-                    if (data.exists()) {
+                    if (!data.exists()) {
                         return '';
                     }
 
@@ -95,9 +95,10 @@ export class ChatGroupFbProvider {
 
     private getMessage(group: ChatGroup, messageId: string): Observable<ChatMessage> {
         return Observable.create(observer => {
-            this.database.ref(`chat_groups_messages/${group.id}/nessages/${messageId}`)
+            this.database.ref(`chat_groups_messages/${group.id}/messages/${messageId}`)
                 .once('value', data => {
                     const message = data.val() as ChatMessage;
+
                     this.getUser(message.user_id).subscribe(user => {
                         message.user = user
                         observer.next(message);

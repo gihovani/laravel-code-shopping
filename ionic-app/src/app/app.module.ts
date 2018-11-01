@@ -37,6 +37,9 @@ import {DirectivesModule} from "../directives/directives.module";
 import {StoragePermissionProvider} from '../providers/storage-permission/storage-permission';
 import {Diagnostic} from "@ionic-native/diagnostic";
 import {MoreOptionsComponent} from "../components/more-options/more-options";
+import {FirebaseMessaging} from "@ionic-native/firebase-messaging";
+import {PushNotificationProvider} from '../providers/push-notification/push-notification';
+import {UserProfileHttp} from "../providers/http/user-profile-http";
 
 @NgModule({
     declarations: [
@@ -103,16 +106,18 @@ import {MoreOptionsComponent} from "../components/more-options/more-options";
         Media,
         File,
         ChatGroupFbProvider,
+        ChatGroupViewerProvider,
+        StoragePermissionProvider,
+        Diagnostic,
         {
             provide: HTTP_INTERCEPTORS,
             useClass: RefreshTokenInterceptor,
             multi: true
         },
         RedirectIfNotAuthProvider,
-        ChatGroupViewerProvider,
-        StoragePermissionProvider,
-        Diagnostic
-
+        FirebaseMessaging,
+        PushNotificationProvider,
+        UserProfileHttp
     ]
 })
 export class AppModule {

@@ -72,6 +72,7 @@ export interface Profile {
     photo_url?: File | false | null;
     phone_number?: string;
     token?: string;
+    device_token?: string;
 }
 
 export interface ChatGroup {

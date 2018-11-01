@@ -86,6 +86,7 @@
     <plugin name="cordova-plugin-firebase-authentication" spec="^1.0.1">
         <variable name="FIREBASE_AUTH_VERSION" value="16.0.+" />
     </plugin>
-    <engine name="android" spec="~7.1.0" />
     <plugin name="com-sarriaroman-photoviewer" spec="^1.1.18" />
+    <allow-navigation href="http://192.168.2.1:8100" sessionid="d314e6d9" />
+    <engine name="android" spec="7.1.0" />
 </widget>

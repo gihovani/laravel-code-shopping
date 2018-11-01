@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "4994c5cfa98612cefa12e8d104ee3565",
+    "content-hash": "c9c25dcbb861a557ec9142feedae5027",
     "packages": [
         {
             "name": "cocur/slugify",
@@ -809,12 +809,12 @@
             "version": "v1.23.0",
             "source": {
                 "type": "git",
-                "url": "https://github.com/GoogleCloudPlatform/google-cloud-php-core.git",
+                "url": "https://github.com/googleapis/google-cloud-php-core.git",
                 "reference": "3fdfca2fe891d959accaa0ff16f2641e23542256"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/GoogleCloudPlatform/google-cloud-php-core/zipball/3fdfca2fe891d959accaa0ff16f2641e23542256",
+                "url": "https://api.github.com/repos/googleapis/google-cloud-php-core/zipball/3fdfca2fe891d959accaa0ff16f2641e23542256",
                 "reference": "3fdfca2fe891d959accaa0ff16f2641e23542256",
                 "shasum": ""
             },
@@ -868,12 +868,12 @@
             "version": "v1.3.4",
             "source": {
                 "type": "git",
-                "url": "https://github.com/GoogleCloudPlatform/google-cloud-php-storage.git",
+                "url": "https://github.com/googleapis/google-cloud-php-storage.git",
                 "reference": "240de4b1d65fad78983d80ca78bed7b1facd6467"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/GoogleCloudPlatform/google-cloud-php-storage/zipball/240de4b1d65fad78983d80ca78bed7b1facd6467",
+                "url": "https://api.github.com/repos/googleapis/google-cloud-php-storage/zipball/240de4b1d65fad78983d80ca78bed7b1facd6467",
                 "reference": "240de4b1d65fad78983d80ca78bed7b1facd6467",
                 "shasum": ""
             },
@@ -2473,6 +2473,63 @@
                 "uuid"
             ],
             "time": "2018-01-20T00:28:24+00:00"
+        },
+        {
+            "name": "redjanym/php-firebase-cloud-messaging",
+            "version": "v1.1.4",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/redjanym/php-firebase-cloud-messaging.git",
+                "reference": "95665f66001fe67e4aadeeeb72741a0a1714b31e"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/redjanym/php-firebase-cloud-messaging/zipball/95665f66001fe67e4aadeeeb72741a0a1714b31e",
+                "reference": "95665f66001fe67e4aadeeeb72741a0a1714b31e",
+                "shasum": ""
+            },
+            "require": {
+                "guzzlehttp/guzzle": "*",
+                "php": ">=5.5"
+            },
+            "require-dev": {
+                "mockery/mockery": "*",
+                "phpunit/phpunit": "*"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "sngrl\\PhpFirebaseCloudMessaging\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Sngrl",
+                    "email": "i@sngrl.ru"
+                },
+                {
+                    "name": "Redjan Ymeraj",
+                    "email": "ymerajr@yahoo.com"
+                }
+            ],
+            "description": "PHP API for Firebase Cloud Messaging from Google",
+            "homepage": "https://github.com/sngrl/php-firebase-cloud-messaging",
+            "keywords": [
+                "FCM",
+                "android",
+                "chrome",
+                "cloud",
+                "firebase",
+                "google",
+                "ios",
+                "notifications",
+                "php"
+            ],
+            "time": "2018-04-21T10:43:51+00:00"
         },
         {
             "name": "rize/uri-template",

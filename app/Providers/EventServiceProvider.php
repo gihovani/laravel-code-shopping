@@ -15,6 +15,10 @@ class EventServiceProvider extends ServiceProvider
     protected $listen = [
         'CodeShopping\Events\UserCreatedEvent' => [
             'CodeShopping\Listeners\SendEmailToDefinePasswordListener',
+        ],
+
+        'CodeShopping\Events\ChatMessageSentEvent' => [
+            'CodeShopping\Listeners\SendPushChatGroupMembersListener',
         ]
     ];
 
