@@ -1,100 +1,41 @@
-var fs = require('fs');
-var path = require('path');
+const filestocopy = [{
+    './icons/drawable-hdpi/ic_card_giftcard.png': [
+        './platforms/android/app/src/main/res/drawable-land-hdpi/ic_card_giftcard.png',
+        './platforms/android/app/src/main/res/drawable-port-hdpi/ic_card_giftcard.png',
+    ],
+    './icons/drawable-mdpi/ic_card_giftcard.png': [
+        './platforms/android/app/src/main/res/drawable-land-mdpi/ic_card_giftcard.png',
+        './platforms/android/app/src/main/res/drawable-port-mdpi/ic_card_giftcard.png',
+    ],
+    './icons/drawable-xhdpi/ic_card_giftcard.png': [
+        './platforms/android/app/src/main/res/drawable-land-xhdpi/ic_card_giftcard.png',
+        './platforms/android/app/src/main/res/drawable-port-xhdpi/ic_card_giftcard.png',
+    ],
+    './icons/drawable-xxhdpi/ic_card_giftcard.png': [
+        './platforms/android/app/src/main/res/drawable-land-xxhdpi/ic_card_giftcard.png',
+        './platforms/android/app/src/main/res/drawable-port-xxhdpi/ic_card_giftcard.png',
+    ],
+    './icons/drawable-xxxhdpi/ic_card_giftcard.png': [
+        './platforms/android/app/src/main/res/drawable-land-xxxhdpi/ic_card_giftcard.png',
+        './platforms/android/app/src/main/res/drawable-port-xxxhdpi/ic_card_giftcard.png',
+    ],
+}];
 
-var sourceDir = 'resources/android/custom';
-var platformDir = 'platforms/android';
-var resourceDirs = [
-    'res/drawable-ldpi',
-    'res/drawable-mdpi',
-    'res/drawable-mdpi-v11',
-    'res/drawable-hdpi',
-    'res/drawable-hdpi-v11',
-    'res/drawable-xhdpi',
-    'res/drawable-xhdpi-v11',
-    'res/drawable-xxhdpi',
-    'res/drawable-xxhdpi-v11',
-    'res/drawable-xxxhdpi',
-    'res/drawable-xxxhdpi-v11'
-];
+const fs = require('fs');
+const path = require('path');
 
-module.exports = function (ctx) {
-    if (ctx.opts.platforms.indexOf('android') < 0) {
-        return;
-    }
+filestocopy.forEach(obj => {
+    Object.keys(obj).forEach(key => {
+        const srcFile = key;
 
-    var Q = ctx.requireCordovaModule('q');
-    var deferred = Q.defer();
-    var androidPlatformDir = path.join(ctx.opts.projectRoot, platformDir);
-    var customResourcesDir = path.join(ctx.opts.projectRoot, sourceDir);
-
-    function copy(src, dest) {
-        var deferred = Q.defer();
-
-        fs.stat(src, function (err, stats) {
-            if (err || !stats.isFile()) {
-                return deferred.reject(err);
+        for (const val of obj[key]) {
+            const destFile = val;
+            console.log(`copy ${srcFile} to ${destFile}`);
+            const destDir = path.dirname(destFile);
+            if (fs.existsSync(srcFile) && fs.existsSync(destDir)) {
+                fs.createReadStream(srcFile)
+                    .pipe(fs.createWriteStream(destFile));
             }
-
-            fs.stat(path.dirname(dest), function (err, stats) {
-                if (err || !stats.isDirectory()) {
-                    return deferred.reject(err);
-                }
-
-                var rs = fs.createReadStream(src);
-
-                rs.on('error', function (err) {
-                    console.error(err.stack);
-                    deferred.reject(err);
-                });
-
-                var ws = fs.createWriteStream(dest);
-
-                ws.on('error', function (err) {
-                    console.error(err.stack);
-                    deferred.reject(err);
-                });
-
-                ws.on('close', function () {
-                    deferred.resolve();
-                });
-
-                rs.pipe(ws);
-            });
-        });
-
-        return deferred.promise;
-    }
-
-    fs.stat(customResourcesDir, function (err, stats) {
-        if (err || !stats.isDirectory()) {
-            return deferred.resolve();
         }
-
-        fs.readdir(customResourcesDir, function (err, files) {
-            var copies = [];
-            for (var i in files) {
-                var innerDir = path.join(customResourcesDir, files[i]);
-                var innerFiles = fs.readdirSync(innerDir);
-                for (var k in innerFiles) {
-                    var innerFilePath = path.join(innerDir, innerFiles[k]);
-                    var innerDestPath = path.join(androidPlatformDir, 'res', files[i], innerFiles[k]);
-
-                    copies.push([innerFilePath, innerDestPath]);
-                }
-            }
-
-            copies.map(function (args) {
-                return copy.apply(copy, args);
-            });
-
-            Q.all(copies).then(function (r) {
-                deferred.resolve();
-            }, function (err) {
-                console.error(err.stack);
-                deferred.reject(err);
-            });
-        });
     });
-
-    return deferred.promise;
-}
+})

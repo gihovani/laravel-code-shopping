@@ -22,13 +22,13 @@ Route::group([
         ->patch('customers/phone_numbers/{token}', 'CustomerController@updatePhoneNumber');
     Route::name('customers')->post('customers', 'CustomerController@store');
 
-    Route::group(['middleware' => ['auth:api']], function () {
+//    Route::group(['middleware' => ['auth:api']], function () {
         Route::name('logout')->post('logout', 'AuthController@logout');
 //    Route::group(['middleware' => ['auth:api', 'jwt.refresh']], function () {
         Route::name('profile')->patch('profile', 'UserProfileController@update');
         Route::name('chat_groups.messages')->post('chat_groups/{chat_group}/messages', 'ChatMessageFbController@store');
 
-        Route::group(['middleware' => ['can:is_seller']], function () {
+//        Route::group(['middleware' => ['can:is_seller']], function () {
             Route::name('me')->get('me', 'AuthController@me');
             Route::patch('products/{product}/restore', 'ProductController@restore');
             Route::resource('products', 'ProductController', [
@@ -93,6 +93,13 @@ Route::group([
                 ]
             ]);
 
-        });
-    });
+            Route::resource('chat_groups.link_invitations', 'ChatGroupInvitationController', [
+                'except' => [
+                    'create',
+                    'edit'
+                ]
+            ]);
+
+//        });
+//    });
 });

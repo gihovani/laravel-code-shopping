@@ -2,9 +2,11 @@
 
 namespace CodeShopping\Providers;
 
-use CodeShopping\Models\ProductOutput;
-use CodeShopping\Observers\ProductInputObserver;
+use CodeShopping\Models\ChatGroupInvitation;
 use CodeShopping\Models\ProductInput;
+use CodeShopping\Models\ProductOutput;
+use CodeShopping\Observers\ChatGroupInvitationObserver;
+use CodeShopping\Observers\ProductInputObserver;
 use CodeShopping\Observers\ProductOutputObserver;
 use Illuminate\Support\ServiceProvider;
 use Kreait\Firebase;
@@ -21,6 +23,7 @@ class AppServiceProvider extends ServiceProvider
         \Schema::defaultStringLength(191);
         ProductInput::observe(ProductInputObserver::class);
         ProductOutput::observe(ProductOutputObserver::class);
+        ChatGroupInvitation::observe(ChatGroupInvitationObserver::class);
     }
 
     /**
