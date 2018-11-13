@@ -3,7 +3,6 @@ import {ChatGroup, ChatGroupLinkInvitationUser, ChatGroupLinkInvitationUserStatu
 import {FieldsPagination} from "../../../../common/fields-pagination";
 import {FieldsSortColumn} from "../../../../common/fields-sort-column";
 import {ActivatedRoute} from "@angular/router";
-import {ChatGroupLinkInvitationHttpService} from "../../../../services/http/chat-group-link-invitation-http.service";
 import {ChatGroupLinkInvitationUserHttpService} from "../../../../services/http/chat-group-link-invitation-user-http.service";
 
 @Component({
