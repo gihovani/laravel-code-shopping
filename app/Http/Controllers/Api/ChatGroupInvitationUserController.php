@@ -38,18 +38,18 @@ class ChatGroupInvitationUserController extends Controller
         }
     }
 
-    public function show(ChatGroup $chatGroup, ChatGroupInvitationUser $chatGroupInvitationUser)
+    public function show(ChatGroup $chatGroup, ChatGroupInvitationUser $invitation)
     {
-        $this->assertInvitation($chatGroup, $chatGroupInvitationUser);
+        $this->assertInvitation($chatGroup, $invitation);
 
-        return new ChatGroupInvitationUserResource($chatGroupInvitationUser);
+        return new ChatGroupInvitationUserResource($invitation);
     }
 
-    public function update(Request $request, ChatGroup $chatGroup, ChatGroupInvitationUser $chatGroupInvitationUser)
+    public function update(Request $request, ChatGroup $chatGroup, ChatGroupInvitationUser $invitation)
     {
-        $this->assertInvitation($chatGroup, $chatGroupInvitationUser);
+        $this->assertInvitation($chatGroup, $invitation);
 
-        if ($chatGroupInvitationUser->status != ChatGroupInvitationUser::STATUS_PENDING) {
+        if ($invitation->status != ChatGroupInvitationUser::STATUS_PENDING) {
             abort(403, 'Este convite não está mais pendente.');
         }
 
@@ -59,14 +59,14 @@ class ChatGroupInvitationUserController extends Controller
                 ChatGroupInvitationUser::STATUS_REPROVED
         ]);
 
-        $chatGroupInvitationUser->status = $request->get('status');
-        $chatGroupInvitationUser->save();
-        return new ChatGroupInvitationUserResource($chatGroupInvitationUser);
+        $invitation->status = $request->get('status');
+        $invitation->save();
+        return new ChatGroupInvitationUserResource($invitation);
     }
 
-    private function assertInvitation(ChatGroup $chatGroup, ChatGroupInvitationUser $chatGroupInvitationUser)
+    private function assertInvitation(ChatGroup $chatGroup, ChatGroupInvitationUser $invitation)
     {
-        if ($chatGroup->id != $chatGroupInvitationUser->chatGroupInvitation->chat_group_id) {
+        if ($chatGroup->id != $invitation->chatGroupInvitation->chat_group_id) {
             abort(404);
         }
     }

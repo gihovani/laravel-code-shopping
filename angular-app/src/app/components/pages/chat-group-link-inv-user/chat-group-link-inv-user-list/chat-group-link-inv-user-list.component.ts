@@ -62,4 +62,8 @@ export class ChatGroupLinkInvUserListComponent implements OnInit {
         this.searchText = search;
         this.getItems();
     }
+
+    onStatusChanged(status: ChatGroupLinkInvitationUserStatus, invitation: ChatGroupLinkInvitationUser) {
+        invitation.status = status;
+    }
 }
