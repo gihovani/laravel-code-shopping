@@ -13,6 +13,7 @@ import {UserProfileComponent} from "./components/pages/user-profile/user-profile
 import {ChatGroupListComponent} from "./components/pages/chat-group/chat-group-list/chat-group-list.component";
 import {ChatGroupUserListComponent} from "./components/pages/chat-group-user/chat-group-user-list/chat-group-user-list.component";
 import {ChatGroupLinkInvListComponent} from "./components/pages/chat-group-link-inv/chat-group-link-inv-list/chat-group-link-inv-list.component";
+import {ChatGroupLinkInvUserListComponent} from "./components/pages/chat-group-link-inv-user/chat-group-link-inv-user-list/chat-group-link-inv-user-list.component";
 
 const routes: Routes = [
     {path: 'login', component: LoginComponent},
@@ -27,6 +28,11 @@ const routes: Routes = [
     {
         path: 'chat-groups/:chat_group/link-invitations/list',
         component: ChatGroupLinkInvListComponent,
+        canActivate: [AuthGuard]
+    },
+    {
+        path: 'chat-groups/:chat_group/user-invitations/list',
+        component: ChatGroupLinkInvUserListComponent,
         canActivate: [AuthGuard]
     },
     {path: 'chat-groups/:chat_group/users/list', component: ChatGroupUserListComponent, canActivate: [AuthGuard]},

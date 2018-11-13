@@ -85,6 +85,20 @@ export interface ChatGroupLinkInvitation {
     readonly updated_at?: string;
 }
 
+export enum ChatGroupLinkInvitationUserStatus {
+    PENDING = 1,
+    APPROVE = 2,
+    REPROVE = 3
+}
+
+export interface ChatGroupLinkInvitationUser {
+    id?: number;
+    user: User;
+    status: ChatGroupLinkInvitationUserStatus;
+    readonly created_at?: string;
+    readonly updated_at?: string;
+}
+
 export interface ChatGroup {
     id?: number;
     name: string;

@@ -14,6 +14,10 @@ class ChatGroupInvitationObserver
 
     public function updating(ChatGroupInvitation $invitation)
     {
-        $invitation->remaining = $invitation->total;
+        $oldRemaining = $invitation->getOriginal('remaining');
+        $newRemaining = $invitation->remaining;
+        if ($oldRemaining == $newRemaining) {
+            $invitation->remaining = $invitation->total;
+        }
     }
 }

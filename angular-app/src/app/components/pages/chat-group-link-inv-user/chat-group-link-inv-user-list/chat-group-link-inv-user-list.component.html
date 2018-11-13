@@ -1,0 +1,36 @@
+<div class="row">
+    <h1>Usuários que querem entrar no Grupo - {{chatGroup?.name}}</h1>
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th style="width: 5%">ID</th>
+            <th style="width: 50%">Usuário</th>
+            <th style="width: 35%">Status</th>
+            <th style="width: 10%">Criado em</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let inv of invitations | paginate: {itemsPerPage: pagination.itemsPerPage, currentPage: pagination.page, totalItems: pagination.totalItems}">
+            <td>{{inv.id}}</td>
+            <td>{{inv.user.name + ', ' + inv.user.profile.phone_number}}</td>
+            <td>
+                <ng-container *ngIf="inv.status !== STATUS.PENDING; else elseStatus">
+                    <h6>
+                        <span class="badge"
+                              [ngClass]="{'badge-danger': inv.status !== STATUS.APPROVE, 'badge-success': inv.status === STATUS.APPROVE}">
+                          {{inv.status === STATUS.APPROVE ? 'Aprovado' : 'Reprovado'}}
+                        </span>
+                    </h6>
+                </ng-container>
+                <ng-container #elseStatus>
+
+                </ng-container>
+            </td>
+            <td>{{inv.created_at | date: 'dd/MM/yyyy'}}</td>
+        </tr>
+        </tbody>
+    </table>
+
+    <pagination-controls (pageChange)="pageChanged($event)" previousLabel="Anterior"
+                         nextLabel="Próxima"></pagination-controls>
+</div>

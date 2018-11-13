@@ -73,6 +73,7 @@ import {ChatGroupLinkInvFormComponent} from './components/pages/chat-group-link-
 import {ChatGroupLinkInvEditModalComponent} from './components/pages/chat-group-link-inv/chat-group-link-inv-edit-modal/chat-group-link-inv-edit-modal.component';
 import {ChatGroupLinkInvDeleteModalComponent} from './components/pages/chat-group-link-inv/chat-group-link-inv-delete-modal/chat-group-link-inv-delete-modal.component';
 import {ChatGroupLinkInvNewModalComponent} from './components/pages/chat-group-link-inv/chat-group-link-inv-new-modal/chat-group-link-inv-new-modal.component';
+import { ChatGroupLinkInvUserListComponent } from './components/pages/chat-group-link-inv-user/chat-group-link-inv-user-list/chat-group-link-inv-user-list.component';
 
 
 @NgModule({
@@ -140,7 +141,8 @@ import {ChatGroupLinkInvNewModalComponent} from './components/pages/chat-group-l
         ChatGroupLinkInvFormComponent,
         ChatGroupLinkInvEditModalComponent,
         ChatGroupLinkInvDeleteModalComponent,
-        ChatGroupLinkInvNewModalComponent
+        ChatGroupLinkInvNewModalComponent,
+        ChatGroupLinkInvUserListComponent
     ],
     imports: [
         AppRoutingModule,
