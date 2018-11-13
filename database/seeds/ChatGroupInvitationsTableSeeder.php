@@ -18,7 +18,6 @@ class ChatGroupInvitationsTableSeeder extends Seeder
             ->make()
             ->each(function ($invitation) use ($chatGroups) {
                 $invitation->chat_group_id = $chatGroups->first()->id;
-                $invitation->slug = str_random();
                 $invitation->save();
             });
 
@@ -26,7 +25,6 @@ class ChatGroupInvitationsTableSeeder extends Seeder
             ->make()
             ->each(function ($invitation) use ($chatGroups) {
                 $invitation->chat_group_id = $chatGroups->random()->id;
-                $invitation->slug = str_random();
                 $invitation->save();
             });
     }

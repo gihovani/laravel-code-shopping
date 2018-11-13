@@ -3,9 +3,11 @@
 namespace CodeShopping\Providers;
 
 use CodeShopping\Models\ChatGroupInvitation;
+use CodeShopping\Models\ChatGroupInvitationUser;
 use CodeShopping\Models\ProductInput;
 use CodeShopping\Models\ProductOutput;
 use CodeShopping\Observers\ChatGroupInvitationObserver;
+use CodeShopping\Observers\ChatGroupInvitationUserObserver;
 use CodeShopping\Observers\ProductInputObserver;
 use CodeShopping\Observers\ProductOutputObserver;
 use Illuminate\Support\ServiceProvider;
@@ -24,6 +26,7 @@ class AppServiceProvider extends ServiceProvider
         ProductInput::observe(ProductInputObserver::class);
         ProductOutput::observe(ProductOutputObserver::class);
         ChatGroupInvitation::observe(ChatGroupInvitationObserver::class);
+        ChatGroupInvitationUser::observe(ChatGroupInvitationUserObserver::class);
     }
 
     /**

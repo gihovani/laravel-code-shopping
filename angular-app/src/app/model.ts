@@ -75,6 +75,16 @@ export interface Profile {
     device_token?: string;
 }
 
+export interface ChatGroupLinkInvitation {
+    id?: number;
+    total: number;
+    remaining: number;
+    chat_group?: ChatGroup;
+    expires_at?: string;
+    readonly created_at?: string;
+    readonly updated_at?: string;
+}
+
 export interface ChatGroup {
     id?: number;
     name: string;

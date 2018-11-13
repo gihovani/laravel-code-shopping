@@ -1,0 +1,17 @@
+<div class="form-group" [formGroup]="form">
+    <label [for]="total.id">{{total.label}}</label>
+    <input type="number" [id]="total.id" class="form-control" formControlName="total" isInvalid>
+    <field-error [field]="form.get('total')" [label]="total.label"
+                 [messages]="total.validationMessage"></field-error>
+</div>
+<div class="form-group" [formGroup]="form">
+    <label [for]="remaining.id">{{remaining.label}}</label>
+    <input type="number" [id]="remaining.id" class="form-control" formControlName="remaining" readonly
+           [value]="!form.get('remaining').value?form.get('total').value:form.get('remaining').value">
+</div>
+<div class="form-group" [formGroup]="form">
+    <label [for]="expires_at.id">{{expires_at.label}}</label>
+    <input type="date" [id]="expires_at.id" class="form-control" formControlName="expires_at" isInvalid>
+    <field-error [field]="form.get('expires_at')" [label]="expires_at.label"
+                 [messages]="expires_at.validationMessage"></field-error>
+</div>

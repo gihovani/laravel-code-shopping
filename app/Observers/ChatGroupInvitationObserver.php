@@ -11,4 +11,9 @@ class ChatGroupInvitationObserver
         $invitation->slug = str_random(7);
         $invitation->remaining = $invitation->total;
     }
+
+    public function updating(ChatGroupInvitation $invitation)
+    {
+        $invitation->remaining = $invitation->total;
+    }
 }

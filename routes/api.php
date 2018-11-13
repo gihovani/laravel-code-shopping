@@ -27,6 +27,7 @@ Route::group([
 //    Route::group(['middleware' => ['auth:api', 'jwt.refresh']], function () {
         Route::name('profile')->patch('profile', 'UserProfileController@update');
         Route::name('chat_groups.messages')->post('chat_groups/{chat_group}/messages', 'ChatMessageFbController@store');
+        Route::name('chat_groups.invitations')->post('chat_invitations/{invitation_slug}', 'ChatGroupInvitationUserController@store');
 
 //        Route::group(['middleware' => ['can:is_seller']], function () {
             Route::name('me')->get('me', 'AuthController@me');
@@ -97,6 +98,14 @@ Route::group([
                 'except' => [
                     'create',
                     'edit'
+                ]
+            ]);
+
+            Route::resource('chat_groups.invitations', 'ChatGroupInvitationUserController', [
+                'only' => [
+                    'index',
+                    'show',
+                    'update'
                 ]
             ]);
 

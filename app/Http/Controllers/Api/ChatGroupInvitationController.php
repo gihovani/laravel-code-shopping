@@ -8,7 +8,6 @@ use CodeShopping\Http\Resources\ChatGroupInvitationCollection;
 use CodeShopping\Http\Resources\ChatGroupInvitationResource;
 use CodeShopping\Models\ChatGroup;
 use CodeShopping\Models\ChatGroupInvitation;
-use Illuminate\Http\Request;
 
 class ChatGroupInvitationController extends Controller
 {
@@ -20,7 +19,8 @@ class ChatGroupInvitationController extends Controller
 
     public function store(ChatGroupInvitationRequest $request, ChatGroup $chatGroup)
     {
-        $linkInvitations = ChatGroupInvitation::create($request->except('chat_group_id') + ['chat_group' => $chatGroup->id]);
+        $request->merge(['chat_group_id' => $chatGroup->id]);
+        $linkInvitations = ChatGroupInvitation::create($request->all());
         return new ChatGroupInvitationResource($linkInvitations);
     }
 
@@ -39,10 +39,10 @@ class ChatGroupInvitationController extends Controller
         return new ChatGroupInvitationResource($linkInvitation);
     }
 
-    public function destroy(ChatGroup $chatGroup, ChatGroupInvitation $linkInvitations)
+    public function destroy(ChatGroup $chatGroup, ChatGroupInvitation $linkInvitation)
     {
-        $this->assertInvitation($chatGroup, $linkInvitations);
-        $linkInvitations->delete();
+        $this->assertInvitation($chatGroup, $linkInvitation);
+        $linkInvitation->delete();
         return response()->json([], 204);
     }
 

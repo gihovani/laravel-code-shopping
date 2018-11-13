@@ -16,7 +16,7 @@
       <th style="width: 5%" [sortColumn]="sortColumn" columnName="id" (onSort)="onSort($event)">
         ID
       </th>
-      <th style="width: 65%" [sortColumn]="sortColumn" columnName="name" (onSort)="onSort($event)">
+      <th style="width: 60%" [sortColumn]="sortColumn" columnName="name" (onSort)="onSort($event)">
         Nome
       </th>
       <th style="width: 8%">
@@ -25,7 +25,7 @@
       <th style="width: 12%" [sortColumn]="sortColumn" columnName="created_at" (onSort)="onSort($event)">
         Criado Em
       </th>
-      <th style="width: 10%">
+      <th style="width: 15%">
         Ações
       </th>
     </tr>
@@ -39,6 +39,9 @@
       <td>
         <a [routerLink]="['/chat-groups', chatGroup.id, 'users', 'list']">
           <i class="fas fa-user"></i>
+        </a> |
+        <a [routerLink]="['/chat-groups', chatGroup.id, 'link-invitations', 'list']">
+          <i class="fas fa-link"></i>
         </a> |
         <a href="javascript:void(0)" (click)="editService.showModal(chatGroup.id)">
           <i class="fas fa-edit"></i>

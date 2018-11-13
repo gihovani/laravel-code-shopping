@@ -4,11 +4,11 @@ namespace CodeShopping\Providers;
 
 use CodeShopping\Common\OnlyTrashed;
 use CodeShopping\Models\Category;
+use CodeShopping\Models\ChatGroupInvitation;
 use CodeShopping\Models\Product;
 use CodeShopping\Models\User;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
+use Illuminate\Support\Facades\Route;
 
 class RouteServiceProvider extends ServiceProvider
 {
@@ -48,6 +48,9 @@ class RouteServiceProvider extends ServiceProvider
             $query = User::query();
             $query = $this->onlyTrashedIfRequested($query);
             return $query->find($value);
+        });
+        Route::bind('invitation_slug', function ($value) {
+            return ChatGroupInvitation::where('slug', $value)->first();
         });
     }
 

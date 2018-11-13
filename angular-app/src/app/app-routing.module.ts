@@ -12,6 +12,7 @@ import {ProductPhotoManagerComponent} from "./components/pages/product-photo/pro
 import {UserProfileComponent} from "./components/pages/user-profile/user-profile.component";
 import {ChatGroupListComponent} from "./components/pages/chat-group/chat-group-list/chat-group-list.component";
 import {ChatGroupUserListComponent} from "./components/pages/chat-group-user/chat-group-user-list/chat-group-user-list.component";
+import {ChatGroupLinkInvListComponent} from "./components/pages/chat-group-link-inv/chat-group-link-inv-list/chat-group-link-inv-list.component";
 
 const routes: Routes = [
     {path: 'login', component: LoginComponent},
@@ -23,6 +24,11 @@ const routes: Routes = [
     {path: 'outputs/list', component: ProductOutputListComponent, canActivate: [AuthGuard]},
     {path: 'users/list', component: UserListComponent, canActivate: [AuthGuard]},
     {path: 'profile', component: UserProfileComponent, canActivate: [AuthGuard]},
+    {
+        path: 'chat-groups/:chat_group/link-invitations/list',
+        component: ChatGroupLinkInvListComponent,
+        canActivate: [AuthGuard]
+    },
     {path: 'chat-groups/:chat_group/users/list', component: ChatGroupUserListComponent, canActivate: [AuthGuard]},
     {path: 'chat-groups/list', component: ChatGroupListComponent, canActivate: [AuthGuard]},
     {path: '', redirectTo: '/login', pathMatch: 'full'}

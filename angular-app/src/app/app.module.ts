@@ -68,6 +68,11 @@ import {UserIdAutocompleteComponent} from './components/select2/user-id-autocomp
 import {SellerIdAutocompleteComponent} from './components/select2/seller-id-autocomplete/seller-id-autocomplete.component';
 import {CustomerIdAutocompleteComponent} from './components/select2/customer-id-autocomplete/customer-id-autocomplete.component';
 import {ChatGroupUserDeleteModalComponent} from './components/pages/chat-group-user/chat-group-user-delete-modal/chat-group-user-delete-modal.component';
+import {ChatGroupLinkInvListComponent} from './components/pages/chat-group-link-inv/chat-group-link-inv-list/chat-group-link-inv-list.component';
+import {ChatGroupLinkInvFormComponent} from './components/pages/chat-group-link-inv/chat-group-link-inv-form/chat-group-link-inv-form.component';
+import {ChatGroupLinkInvEditModalComponent} from './components/pages/chat-group-link-inv/chat-group-link-inv-edit-modal/chat-group-link-inv-edit-modal.component';
+import {ChatGroupLinkInvDeleteModalComponent} from './components/pages/chat-group-link-inv/chat-group-link-inv-delete-modal/chat-group-link-inv-delete-modal.component';
+import {ChatGroupLinkInvNewModalComponent} from './components/pages/chat-group-link-inv/chat-group-link-inv-new-modal/chat-group-link-inv-new-modal.component';
 
 
 @NgModule({
@@ -130,7 +135,12 @@ import {ChatGroupUserDeleteModalComponent} from './components/pages/chat-group-u
         UserIdAutocompleteComponent,
         SellerIdAutocompleteComponent,
         CustomerIdAutocompleteComponent,
-        ChatGroupUserDeleteModalComponent
+        ChatGroupUserDeleteModalComponent,
+        ChatGroupLinkInvListComponent,
+        ChatGroupLinkInvFormComponent,
+        ChatGroupLinkInvEditModalComponent,
+        ChatGroupLinkInvDeleteModalComponent,
+        ChatGroupLinkInvNewModalComponent
     ],
     imports: [
         AppRoutingModule,
