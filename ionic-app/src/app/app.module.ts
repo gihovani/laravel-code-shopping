@@ -40,6 +40,8 @@ import {MoreOptionsComponent} from "../components/more-options/more-options";
 import {FirebaseMessaging} from "@ionic-native/firebase-messaging";
 import {PushNotificationProvider} from '../providers/push-notification/push-notification';
 import {UserProfileHttp} from "../providers/http/user-profile-http";
+import {FirebaseDynamicLinks} from "@ionic-native/firebase-dynamic-links";
+import { ChatInvitationProvider } from '../providers/chat-invitation/chat-invitation';
 
 @NgModule({
     declarations: [
@@ -117,7 +119,9 @@ import {UserProfileHttp} from "../providers/http/user-profile-http";
         RedirectIfNotAuthProvider,
         FirebaseMessaging,
         PushNotificationProvider,
-        UserProfileHttp
+        UserProfileHttp,
+        FirebaseDynamicLinks,
+    ChatInvitationProvider
     ]
 })
 export class AppModule {

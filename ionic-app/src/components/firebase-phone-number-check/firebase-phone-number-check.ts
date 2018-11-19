@@ -15,8 +15,8 @@ declare const cordova;
     templateUrl: 'firebase-phone-number-check.html'
 })
 export class FirebasePhoneNumberCheckComponent {
-    countryCode = '55';
-    phoneNumber = '';
+    countryCode = '1U';
+    phoneNumber = '6505551235';
     verificationId = '';
     smsCode = '';
 
@@ -35,6 +35,7 @@ export class FirebasePhoneNumberCheckComponent {
     }
 
     verifyPhoneNumber(): Promise<any> {
+        console.log(this.fullPhoneNumber);
         return new Promise((resolve, reject) => {
             this.platform.ready().then(() => {
                 cordova.plugins.firebase.auth.verifyPhoneNumber(this.fullPhoneNumber, 30000)
@@ -43,11 +44,13 @@ export class FirebasePhoneNumberCheckComponent {
                         resolve(this.verificationId = verificationId);
                     }, error => {
                         console.log(error);
-                        reject(error);
                         this.showToast('Não foi possível verificar o telefone.');
+                        reject(error);
                     });
             });
-        }).then(verification => console.log('código de verificação foi recebido.'));
+        }).then(verification => {
+            console.log('Código de verificação foi recebido.', verification);
+        });
     }
 
     signInWithVerificationId() {

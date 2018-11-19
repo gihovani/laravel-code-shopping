@@ -4,6 +4,7 @@ namespace CodeShopping\Listeners;
 
 use CodeShopping\Events\ChatMessageSentEvent;
 use CodeShopping\Firebase\CloudMessagingFb;
+use CodeShopping\Firebase\NotificationType;
 use CodeShopping\Models\User;
 use CodeShopping\Models\UserProfile;
 use Illuminate\Database\Eloquent\Collection;
@@ -47,7 +48,10 @@ class SendPushChatGroupMembersListener
             ->setTitle("{$from->name} enviou uma mensagem em {$chatGroup->name}")
             ->setBody($this->getBody())
             ->setTokens($tokens)
-            ->setData(['chat_group_id' => $chatGroup->id])
+            ->setData([
+                'type' => NotificationType::NEW_MESSAGE,
+                'chat_group_id' => $chatGroup->id
+            ])
             ->send();
 
     }

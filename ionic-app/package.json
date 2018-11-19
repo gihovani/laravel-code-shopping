@@ -33,6 +33,7 @@
     "@ionic-native/core": "~4.11.0",
     "@ionic-native/diagnostic": "^4.15.0",
     "@ionic-native/file": "^4.15.0",
+    "@ionic-native/firebase-dynamic-links": "^4.17.0",
     "@ionic-native/firebase-messaging": "^4.16.0",
     "@ionic-native/media": "^4.15.0",
     "@ionic-native/photo-viewer": "^4.15.0",
@@ -44,6 +45,7 @@
     "cordova-plugin-device": "2.0.2",
     "cordova-plugin-file": "^6.0.1",
     "cordova-plugin-firebase-authentication": "^1.0.1",
+    "cordova-plugin-firebase-dynamiclinks": "^1.0.1",
     "cordova-plugin-firebase-messaging": "^1.1.4",
     "cordova-plugin-ionic-keyboard": "^2.0.5",
     "cordova-plugin-ionic-webview": "^2.0.0",
@@ -89,6 +91,12 @@
       "cordova-plugin-firebase-messaging": {
         "FIREBASE_MESSAGING_VERSION": "17.3.+",
         "ANDROID_SUPPORT_VERSION": "27.+"
+      },
+      "cordova-plugin-firebase-dynamiclinks": {
+        "APP_DOMAIN": "gg2.com.br",
+        "APP_PATH": "/",
+        "PAGE_LINK_DOMAIN": "gg2cs.page.link",
+        "FIREBASE_DYNAMIC_LINKS_VERSION": "16.1.+"
       }
     },
     "platforms": [

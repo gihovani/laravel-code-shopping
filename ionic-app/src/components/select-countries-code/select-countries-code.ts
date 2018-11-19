@@ -11,7 +11,7 @@ import {Component, EventEmitter, Input, Output} from '@angular/core';
     templateUrl: 'select-countries-code.html'
 })
 export class SelectCountriesCodeComponent {
-    private _countryCode: string = "55";
+    private _countryCode: string = "1U";
     @Output()
     countryCodeChange: EventEmitter<any> = new EventEmitter<any>();
 

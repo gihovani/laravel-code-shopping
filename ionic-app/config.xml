@@ -91,4 +91,10 @@
     </plugin>
     <plugin name="com-sarriaroman-photoviewer" spec="^1.1.18" />
     <engine name="android" spec="~7.0.0" />
+    <plugin name="cordova-plugin-firebase-dynamiclinks" spec="^1.0.1">
+        <variable name="APP_DOMAIN" value="gg2.com.br" />
+        <variable name="APP_PATH" value="/" />
+        <variable name="PAGE_LINK_DOMAIN" value="gg2cs.page.link" />
+        <variable name="FIREBASE_DYNAMIC_LINKS_VERSION" value="16.1.+" />
+    </plugin>
 </widget>

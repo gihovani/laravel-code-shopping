@@ -2,6 +2,15 @@ import {Injectable} from '@angular/core';
 import {FirebaseMessaging} from "@ionic-native/firebase-messaging";
 import {Platform} from "ionic-angular";
 import {UserProfileHttp} from "../http/user-profile-http";
+import {merge} from "rxjs/observable/merge";
+import {map, shareReplay} from "rxjs/operators";
+import {Observable} from "rxjs";
+
+
+enum NotificationType {
+    CHAT_GROUP_SUBSCRIBE = '1',
+    NEW_MESSAGE = '2'
+}
 
 /*
   Generated class for the PushNotificationProvider provider.
@@ -11,6 +20,13 @@ import {UserProfileHttp} from "../http/user-profile-http";
 */
 @Injectable()
 export class PushNotificationProvider {
+
+    private notification = merge<{ background: boolean, data: any }>(
+        this.fcm.onBackgroundMessage()
+            .pipe(map(data => ({background: true, data}))),
+        this.fcm.onMessage()
+            .pipe(map(data => ({background: false, data}))),
+    ).pipe(shareReplay());
 
     constructor(private fcm: FirebaseMessaging,
                 private platform: Platform,
@@ -42,4 +58,23 @@ export class PushNotificationProvider {
         });
     }
 
+    onChatGroupSubscribe(): Observable<{ background: boolean, data: any }> {
+        return Observable.create(observer => {
+            this.notification.subscribe(data => {
+                if (data.data.type === NotificationType.CHAT_GROUP_SUBSCRIBE) {
+                    observer.next(data);
+                }
+            });
+        });
+    }
+
+    onNewMessage(): Observable<{ background: boolean, data: any }> {
+        return Observable.create(observer => {
+            this.notification.subscribe(data => {
+                if (data.data.type === NotificationType.NEW_MESSAGE) {
+                    observer.next(data);
+                }
+            });
+        });
+    }
 }
