@@ -22,7 +22,7 @@ class ProductResource extends JsonResource
             'price' => (float) $this->price,
             'stock' => (int) $this->stock,
             'active' => (bool) $this->active,
-//            'photo' => $this->photos()->first()->photo_url,
+            'photo' => $this->photo_url,
             'created_at' => $this->created_at->format('Y-m-d H:i:s'),
             'updated_at' => $this->updated_at->format('Y-m-d H:i:s'),
         ];
