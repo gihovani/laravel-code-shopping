@@ -5,9 +5,9 @@ import {AudioRecorderProvider} from "../../providers/audio-recorder/audio-record
 import {RedirectIfNotAuthProvider} from "../../providers/redirect-if-not-auth/redirect-if-not-auth";
 import {MoreOptionsComponent} from "../../components/more-options/more-options";
 import {PushNotificationProvider} from "../../providers/push-notification/push-notification";
-import {FirebaseMessaging} from "@ionic-native/firebase-messaging";
 import {SuperTab} from "ionic2-super-tabs";
 import {ChatInvitationProvider} from "../../providers/chat-invitation/chat-invitation";
+import {ProductListComponent} from "../../components/product-list/product-list";
 
 /**
  * Generated class for the MainPage page.
@@ -22,8 +22,8 @@ import {ChatInvitationProvider} from "../../providers/chat-invitation/chat-invit
     templateUrl: 'main.html',
 })
 export class MainPage {
-
     chatGroupList = ChatGroupListComponent;
+    productList = ProductListComponent;
 
     @ViewChild('chatGroupList')
     tabChatGroupList: SuperTab;
@@ -34,7 +34,6 @@ export class MainPage {
                 private redirectIfNotAuth: RedirectIfNotAuthProvider,
                 private popover: PopoverController,
                 private pushNotification: PushNotificationProvider,
-                private fcm: FirebaseMessaging,
                 private chatInvitation: ChatInvitationProvider,
                 private toastCtrl: ToastController) {
     }

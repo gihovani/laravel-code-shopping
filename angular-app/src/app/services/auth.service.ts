@@ -64,6 +64,5 @@ export class AuthService {
             email: decodedToken.email,
             profile: decodedToken.profile
         } : null;
-        return
     }
 }

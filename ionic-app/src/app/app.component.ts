@@ -5,9 +5,8 @@ import {SplashScreen} from '@ionic-native/splash-screen';
 
 import {HomePage} from '../pages/home/home';
 import {ListPage} from '../pages/list/list';
-import {LoginOptionsPage} from "../pages/login-options/login-options";
-import {FirebaseMessaging} from "@ionic-native/firebase-messaging";
 import {ChatInvitationProvider} from "../providers/chat-invitation/chat-invitation";
+import {MainPage} from "../pages/main/main";
 
 @Component({
     templateUrl: 'app.html'
@@ -15,14 +14,13 @@ import {ChatInvitationProvider} from "../providers/chat-invitation/chat-invitati
 export class MyApp {
     @ViewChild(Nav) nav: Nav;
 
-    rootPage: any = LoginOptionsPage;
+    rootPage: any = MainPage; //LoginOptionsPage;
 
     pages: Array<{ title: string, component: any }>;
 
     constructor(public platform: Platform,
                 public statusBar: StatusBar,
                 public splashScreen: SplashScreen,
-                private fcm: FirebaseMessaging,
                 private chatInvitation: ChatInvitationProvider) {
         this.initializeApp();
 
@@ -35,9 +33,6 @@ export class MyApp {
 
     initializeApp() {
         this.platform.ready().then(() => {
-            // this.fcm.getToken().then((token) => {
-            //     console.log(token);
-            // });
             // Okay, so the platform is ready and our plugins are available.
             // Here you can do any higher level native things you might need.
             this.statusBar.styleDefault();

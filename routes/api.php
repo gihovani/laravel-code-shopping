@@ -29,7 +29,11 @@ Route::group([
         Route::name('chat_groups.messages')->post('chat_groups/{chat_group}/messages', 'ChatMessageFbController@store');
         Route::name('chat_groups.invitations')->post('chat_invitations/{invitation_slug}', 'ChatGroupInvitationUserController@store');
 
-//        Route::group(['middleware' => ['can:is_seller']], function () {
+        Route::group(['prefix' => 'open', 'namespace' => 'Open'], function() {
+            Route::get('products', 'ProductController@index');
+            Route::get('categories', 'CategoryController@index');
+        });
+        Route::group(['middleware' => ['can:is_seller']], function () {
             Route::name('me')->get('me', 'AuthController@me');
             Route::patch('products/{product}/restore', 'ProductController@restore');
             Route::resource('products', 'ProductController', [
@@ -109,6 +113,6 @@ Route::group([
                 ]
             ]);
 
-//        });
+        });
 //    });
 });

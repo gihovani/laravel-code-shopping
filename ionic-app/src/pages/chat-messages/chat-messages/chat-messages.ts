@@ -1,6 +1,5 @@
 import {Component, ViewChild} from '@angular/core';
 import {Content, InfiniteScroll, IonicPage, NavController, NavParams} from 'ionic-angular';
-import {FirebaseAuthProvider} from "../../../providers/auth/firebase-auth";
 import {ChatGroup, ChatMessage} from "../../../model";
 import {ChatMessageFb} from "../../../providers/firebase/chat-message-fb";
 import {IsCurrentUserPipe} from "../../../pipes/is-current-user/is-current-user";
@@ -33,7 +32,6 @@ export class ChatMessagesPage {
     constructor(public navCtrl: NavController,
                 public navParams: NavParams,
                 private chatMessageFb: ChatMessageFb,
-                private firebaseAuth: FirebaseAuthProvider,
                 private isCurrentUser: IsCurrentUserPipe,
                 private redirectIfNotAuth: RedirectIfNotAuthProvider) {
 

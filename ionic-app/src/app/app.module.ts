@@ -41,7 +41,8 @@ import {FirebaseMessaging} from "@ionic-native/firebase-messaging";
 import {PushNotificationProvider} from '../providers/push-notification/push-notification';
 import {UserProfileHttp} from "../providers/http/user-profile-http";
 import {FirebaseDynamicLinks} from "@ionic-native/firebase-dynamic-links";
-import { ChatInvitationProvider } from '../providers/chat-invitation/chat-invitation';
+import {ChatInvitationProvider} from '../providers/chat-invitation/chat-invitation';
+import {ProductListComponent} from "../components/product-list/product-list";
 
 @NgModule({
     declarations: [
@@ -56,7 +57,8 @@ import { ChatInvitationProvider } from '../providers/chat-invitation/chat-invita
         ChatGroupListComponent,
         FirebasePhoneNumberCheckComponent,
         SelectCountriesCodeComponent,
-        MoreOptionsComponent
+        MoreOptionsComponent,
+        ProductListComponent
     ],
     imports: [
         BrowserModule,
@@ -95,7 +97,8 @@ import { ChatInvitationProvider } from '../providers/chat-invitation/chat-invita
         ChatGroupListComponent,
         FirebasePhoneNumberCheckComponent,
         SelectCountriesCodeComponent,
-        MoreOptionsComponent
+        MoreOptionsComponent,
+        ProductListComponent
     ],
     providers: [
         StatusBar,
@@ -121,7 +124,7 @@ import { ChatInvitationProvider } from '../providers/chat-invitation/chat-invita
         PushNotificationProvider,
         UserProfileHttp,
         FirebaseDynamicLinks,
-    ChatInvitationProvider
+        ChatInvitationProvider
     ]
 })
 export class AppModule {

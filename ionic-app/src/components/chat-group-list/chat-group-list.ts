@@ -1,5 +1,4 @@
 import {Component} from '@angular/core';
-import {FirebaseAuthProvider} from "../../providers/auth/firebase-auth";
 import {ChatGroup, ChatMessage} from "../../model";
 import {ChatGroupFbProvider} from "../../providers/firebase/chat-group-fb";
 import {App} from "ionic-angular";
@@ -21,8 +20,7 @@ export class ChatGroupListComponent {
     chatActive: ChatGroup;
     chatGroupIdToFirstOpen = null;
 
-    constructor(private firebaseAuth: FirebaseAuthProvider,
-                private chatGroupFb: ChatGroupFbProvider,
+    constructor(private chatGroupFb: ChatGroupFbProvider,
                 private app: App,
                 private chatGroupViewer: ChatGroupViewerProvider) {
     }
