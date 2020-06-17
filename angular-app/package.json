@@ -27,7 +27,7 @@
     "core-js": "^2.5.4",
     "firebase": "^5.3.1",
     "firebaseui": "^3.3.0",
-    "jquery": "^3.3.1",
+    "jquery": "^3.5.0",
     "ng2-select2": "^1.0.0-beta.16",
     "ngx-pagination": "^3.1.1",
     "pace": "github:HubSpot/pace#v1.0.2",
